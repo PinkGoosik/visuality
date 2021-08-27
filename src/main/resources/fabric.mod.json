@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "id": "visuality",
+  "version": "${version}",
+
+  "name": "Visuality",
+  "description": "Visual improvements by adding a bunch of new particles.",
+  "authors": [
+    "PinkGoosik"
+  ],
+  "contact": {
+    "homepage": "https://curseforge.com/minecraft/mc-mods/visuality",
+    "sources": "https://github.com/PinkGoosik/visuality",
+    "issues": "https://github.com/PinkGoosik/visuality/issues"
+  },
+
+  "license": "MIT",
+  "icon": "assets/visuality/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "ru.pinkgoosik.visuality.VisualityMod"
+    ],
+    "client": [
+      "ru.pinkgoosik.visuality.VisualityMod"
+    ]
+  },
+  "mixins": [
+    "visuality.mixins.json"
+  ],
+  "custom": {
+    "modmenu": {
+      "links": {
+        "modmenu.discord": "https://discord.gg/DcemWeskeZ"
+      }
+    }
+  },
+  "depends": {
+    "fabricloader": ">=0.11.3",
+    "fabric": "*",
+    "minecraft": "1.17.x",
+    "java": ">=16"
+  }
+}
