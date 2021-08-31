@@ -9,4 +9,4 @@
 </div>
 
 ## About
-Visuality is a small cosmetic mod that will improve visuals by adding a bunch of new particles.
+Visuality is a simple cosmetic mod that adds a bunch of new particles such as crystal sparkles, particles on mob hitting, environmental particles, custom particles for slimes, expect list expanding with mod updates.

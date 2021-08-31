@@ -12,7 +12,7 @@ public class UnderwaterBubbleParticle extends SpriteBillboardParticle {
 
     private UnderwaterBubbleParticle(ClientWorld world, double x, double y, double z, double velX, double velY, double velZ) {
         super(world, x, y, z);
-        this.gravityStrength = -0.125F;
+        this.gravityStrength = -0.25F;
         this.field_28786 = 0.85F;
         this.setBoundingBoxSpacing(0.02F, 0.02F);
         this.scale *= this.random.nextFloat() * 0.6F + 0.5F;

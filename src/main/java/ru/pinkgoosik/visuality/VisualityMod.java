@@ -13,7 +13,6 @@ public class VisualityMod implements ModInitializer, ClientModInitializer {
 
 	@Override
 	public void onInitialize() {
-        VisualityParticles.register();
         HitMobParticleRegistry.register(EntityType.SKELETON, VisualityParticles.BONE, 15);
         HitMobParticleRegistry.register(EntityType.SKELETON_HORSE, VisualityParticles.BONE, 15);
         HitMobParticleRegistry.register(EntityType.STRAY, VisualityParticles.BONE, 15);
@@ -23,6 +22,7 @@ public class VisualityMod implements ModInitializer, ClientModInitializer {
 
 	@Override
 	public void onInitializeClient() {
+		VisualityParticles.register();
 		VisualityEvents.registerClient();
 	}
 }

@@ -28,7 +28,7 @@ public class UnderwaterBubblesEvent implements ClientTickEvents.StartWorldTick {
 
         if(bubblesAge > 0){
             bubblesAge--;
-            if(bubblesAge % 5 == 0){
+            if(bubblesAge % 3 == 0){
                 world.addParticle(VisualityParticles.UNDERWATER_BUBBLE, bubblesPos.getX() + 0.5D, bubblesPos.getY() + 0.1D, bubblesPos.getZ() + 0.5D, 0, 0, 0);
             }
         }
