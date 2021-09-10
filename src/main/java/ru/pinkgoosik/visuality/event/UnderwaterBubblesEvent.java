@@ -49,7 +49,7 @@ public class UnderwaterBubblesEvent implements ClientTickEvents.StartWorldTick {
                 }
             }
 
-            if(possibleBlockPoses.size() > 0){
+            if(possibleBlockPoses.size() > 10){
                 BlockPos randomPos = possibleBlockPoses.get(world.getRandom().nextInt(possibleBlockPoses.size()));
                 addBubbles(randomPos);
             }

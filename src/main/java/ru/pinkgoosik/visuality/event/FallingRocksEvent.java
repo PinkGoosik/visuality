@@ -39,7 +39,7 @@ public class FallingRocksEvent implements ClientTickEvents.StartWorldTick {
                 }
             }
 
-            if(possibleBlockPoses.size() > 10){
+            if(possibleBlockPoses.size() > 30){
                 BlockPos randomPos = possibleBlockPoses.get(world.getRandom().nextInt(possibleBlockPoses.size()));
                 world.addParticle(VisualityParticles.ROCK, randomPos.getX() + 0.5D, randomPos.getY() + 0.5D, randomPos.getZ() + 0.5D, 0, 0, 0);
             }
