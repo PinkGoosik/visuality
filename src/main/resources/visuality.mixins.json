@@ -4,11 +4,11 @@
   "package": "ru.pinkgoosik.visuality.mixin",
   "compatibilityLevel": "JAVA_16",
   "mixins": [
-    "LivingEntityMixin"
   ],
   "client": [
     "SlimeEntityMixin",
-    "AmethystClusterBlockMixin"
+    "AmethystClusterBlockMixin",
+    "LivingEntityMixin"
   ],
   "injectors": {
     "defaultRequire": 1
