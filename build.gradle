@@ -22,8 +22,8 @@ dependencies {
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-	modImplementation "com.github.PinkGoosik:goosik-lib:v0.1.0"
-	include "com.github.PinkGoosik:goosik-lib:v0.1.0"
+	modImplementation "com.github.PinkGoosik:cosmetica:0.2.0"
+	include "com.github.PinkGoosik:cosmetica:0.2.0"
 	
 	modRuntime "com.terraformersmc:modmenu:2.0.3"
 	modRuntime "supercoder79:databreaker:0.2.7"

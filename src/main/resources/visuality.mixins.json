@@ -6,9 +6,10 @@
   "mixins": [
   ],
   "client": [
-    "SlimeEntityMixin",
     "AmethystClusterBlockMixin",
-    "LivingEntityMixin"
+    "LivingEntityMixin",
+    "SlimeEntityMixin",
+    "CreeperEntityMixin"
   ],
   "injectors": {
     "defaultRequire": 1

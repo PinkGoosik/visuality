@@ -13,7 +13,6 @@ import ru.pinkgoosik.visuality.particle.VisualityParticles;
 import java.util.ArrayList;
 
 public class FallingRocksEvent implements ClientTickEvents.StartWorldTick {
-
     private static int ticksDelay = 0;
 
     @Override

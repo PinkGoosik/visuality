@@ -6,7 +6,6 @@ import net.minecraft.particle.ParticleEffect;
 import java.util.ArrayList;
 
 public class HitMobParticleRegistry {
-
     private static final ArrayList<Entry> ENTRIES = new ArrayList<>();
 
     public static void register(EntityType<?> entityType, ParticleEffect particleEffect, int height){
