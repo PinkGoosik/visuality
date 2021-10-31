@@ -13,7 +13,7 @@ group = project.maven_group
 repositories {
 	maven { url "https://maven.gegy.dev" } //databreaker
 	maven { url "https://maven.terraformersmc.com" } //modmenu
-	maven { url "https://jitpack.io" }
+	maven { url "https://jitpack.io" } //cosmetica
 }
 
 dependencies {
@@ -22,8 +22,8 @@ dependencies {
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-	modImplementation "com.github.PinkGoosik:cosmetica:0.2.0"
-	include "com.github.PinkGoosik:cosmetica:0.2.0"
+	modImplementation "com.github.PinkGoosik:cosmetica:0.2.1"
+	include "com.github.PinkGoosik:cosmetica:0.2.1"
 	
 	modRuntime "com.terraformersmc:modmenu:2.0.3"
 	modRuntime "supercoder79:databreaker:0.2.7"

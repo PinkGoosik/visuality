@@ -7,7 +7,6 @@ import net.minecraft.client.world.ClientWorld;
 import net.minecraft.particle.DefaultParticleType;
 
 public class SparkleParticle extends SpriteBillboardParticle {
-
     private final SpriteProvider spriteProvider;
 
     private SparkleParticle(ClientWorld world, double x, double y, double z, SpriteProvider spriteProvider) {

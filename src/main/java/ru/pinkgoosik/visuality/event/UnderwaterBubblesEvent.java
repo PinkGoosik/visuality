@@ -8,7 +8,7 @@ import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import ru.pinkgoosik.visuality.particle.VisualityParticles;
+import ru.pinkgoosik.visuality.registry.VisualityParticles;
 
 import java.util.ArrayList;
 
@@ -20,7 +20,7 @@ public class UnderwaterBubblesEvent implements ClientTickEvents.StartWorldTick {
     @Override
     public void onStartTick(ClientWorld world) {
         ClientPlayerEntity player = MinecraftClient.getInstance().player;
-        assert player != null;
+        if(player == null) return;
         if(!player.isSubmergedInWater() || !world.getRegistryKey().equals(World.OVERWORLD) || player.getY() >= 64 || player.getY() <= 32) return;
         ticksDelay++;
 

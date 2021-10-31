@@ -12,17 +12,15 @@ public class FeatherParticle extends AbstractSlowingParticle {
         super(world, x, y, z, velX, velY, velZ);
         this.scale(0.7F + (float)world.random.nextInt(6) / 10);
         this.angle = prevAngle = random.nextFloat() * (float)(2 * Math.PI);
-
         this.velocityY = -0.25D;
-        this.maxAge = (int)(8.0D / (Math.random() * 0.8D + 0.2D)) + 7;
-    }
-
-    public ParticleTextureSheet getType() {
-        return ParticleTextureSheet.PARTICLE_SHEET_TRANSLUCENT;
+        this.maxAge = (int)(8.0D / (Math.random() * 0.8D + 0.2D)) + 12;
     }
 
     @Override
     public void tick() {
+        if (this.age > this.maxAge / 2) {
+            this.setColorAlpha(1.0F - ((float)this.age - (float)(this.maxAge / 2)) / (float)this.maxAge);
+        }
         super.tick();
         if(age == 1){
             this.velocityX = velocityX + (Math.random() * 2.0D - 1.0D) * 0.2D;
@@ -35,6 +33,11 @@ public class FeatherParticle extends AbstractSlowingParticle {
             this.setVelocity(0D, 0D, 0D);
             this.setPos(prevPosX, prevPosY + 0.1D, prevPosZ);
         }
+    }
+
+    @Override
+    public ParticleTextureSheet getType() {
+        return ParticleTextureSheet.PARTICLE_SHEET_TRANSLUCENT;
     }
 
     @Environment(EnvType.CLIENT)

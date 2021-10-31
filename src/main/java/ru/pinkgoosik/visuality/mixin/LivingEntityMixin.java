@@ -15,12 +15,13 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import ru.pinkgoosik.visuality.VisualityMod;
-import ru.pinkgoosik.visuality.api.HitMobParticleRegistry;
-import ru.pinkgoosik.visuality.particle.VisualityParticles;
+import ru.pinkgoosik.visuality.api.HitParticleRegistry;
+import ru.pinkgoosik.visuality.registry.VisualityParticles;
+import ru.pinkgoosik.visuality.util.FunkyUtils;
 
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin extends Entity {
+    LivingEntity self = LivingEntity.class.cast(this);
 
     @Shadow public abstract boolean isAlive();
 
@@ -34,10 +35,11 @@ public abstract class LivingEntityMixin extends Entity {
     private void tick(CallbackInfo ci){
         if(world.isClient && ticksDelay != 0) ticksDelay--;
         if(this.world.isClient && this.isAlive() && MinecraftClient.getInstance().player != null){
+            int shinyLevel = FunkyUtils.getShinyArmor(self);
             if(MinecraftClient.getInstance().player.getUuid().equals(this.getUuid())){
                 if(MinecraftClient.getInstance().options.getPerspective().isFrontView()){
-                    if(getShinyArmor() > 0){
-                        if(this.random.nextInt(20 - getShinyArmor()) == 0){
+                    if(shinyLevel > 0){
+                        if(this.random.nextInt(20 - shinyLevel) == 0){
                             double randomX = random.nextFloat() * 2 - 1;
                             double randomY = random.nextFloat();
                             double randomZ = random.nextFloat() * 2 - 1;
@@ -46,8 +48,8 @@ public abstract class LivingEntityMixin extends Entity {
                     }
                 }
             }else {
-                if(getShinyArmor() > 0){
-                    if(this.random.nextInt(20 - getShinyArmor()) == 0){
+                if(shinyLevel > 0){
+                    if(this.random.nextInt(20 - shinyLevel) == 0){
                         double randomX = random.nextFloat() * 2 - 1;
                         double randomY = random.nextFloat();
                         double randomZ = random.nextFloat() * 2 - 1;
@@ -61,7 +63,7 @@ public abstract class LivingEntityMixin extends Entity {
     @Inject(method = "damage", at = @At("HEAD"))
     void damage(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir){
         if(world.isClient && source.getAttacker() instanceof LivingEntity attacker && ticksDelay == 0 && this.isAlive()){
-            HitMobParticleRegistry.getEntries().forEach(entry -> {
+            HitParticleRegistry.ENTRIES.forEach(entry -> {
                 if(this.getType().equals(entry.entityType())){
                     ticksDelay = 10;
                     Item itemInHand = attacker.getStackInHand(Hand.MAIN_HAND).getItem();
@@ -74,20 +76,9 @@ public abstract class LivingEntityMixin extends Entity {
     }
 
     @Unique
-    private void spawnHitParticles(HitMobParticleRegistry.Entry entry, int count){
+    private void spawnHitParticles(HitParticleRegistry.Entry entry, int count){
         for(int i = 0; i <= count; i++){
             world.addParticle(entry.particleEffect(), this.getX(), this.getY() + 0.5 + (double)this.random.nextInt(entry.height()) / 10, this.getZ(), 0, 0, 0);
         }
-    }
-
-    @Unique
-    private int getShinyArmor(){
-        int shinyArmor = 0;
-        for(ItemStack stack : this.getItemsEquipped()){
-            if(VisualityMod.SHINY_ARMOR.contains(stack.getItem())){
-                shinyArmor++;
-            }
-        }
-        return shinyArmor;
     }
 }

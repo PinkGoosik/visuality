@@ -4,7 +4,7 @@ import net.minecraft.block.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
-import ru.pinkgoosik.visuality.particle.VisualityParticles;
+import ru.pinkgoosik.visuality.registry.VisualityParticles;
 
 import java.util.Random;
 
