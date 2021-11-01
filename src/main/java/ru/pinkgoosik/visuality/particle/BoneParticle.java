@@ -8,7 +8,7 @@ import net.minecraft.particle.DefaultParticleType;
 
 public class BoneParticle extends AbstractSlowingParticle {
 
-    private BoneParticle(ClientWorld world, double x, double y, double z, double velX, double velY, double velZ) {
+    public BoneParticle(ClientWorld world, double x, double y, double z, double velX, double velY, double velZ) {
         super(world, x, y, z, velX, velY, velZ);
         this.scale(1.1F + (float)world.random.nextInt(6) / 10);
         this.angle = prevAngle = random.nextFloat() * (float)(2 * Math.PI);
@@ -42,7 +42,6 @@ public class BoneParticle extends AbstractSlowingParticle {
 
     @Environment(EnvType.CLIENT)
     public record Factory(SpriteProvider spriteProvider) implements ParticleFactory<DefaultParticleType> {
-
         public Particle createParticle(DefaultParticleType defaultParticleType, ClientWorld world, double x, double y, double z, double velX, double velY, double velZ) {
             BoneParticle particle = new BoneParticle(world, x, y, z, velX, velY, velZ);
             particle.setSprite(spriteProvider);

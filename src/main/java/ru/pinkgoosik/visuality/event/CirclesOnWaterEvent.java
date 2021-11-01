@@ -10,6 +10,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.Heightmap;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
+import ru.pinkgoosik.visuality.VisualityMod;
 import ru.pinkgoosik.visuality.registry.VisualityParticles;
 
 import java.util.Random;
@@ -19,6 +20,7 @@ public class CirclesOnWaterEvent implements ClientTickEvents.StartWorldTick {
 
     @Override
     public void onStartTick(ClientWorld world) {
+        if (!VisualityMod.config.particles.water_circle) return;
         if (MinecraftClient.getInstance().options.particles == ParticlesMode.MINIMAL) return;
         ClientPlayerEntity player = MinecraftClient.getInstance().player;
         if(player == null) return;

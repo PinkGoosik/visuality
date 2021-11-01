@@ -7,7 +7,6 @@ import net.minecraft.client.world.ClientWorld;
 import net.minecraft.particle.DefaultParticleType;
 
 public class ChargeParticle extends SpriteBillboardParticle {
-
     private final SpriteProvider spriteProvider;
 
     protected ChargeParticle(ClientWorld world, double x, double y, double z, SpriteProvider spriteProvider) {

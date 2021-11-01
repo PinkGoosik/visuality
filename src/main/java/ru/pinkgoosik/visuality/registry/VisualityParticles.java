@@ -18,6 +18,7 @@ public class VisualityParticles {
     public static final DefaultParticleType BIG_SLIME_BLOB = add("big_slime_blob");
     public static final DefaultParticleType CHARGE = add("charge");
     public static final DefaultParticleType WATER_CIRCLE = add("water_circle");
+    public static final DefaultParticleType EMERALD = add("emerald");
 
     public static void register() {
         ParticleFactoryRegistry registry = ParticleFactoryRegistry.getInstance();
@@ -31,6 +32,7 @@ public class VisualityParticles {
         registry.register(BIG_SLIME_BLOB, SlimeParticle.Factory::new);
         registry.register(CHARGE, ChargeParticle.Factory::new);
         registry.register(WATER_CIRCLE, WaterCircleParticle.Factory::new);
+        registry.register(EMERALD, EmeraldParticle.Factory::new);
     }
 
     private static DefaultParticleType add(String name) {

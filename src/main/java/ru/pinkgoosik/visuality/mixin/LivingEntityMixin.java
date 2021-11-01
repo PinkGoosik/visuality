@@ -15,7 +15,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import ru.pinkgoosik.visuality.api.HitParticleRegistry;
+import ru.pinkgoosik.visuality.VisualityMod;
+import ru.pinkgoosik.visuality.registry.HitParticleRegistry;
 import ru.pinkgoosik.visuality.registry.VisualityParticles;
 import ru.pinkgoosik.visuality.util.FunkyUtils;
 
@@ -34,7 +35,7 @@ public abstract class LivingEntityMixin extends Entity {
     @Inject(method = "tick", at = @At("TAIL"))
     private void tick(CallbackInfo ci){
         if(world.isClient && ticksDelay != 0) ticksDelay--;
-        if(this.world.isClient && this.isAlive() && MinecraftClient.getInstance().player != null){
+        if(this.world.isClient && this.isAlive() && MinecraftClient.getInstance().player != null && VisualityMod.config.particles.sparkle){
             int shinyLevel = FunkyUtils.getShinyArmor(self);
             if(MinecraftClient.getInstance().player.getUuid().equals(this.getUuid())){
                 if(MinecraftClient.getInstance().options.getPerspective().isFrontView()){
@@ -62,9 +63,9 @@ public abstract class LivingEntityMixin extends Entity {
 
     @Inject(method = "damage", at = @At("HEAD"))
     void damage(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir){
-        if(world.isClient && source.getAttacker() instanceof LivingEntity attacker && ticksDelay == 0 && this.isAlive()){
+        if(world.isClient && source.getAttacker() instanceof LivingEntity attacker && ticksDelay == 0 && this.isAlive() && VisualityMod.config.particles.hit_particles){
             HitParticleRegistry.ENTRIES.forEach(entry -> {
-                if(this.getType().equals(entry.entityType())){
+                if(this.getType().equals(entry.entity())){
                     ticksDelay = 10;
                     Item itemInHand = attacker.getStackInHand(Hand.MAIN_HAND).getItem();
                     if(itemInHand instanceof SwordItem swordItem) spawnHitParticles(entry, (int)swordItem.getAttackDamage() / 2);
@@ -78,7 +79,7 @@ public abstract class LivingEntityMixin extends Entity {
     @Unique
     private void spawnHitParticles(HitParticleRegistry.Entry entry, int count){
         for(int i = 0; i <= count; i++){
-            world.addParticle(entry.particleEffect(), this.getX(), this.getY() + 0.5 + (double)this.random.nextInt(entry.height()) / 10, this.getZ(), 0, 0, 0);
+            world.addParticle(entry.particle(), this.getX(), this.getY() + 0.2D + (double)this.random.nextInt((int)entry.height() * 10) / 10, this.getZ(), 0, 0, 0);
         }
     }
 }

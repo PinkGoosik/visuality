@@ -12,6 +12,7 @@ import ru.pinkgoosik.visuality.registry.VisualityParticles;
 
 import java.util.ArrayList;
 
+@Deprecated() //needs to be redone
 public class UnderwaterBubblesEvent implements ClientTickEvents.StartWorldTick {
     private static BlockPos bubblesPos = new BlockPos(0, 0, 0);
     private static int bubblesAge = 0;

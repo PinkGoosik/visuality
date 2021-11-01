@@ -12,6 +12,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import ru.pinkgoosik.visuality.VisualityMod;
 import ru.pinkgoosik.visuality.registry.VisualityParticles;
 
 @Mixin(CreeperEntity.class)
@@ -26,11 +27,13 @@ public abstract class CreeperEntityMixin extends HostileEntity implements SkinOv
     @Inject(method = "tick", at = @At("TAIL"))
     void tick(CallbackInfo ci){
         if(this.world.isClient && this.isAlive() && getDataTracker().get(CHARGED)){
-            if(this.random.nextInt(20) == 0){
-                double randomX = random.nextFloat() * 2 - 1;
-                double randomY = random.nextFloat();
-                double randomZ = random.nextFloat() * 2 - 1;
-                world.addParticle(VisualityParticles.CHARGE, this.getX() + randomX, this.getY() + randomY + 1, this.getZ() + randomZ, 0, 0, 0);
+            if(VisualityMod.config.particles.charge){
+                if(this.random.nextInt(20) == 0){
+                    double randomX = random.nextFloat() * 2 - 1;
+                    double randomY = random.nextFloat();
+                    double randomZ = random.nextFloat() * 2 - 1;
+                    world.addParticle(VisualityParticles.CHARGE, this.getX() + randomX, this.getY() + randomY + 1, this.getZ() + randomZ, 0, 0, 0);
+                }
             }
         }
     }

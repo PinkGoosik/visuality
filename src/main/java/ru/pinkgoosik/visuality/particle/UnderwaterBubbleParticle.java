@@ -38,7 +38,6 @@ public class UnderwaterBubbleParticle extends SpriteBillboardParticle {
 
     @Environment(EnvType.CLIENT)
     public record Factory(SpriteProvider spriteProvider) implements ParticleFactory<DefaultParticleType> {
-
         public Particle createParticle(DefaultParticleType defaultParticleType, ClientWorld world, double x, double y, double z, double velX, double velY, double velZ) {
             UnderwaterBubbleParticle particle = new UnderwaterBubbleParticle(world, x, y, z, velX, velY, velZ);
             particle.setSprite(this.spriteProvider);

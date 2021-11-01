@@ -42,7 +42,6 @@ public class FeatherParticle extends AbstractSlowingParticle {
 
     @Environment(EnvType.CLIENT)
     public record Factory(SpriteProvider spriteProvider) implements ParticleFactory<DefaultParticleType> {
-
         public Particle createParticle(DefaultParticleType defaultParticleType, ClientWorld world, double x, double y, double z, double velX, double velY, double velZ) {
             FeatherParticle particle = new FeatherParticle(world, x, y, z, velX, velY, velZ);
             particle.setSprite(spriteProvider);
