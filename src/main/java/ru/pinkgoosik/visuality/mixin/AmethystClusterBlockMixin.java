@@ -9,6 +9,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import ru.pinkgoosik.visuality.VisualityMod;
 import ru.pinkgoosik.visuality.registry.VisualityParticles;
+import ru.pinkgoosik.visuality.util.ParticleUtils;
 
 import java.util.Random;
 
@@ -28,9 +29,12 @@ public abstract class AmethystClusterBlockMixin extends AmethystBlock implements
     @Override
     public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
         super.randomDisplayTick(state, world, pos, random);
-        if(VisualityMod.config.particles.sparkle){
+        if(VisualityMod.CONFIG.getBoolean("sparkle")){
             if(state.getBlock() instanceof AmethystClusterBlock && hgHeight > 5 && random.nextFloat() > 0.5) {
-                world.addParticle(VisualityParticles.SPARKLE, pos.getX() + random.nextFloat(), pos.getY() + random.nextFloat(), pos.getZ() + random.nextFloat(), 0, 0, 0);
+                double x = pos.getX() + random.nextDouble();
+                double y = pos.getY() + random.nextDouble();
+                double z = pos.getZ() + random.nextDouble();
+                ParticleUtils.add(world, VisualityParticles.SPARKLE, x, y, z);
             }
         }
     }

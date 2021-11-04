@@ -24,7 +24,10 @@ dependencies {
 
 	modImplementation "com.github.PinkGoosik:cosmetica:0.2.1"
 	include "com.github.PinkGoosik:cosmetica:0.2.1"
-	
+
+	modImplementation "com.github.PinkGoosik:goosik-config:0.1.1"
+	include "com.github.PinkGoosik:goosik-config:0.1.1"
+
 	modRuntime "com.terraformersmc:modmenu:2.0.3"
 	modRuntime "supercoder79:databreaker:0.2.7"
 	modRuntime "com.ptsmods:devlogin:1.2"

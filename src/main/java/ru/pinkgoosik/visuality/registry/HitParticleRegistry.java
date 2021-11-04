@@ -17,12 +17,12 @@ public class HitParticleRegistry {
     public static void reload(){
         ENTRIES.clear();
         ArrayList<Entry> entries = new ArrayList<>();
-        VisualityMod.config.hit_particles.forEach(configuredHitParticle -> {
-            EntityType<?> entity = getEntityFromString(configuredHitParticle.entity);
-            ParticleEffect particle = getParticleFromString(configuredHitParticle.particle);
-            float height = configuredHitParticle.height;
-            if(entity != null && particle != null && height > 0){
-                entries.add(new Entry(entity, particle, height));
+        VisualityMod.CONFIG.getStringsArray("hit_particles_entries").forEach(entry -> {
+            String[] args = entry.split("\\|");
+            EntityType<?> entity = getEntityFromString(args[0]);
+            ParticleEffect particle = getParticleFromString(args[1]);
+            if(entity != null && particle != null){
+                entries.add(new Entry(entity, particle));
             }
         });
         ENTRIES.addAll(entries);
@@ -38,5 +38,5 @@ public class HitParticleRegistry {
         return (DefaultParticleType)optional.orElse(null);
     }
 
-    public record Entry(EntityType<?> entity, ParticleEffect particle, float height){}
+    public record Entry(EntityType<?> entity, ParticleEffect particle){}
 }

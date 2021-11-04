@@ -6,6 +6,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.item.*;
+import net.minecraft.particle.ParticleEffect;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
@@ -19,6 +20,7 @@ import ru.pinkgoosik.visuality.VisualityMod;
 import ru.pinkgoosik.visuality.registry.HitParticleRegistry;
 import ru.pinkgoosik.visuality.registry.VisualityParticles;
 import ru.pinkgoosik.visuality.util.FunkyUtils;
+import ru.pinkgoosik.visuality.util.ParticleUtils;
 
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin extends Entity {
@@ -35,51 +37,55 @@ public abstract class LivingEntityMixin extends Entity {
     @Inject(method = "tick", at = @At("TAIL"))
     private void tick(CallbackInfo ci){
         if(world.isClient && ticksDelay != 0) ticksDelay--;
-        if(this.world.isClient && this.isAlive() && MinecraftClient.getInstance().player != null && VisualityMod.config.particles.sparkle){
+        if(this.world.isClient && this.isAlive() && MinecraftClient.getInstance().player != null && VisualityMod.CONFIG.getBoolean("sparkle")){
             int shinyLevel = FunkyUtils.getShinyArmor(self);
             if(MinecraftClient.getInstance().player.getUuid().equals(this.getUuid())){
                 if(MinecraftClient.getInstance().options.getPerspective().isFrontView()){
-                    if(shinyLevel > 0){
-                        if(this.random.nextInt(20 - shinyLevel) == 0){
-                            double randomX = random.nextFloat() * 2 - 1;
-                            double randomY = random.nextFloat();
-                            double randomZ = random.nextFloat() * 2 - 1;
-                            world.addParticle(VisualityParticles.SPARKLE, this.getX() + randomX, this.getY() + randomY + 1, this.getZ() + randomZ, 0, 0, 0);
-                        }
-                    }
+                    spawnSparkles(shinyLevel);
                 }
             }else {
-                if(shinyLevel > 0){
-                    if(this.random.nextInt(20 - shinyLevel) == 0){
-                        double randomX = random.nextFloat() * 2 - 1;
-                        double randomY = random.nextFloat();
-                        double randomZ = random.nextFloat() * 2 - 1;
-                        world.addParticle(VisualityParticles.SPARKLE, this.getX() + randomX, this.getY() + randomY + 1, this.getZ() + randomZ, 0, 0, 0);
-                    }
-                }
+                spawnSparkles(shinyLevel);
             }
         }
     }
 
     @Inject(method = "damage", at = @At("HEAD"))
     void damage(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir){
-        if(world.isClient && source.getAttacker() instanceof LivingEntity attacker && ticksDelay == 0 && this.isAlive() && VisualityMod.config.particles.hit_particles){
+        if(world.isClient && source.getAttacker() instanceof LivingEntity attacker && ticksDelay == 0 && this.isAlive() && VisualityMod.CONFIG.getBoolean("hit_particles")){
             HitParticleRegistry.ENTRIES.forEach(entry -> {
                 if(this.getType().equals(entry.entity())){
                     ticksDelay = 10;
-                    Item itemInHand = attacker.getStackInHand(Hand.MAIN_HAND).getItem();
-                    if(itemInHand instanceof SwordItem swordItem) spawnHitParticles(entry, (int)swordItem.getAttackDamage() / 2);
-                    else if(itemInHand instanceof MiningToolItem miningToolItem) spawnHitParticles(entry, (int)miningToolItem.getAttackDamage() / 2);
-                    else spawnHitParticles(entry, this.random.nextInt(2));
+                    Item item = attacker.getStackInHand(Hand.MAIN_HAND).getItem();
+                    int count = this.random.nextInt(2);
+                    if(item instanceof SwordItem swordItem) count = (int)swordItem.getAttackDamage() / 2;
+                    else if(item instanceof MiningToolItem miningToolItem) count = (int)miningToolItem.getAttackDamage() / 2;
+                    spawnHitParticles(entry.particle(), count);
                 }
             });
         }
     }
 
     @Unique
-    private void spawnHitParticles(HitParticleRegistry.Entry entry, int count){
+    private void spawnHitParticles(ParticleEffect particle, int count){
+        float height = this.getHeight();
+        if(height * 100 < 100) height = 1.0F;
+        else height = height + 0.5F;
         for(int i = 0; i <= count; i++){
-            world.addParticle(entry.particle(), this.getX(), this.getY() + 0.2D + (double)this.random.nextInt((int)entry.height() * 10) / 10, this.getZ(), 0, 0, 0);
+            double randomHeight = (double)this.random.nextInt((int)height * 10) / 10;
+            System.out.println(randomHeight);
+            ParticleUtils.add(world, particle, this.getX(), this.getY() + 0.2D + randomHeight, this.getZ());
+        }
+    }
+
+    @Unique
+    private void spawnSparkles(int shinyLevel){
+        if(shinyLevel > 0){
+            if(this.random.nextInt(20 - shinyLevel) == 0){
+                double x = random.nextFloat() * 2 - 1;
+                double y = random.nextFloat();
+                double z = random.nextFloat() * 2 - 1;
+                ParticleUtils.add(world, VisualityParticles.SPARKLE, this.getX() + x, this.getY() + y + 1, this.getZ() + z);
+            }
         }
     }
 }
