@@ -72,7 +72,6 @@ public abstract class LivingEntityMixin extends Entity {
         else height = height + 0.5F;
         for(int i = 0; i <= count; i++){
             double randomHeight = (double)this.random.nextInt((int)height * 10) / 10;
-            System.out.println(randomHeight);
             ParticleUtils.add(world, particle, this.getX(), this.getY() + 0.2D + randomHeight, this.getZ());
         }
     }
