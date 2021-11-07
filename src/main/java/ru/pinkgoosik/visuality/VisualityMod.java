@@ -1,7 +1,7 @@
 package ru.pinkgoosik.visuality;
 
 import net.fabricmc.api.ClientModInitializer;
-import net.minecraft.util.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ru.pinkgoosik.goosikconfig.api.Config;
@@ -22,7 +22,7 @@ public class VisualityMod implements ClientModInitializer{
 		HitParticleRegistry.reload();
 	}
 
-	public static Identifier newId(String path){
-		return new Identifier(MOD_ID, path);
+	public static ResourceLocation newId(String path){
+		return new ResourceLocation(MOD_ID, path);
 	}
 }

@@ -1,9 +1,9 @@
 package ru.pinkgoosik.visuality.util;
 
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +15,7 @@ public class FunkyUtils {
 
     public static int getShinyArmor(LivingEntity entity){
         int shinyArmor = 0;
-        for(ItemStack stack : entity.getItemsEquipped()){
+        for(ItemStack stack : entity.getArmorSlots()){
             if(FunkyUtils.SHINY_ARMOR.contains(stack.getItem())){
                 shinyArmor++;
             }

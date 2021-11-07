@@ -1,5 +1,5 @@
 plugins {
-	id 'fabric-loom' version '0.9-SNAPSHOT'
+	id 'fabric-loom' version '0.10-SNAPSHOT'
 	id 'maven-publish'
 }
 
@@ -14,11 +14,16 @@ repositories {
 	maven { url "https://maven.gegy.dev" } //databreaker
 	maven { url "https://maven.terraformersmc.com" } //modmenu
 	maven { url "https://jitpack.io" } //cosmetica
+	maven { url "https://maven.parchmentmc.org" }
 }
 
 dependencies {
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
-	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
+//	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
+	mappings loom.layered() {
+		officialMojangMappings()
+		parchment("org.parchmentmc.data:parchment-1.17.1:2021.10.31@zip")
+	}
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 

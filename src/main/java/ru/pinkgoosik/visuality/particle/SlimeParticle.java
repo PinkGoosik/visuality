@@ -1,23 +1,21 @@
 package ru.pinkgoosik.visuality.particle;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.*;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.particle.DefaultParticleType;
+import net.minecraft.core.particles.SimpleParticleType;
 
-public class SlimeParticle extends SpriteBillboardParticle {
+public class SlimeParticle extends TextureSheetParticle {
 
-    private SlimeParticle(ClientWorld world, double x, double y, double z, double color, double size) {
+    private SlimeParticle(ClientLevel world, double x, double y, double z, double color, double size) {
         super(world, x, y, z, 0, 0, 0);
         this.setColor((int)color);
-        this.setColorAlpha(0.8F);
-        this.velocityX *= 0.10000000149011612D;
-        this.velocityY *= 0.10000000149011612D;
-        this.velocityZ *= 0.10000000149011612D;
-        this.gravityStrength = 1.0F;
+        this.setAlpha(0.8F);
+        this.xd *= 0.10000000149011612D;
+        this.yd *= 0.10000000149011612D;
+        this.zd *= 0.10000000149011612D;
+        this.gravity = 1.0F;
         this.scale((float)size + (float)random.nextInt(6) / 10);
-        this.maxAge = 10 + random.nextInt(7);
+        this.lifetime = 10 + random.nextInt(7);
     }
 
     public void setColor(int rgbHex) {
@@ -29,27 +27,26 @@ public class SlimeParticle extends SpriteBillboardParticle {
 
     @Override
     public void tick() {
-        if (this.age > this.maxAge / 2) {
-            this.setColorAlpha(1.0F - ((float)this.age - (float)(this.maxAge / 2)) / (float)this.maxAge);
+        if (this.age > this.lifetime / 2) {
+            this.setAlpha(1.0F - ((float)this.age - (float)(this.lifetime / 2)) / (float)this.lifetime);
         }
         super.tick();
         if(this.onGround){
-            this.gravityStrength = 0F;
-            this.setVelocity(0D, 0D, 0D);
-            this.setPos(prevPosX, prevPosY + 0.1D, prevPosZ);
+            this.gravity = 0F;
+            this.setParticleSpeed(0D, 0D, 0D);
+            this.setPos(xo, yo + 0.1D, zo);
         }
     }
 
     @Override
-    public ParticleTextureSheet getType() {
-        return ParticleTextureSheet.PARTICLE_SHEET_TRANSLUCENT;
+    public ParticleRenderType getRenderType() {
+        return ParticleRenderType.PARTICLE_SHEET_TRANSLUCENT;
     }
 
-    @Environment(EnvType.CLIENT)
-    public record Factory(SpriteProvider spriteProvider) implements ParticleFactory<DefaultParticleType> {
-        public Particle createParticle(DefaultParticleType defaultParticleType, ClientWorld world, double x, double y, double z, double velX, double velY, double velZ) {
+    public record Factory(SpriteSet spriteProvider) implements ParticleProvider<SimpleParticleType> {
+        public Particle createParticle(SimpleParticleType defaultParticleType, ClientLevel world, double x, double y, double z, double velX, double velY, double velZ) {
             SlimeParticle particle = new SlimeParticle(world, x, y, z, velX, velY);
-            particle.setSprite(spriteProvider.getSprite(world.random));
+            particle.setSprite(spriteProvider.get(world.random));
             return particle;
         }
     }
