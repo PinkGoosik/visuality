@@ -1,19 +1,22 @@
 plugins {
-	id 'fabric-loom' version '0.9-SNAPSHOT'
+	id 'fabric-loom' version '0.10-SNAPSHOT'
 	id 'maven-publish'
+	id "com.modrinth.minotaur" version "1.2.1"
+	id 'com.matthewprenger.cursegradle' version '1.4.0'
 }
 
 sourceCompatibility = JavaVersion.VERSION_16
 targetCompatibility = JavaVersion.VERSION_16
 
 archivesBaseName = project.archives_base_name
-version = "mc" + project.minecraft_version + "-" + project.mod_version
+version = project.mod_version + "-fabric"
 group = project.maven_group
 
 repositories {
 	maven { url "https://maven.gegy.dev" } //databreaker
 	maven { url "https://maven.terraformersmc.com" } //modmenu
-	maven { url "https://jitpack.io" } //cosmetica
+	maven { url "https://jitpack.io" } //goosik-config
+	maven { url "https://maven.pinkgoosik.ru" } //cosmetica
 }
 
 dependencies {
@@ -22,8 +25,8 @@ dependencies {
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-	modImplementation "com.github.PinkGoosik:cosmetica:0.2.1"
-	include "com.github.PinkGoosik:cosmetica:0.2.1"
+	modImplementation "ru.pinkgoosik:cosmetica:0.3.1-fabric"
+	include "ru.pinkgoosik:cosmetica:0.3.1-fabric"
 
 	modImplementation "com.github.PinkGoosik:goosik-config:0.1.1"
 	include "com.github.PinkGoosik:goosik-config:0.1.1"
@@ -69,21 +72,54 @@ jar {
 publishing {
 	publications {
 		mavenJava(MavenPublication) {
-			// add all the jars that should be included when publishing to maven
-			artifact(remapJar) {
-				builtBy remapJar
-			}
-			artifact(sourcesJar) {
-				builtBy remapSourcesJar
+			from components.java
+		}
+	}
+	repositories {
+		maven {
+			url "https://maven.pinkgoosik.ru/"
+			credentials {
+				username System.getenv("MAVEN_REPO_USER")
+				password System.getenv("MAVEN_REPO_PASS")
 			}
 		}
 	}
-
-	// See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
-	repositories {
-		// Add repositories to publish to here.
-		// Notice: This block does NOT have the same function as the block in the top level.
-		// The repositories here will be used for publishing your artifact, not for
-		// retrieving dependencies.
-	}
 }
+
+//import com.modrinth.minotaur.TaskModrinthUpload
+//
+//task publishModrinth (type: TaskModrinthUpload){
+//	onlyIf {
+//		System.getenv("MODRINTH")
+//	}
+//	failSilently = true
+//	token = System.getenv("MODRINTH")
+//	projectId = 'rI0hvYcd'
+//	versionName = "[" + project.minecraft_version + "] " + "Visuality" + " " + project.mod_version
+//	versionNumber = project.minecraft_version + "-" + project.mod_version + "-fabric"
+//	versionType = "BETA"
+//	changelog = project.mod_changelog
+//	uploadFile = remapJar
+//	addGameVersion(project.minecraft_version)
+//	addLoader("fabric")
+//}
+
+//curseforge {
+//	apiKey = System.getenv("CURSEFORGE")
+//	project {
+//		id = "521126"
+//		changelog = project.mod_changelog
+//		releaseType =  "beta"
+//		addGameVersion project.minecraft_version
+//		mainArtifact(remapJar) {
+//			displayName = "[" + project.minecraft_version + "] " + "Visuality" + " " + project.mod_version
+//		}
+//	}
+//	options {
+//		forgeGradleIntegration = false
+//	}
+//}
+//
+//afterEvaluate {
+//	tasks.curseforge521126.dependsOn remapJar
+//}
