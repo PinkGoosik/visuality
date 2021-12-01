@@ -29,7 +29,7 @@ public class CirclesOnWaterEvent implements ClientTickEvents.StartWorldTick {
         if(player.isUnderWater() || !Level.OVERWORLD.equals(world.dimension())) return;
         if(!world.isRaining()) return;
         Biome biome = world.getBiome(player.getOnPos());
-        if (!(biome.getPrecipitation().equals(Biome.Precipitation.RAIN)) || !(biome.getTemperature(player.getOnPos()) >= 0.15F)) return;
+        if (!(biome.getPrecipitation().equals(Biome.Precipitation.RAIN)) || !(biome.warmEnoughToRain(player.getOnPos()))) return;
 
         for (int i = 0; i<= random.nextInt(10) + 5; i++){
             int x = random.nextInt(15) - 7;

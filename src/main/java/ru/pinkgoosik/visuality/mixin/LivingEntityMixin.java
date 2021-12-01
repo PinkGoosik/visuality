@@ -52,7 +52,7 @@ public abstract class LivingEntityMixin extends Entity {
 
     @Inject(method = "hurt", at = @At("HEAD"))
     void damage(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir){
-        if(level.isClientSide && source.getEntity() instanceof LivingEntity attacker && ticksDelay == 0 && this.isAlive() && VisualityMod.CONFIG.getBoolean("hit_particles")){
+        if(level.isClientSide && source.getEntity() instanceof LivingEntity attacker && ticksDelay == 0 && this.isAlive() && VisualityMod.CONFIG.getBoolean("enabled", "hit_particles")){
             HitParticleRegistry.ENTRIES.forEach(entry -> {
                 if(this.getType().equals(entry.entity())){
                     ticksDelay = 10;

@@ -17,7 +17,7 @@ public class HitParticleRegistry {
     public static void reload(){
         ENTRIES.clear();
         ArrayList<Entry> entries = new ArrayList<>();
-        VisualityMod.CONFIG.getStringsArray("hit_particles_entries").forEach(entry -> {
+        VisualityMod.CONFIG.getStringsArray("entries", "hit_particles").forEach(entry -> {
             String[] args = entry.split("\\|");
             EntityType<?> entity = getEntityFromString(args[0]);
             ParticleOptions particle = getParticleFromString(args[1]);

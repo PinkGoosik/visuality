@@ -1,68 +1,44 @@
 plugins {
 	id 'fabric-loom' version '0.10-SNAPSHOT'
 	id 'maven-publish'
-	id "com.modrinth.minotaur" version "1.2.1"
-	id 'com.matthewprenger.cursegradle' version '1.4.0'
 }
 
-sourceCompatibility = JavaVersion.VERSION_16
-targetCompatibility = JavaVersion.VERSION_16
+sourceCompatibility = JavaVersion.VERSION_17
+targetCompatibility = JavaVersion.VERSION_17
 
 archivesBaseName = project.archives_base_name
-version = project.mod_version + "-fabric"
+version = project.mod_version + "-" + project.minecraft_version + "-fabric"
 group = project.maven_group
 
 repositories {
-	maven { url "https://maven.gegy.dev" } //databreaker
-	maven { url "https://maven.terraformersmc.com" } //modmenu
-	maven { url "https://jitpack.io" } //goosik-config
-	maven { url "https://maven.parchmentmc.org" }
-	maven { url "https://maven.pinkgoosik.ru" } //cosmetica
+	maven { url "https://maven.pinkgoosik.ru" } //cosmetica, goosik-config
 }
 
 dependencies {
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
-//	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
-	mappings loom.layered() {
-		officialMojangMappings()
-		parchment("org.parchmentmc.data:parchment-1.17.1:2021.10.31@zip")
-	}
+	mappings loom.officialMojangMappings()
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-	modImplementation "ru.pinkgoosik:cosmetica:0.3.0-fabric"
-	include "ru.pinkgoosik:cosmetica:0.3.0-fabric"
+	modImplementation "ru.pinkgoosik:cosmetica:0.3.2-1.17.1-fabric"
+	include "ru.pinkgoosik:cosmetica:0.3.2-1.17.1-fabric"
 
-	modImplementation "com.github.PinkGoosik:goosik-config:0.1.1"
-	include "com.github.PinkGoosik:goosik-config:0.1.1"
-
-	modRuntime "com.terraformersmc:modmenu:2.0.3"
-	modRuntime "supercoder79:databreaker:0.2.7"
+	modImplementation "ru.pinkgoosik:goosik-config:0.2.0-1.17.1-fabric"
+	include "ru.pinkgoosik:goosik-config:0.2.0-1.17.1-fabric"
 }
 
 processResources {
 	inputs.property "version", project.mod_version
-
 	filesMatching("fabric.mod.json") {
 		expand "version": project.mod_version
 	}
 }
 
 tasks.withType(JavaCompile).configureEach {
-	// ensure that the encoding is set to UTF-8, no matter what the system default is
-	// this fixes some edge cases with special characters not displaying correctly
-	// see http://yodaconditions.net/blog/fix-for-java-file-encoding-problems-with-gradle.html
-	// If Javadoc is generated, this must be specified in that task too.
-	it.options.encoding = "UTF-8"
-
-	// Minecraft 1.17 (21w19a) upwards uses Java 16.
-	it.options.release = 16
+	it.options.release = 17
 }
 
 java {
-	// Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task
-	// if it is present.
-	// If you remove this line, sources will not be generated.
 	withSourcesJar()
 }
 
@@ -72,7 +48,6 @@ jar {
 	}
 }
 
-// configure the maven publication
 publishing {
 	publications {
 		mavenJava(MavenPublication) {
@@ -89,41 +64,3 @@ publishing {
 		}
 	}
 }
-
-//import com.modrinth.minotaur.TaskModrinthUpload
-//
-//task publishModrinth (type: TaskModrinthUpload){
-//	onlyIf {
-//		System.getenv("MODRINTH")
-//	}
-//	failSilently = true
-//	token = System.getenv("MODRINTH")
-//	projectId = 'rI0hvYcd'
-//	versionName = "[" + project.minecraft_version + "] " + "Visuality" + " " + project.mod_version
-//	versionNumber = project.minecraft_version + "-" + project.mod_version + "-fabric"
-//	versionType = "BETA"
-//	changelog = project.mod_changelog
-//	uploadFile = remapJar
-//	addGameVersion(project.minecraft_version)
-//	addLoader("fabric")
-//}
-//
-//curseforge {
-//	apiKey = System.getenv("CURSEFORGE")
-//	project {
-//		id = "521126"
-//		changelog = project.mod_changelog
-//		releaseType = "beta"
-//		addGameVersion project.minecraft_version
-//		mainArtifact(remapJar) {
-//			displayName = "[" + project.minecraft_version + "] " + "Visuality" + " " + project.mod_version
-//		}
-//	}
-//	options {
-//		forgeGradleIntegration = false
-//	}
-//}
-//
-//afterEvaluate {
-//	tasks.curseforge521126.dependsOn remapJar
-//}
