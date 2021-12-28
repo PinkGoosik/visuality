@@ -22,8 +22,8 @@ public class VisualityParticles {
     public static void register() {
         ParticleFactoryRegistry registry = ParticleFactoryRegistry.getInstance();
         registry.register(SPARKLE, SparkleParticle.Factory::new);
-        registry.register(BONE, BoneParticle.Factory::new);
-        registry.register(WITHER_BONE, BoneParticle.Factory::new);
+        registry.register(BONE, SolidFallingParticle.Factory::new);
+        registry.register(WITHER_BONE, SolidFallingParticle.Factory::new);
         registry.register(FEATHER, FeatherParticle.Factory::new);
         registry.register(SMALL_SLIME_BLOB, SlimeParticle.Factory::new);
         registry.register(MEDIUM_SLIME_BLOB, SlimeParticle.Factory::new);

@@ -20,7 +20,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import ru.pinkgoosik.visuality.VisualityMod;
 import ru.pinkgoosik.visuality.registry.HitParticleRegistry;
 import ru.pinkgoosik.visuality.registry.VisualityParticles;
-import ru.pinkgoosik.visuality.util.FunkyUtils;
+import ru.pinkgoosik.visuality.util.ShinyArmorUtils;
 import ru.pinkgoosik.visuality.util.ParticleUtils;
 
 @Mixin(LivingEntity.class)
@@ -39,7 +39,7 @@ public abstract class LivingEntityMixin extends Entity {
     private void tick(CallbackInfo ci){
         if(level.isClientSide && ticksDelay != 0) ticksDelay--;
         if(level.isClientSide && this.isAlive() && Minecraft.getInstance().player != null && VisualityMod.CONFIG.getBoolean("sparkle")){
-            int shinyLevel = FunkyUtils.getShinyArmor(self);
+            int shinyLevel = ShinyArmorUtils.getShinyLevel(self);
             if(Minecraft.getInstance().player.getUUID().equals(this.getUUID())){
                 if(!Minecraft.getInstance().options.getCameraType().isFirstPerson()){
                     spawnSparkles(shinyLevel);

@@ -5,9 +5,10 @@
   "compatibilityLevel": "JAVA_16",
   "client": [
     "AmethystClusterBlockMixin",
+    "CreeperEntityMixin",
     "LivingEntityMixin",
     "SlimeEntityMixin",
-    "CreeperEntityMixin"
+    "BlockMixin"
   ],
   "injectors": {
     "defaultRequire": 1

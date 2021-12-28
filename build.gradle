@@ -1,30 +1,36 @@
 plugins {
 	id 'fabric-loom' version '0.10-SNAPSHOT'
 	id 'maven-publish'
+	id 'io.github.juuxel.loom-quiltflower-mini' version '1.2.1'
 }
 
-sourceCompatibility = JavaVersion.VERSION_17
-targetCompatibility = JavaVersion.VERSION_17
+sourceCompatibility = targetCompatibility = JavaVersion.VERSION_17
 
 archivesBaseName = project.archives_base_name
 version = project.mod_version + "-" + project.minecraft_version + "-fabric"
 group = project.maven_group
 
 repositories {
+	maven { url "https://maven.gegy.dev" } //databreaker
 	maven { url "https://maven.pinkgoosik.ru" } //cosmetica, goosik-config
+	maven { url "https://maven.terraformersmc.com" } //modmenu
+	maven { url "https://maven.parchmentmc.org" } //parchment
 }
 
 dependencies {
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
-	mappings loom.officialMojangMappings()
+	mappings loom.layered() {
+		officialMojangMappings()
+		parchment("org.parchmentmc.data:parchment-1.18.1:2021.12.19@zip")
+	}
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-	modImplementation "ru.pinkgoosik:cosmetica:0.3.2-1.17.1-fabric"
-	include "ru.pinkgoosik:cosmetica:0.3.2-1.17.1-fabric"
+	include modImplementation ("ru.pinkgoosik:cosmetica:0.3.2-1.17.1-fabric")
+	include modImplementation ("ru.pinkgoosik:goosik-config:0.2.0-1.17.1-fabric")
 
-	modImplementation "ru.pinkgoosik:goosik-config:0.2.0-1.17.1-fabric"
-	include "ru.pinkgoosik:goosik-config:0.2.0-1.17.1-fabric"
+	modRuntimeOnly "supercoder79:databreaker:0.2.8"
+	modRuntimeOnly "com.terraformersmc:modmenu:3.0.1"
 }
 
 processResources {

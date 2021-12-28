@@ -1,6 +1,5 @@
 package ru.pinkgoosik.visuality.event;
 
-import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.ParticleStatus;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -16,12 +15,11 @@ import ru.pinkgoosik.visuality.util.ParticleUtils;
 
 import java.util.Random;
 
-public class CirclesOnWaterEvent implements ClientTickEvents.StartWorldTick {
+public class CirclesOnWaterEvent {
     static Random random = new Random();
 
-    @Override
-    public void onStartTick(ClientLevel world) {
-        if (!VisualityMod.CONFIG.getBoolean("water_circle")) return;
+    public static void onTick(ClientLevel world) {
+        if (!VisualityMod.CONFIG.getBoolean("enabled", "water_circles")) return;
         if(Minecraft.getInstance().isPaused()) return;
         if (Minecraft.getInstance().options.particles == ParticleStatus.MINIMAL) return;
         AbstractClientPlayer player = Minecraft.getInstance().player;
@@ -39,7 +37,13 @@ public class CirclesOnWaterEvent implements ClientTickEvents.StartWorldTick {
 
             if (world.getBlockState(pos.below()).is(Blocks.WATER) && world.getBlockState(pos).isAir()){
                 if(world.getFluidState(pos.below()).getAmount() == 8){
-                    ParticleUtils.add(world, VisualityParticles.WATER_CIRCLE, pos.getX() + random.nextDouble(), pos.getY() + 0.05D, pos.getZ()  + random.nextDouble(), biome.getWaterColor());
+
+                    int color;
+                    if(VisualityMod.CONFIG.getBoolean("colored", "water_circles")){
+                        color = biome.getWaterColor();
+                    }else color = 0;
+
+                    ParticleUtils.add(world, VisualityParticles.WATER_CIRCLE, pos.getX() + random.nextDouble(), pos.getY() + 0.05D, pos.getZ()  + random.nextDouble(), color);
                 }
             }
         }

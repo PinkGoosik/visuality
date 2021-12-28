@@ -4,9 +4,9 @@ import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.*;
 import net.minecraft.core.particles.SimpleParticleType;
 
-public class BoneParticle extends RisingParticle {
+public class SolidFallingParticle extends RisingParticle {
 
-    public BoneParticle(ClientLevel world, double x, double y, double z, double velX, double velY, double velZ) {
+    public SolidFallingParticle(ClientLevel world, double x, double y, double z, double velX, double velY, double velZ) {
         super(world, x, y, z, velX, velY, velZ);
         this.scale(1.1F + (float)world.random.nextInt(6) / 10);
         this.roll = oRoll = random.nextFloat() * (float)(2 * Math.PI);
@@ -38,10 +38,10 @@ public class BoneParticle extends RisingParticle {
         return ParticleRenderType.PARTICLE_SHEET_TRANSLUCENT;
     }
 
-    public record Factory(SpriteSet spriteProvider) implements ParticleProvider<SimpleParticleType> {
-        public Particle createParticle(SimpleParticleType defaultParticleType, ClientLevel world, double x, double y, double z, double velX, double velY, double velZ) {
-            BoneParticle particle = new BoneParticle(world, x, y, z, velX, velY, velZ);
-            particle.setSpriteFromAge(spriteProvider);
+    public record Factory(SpriteSet spriteSet) implements ParticleProvider<SimpleParticleType> {
+        public Particle createParticle(SimpleParticleType simpleParticleType, ClientLevel world, double x, double y, double z, double velX, double velY, double velZ) {
+            SolidFallingParticle particle = new SolidFallingParticle(world, x, y, z, velX, velY, velZ);
+            particle.setSpriteFromAge(spriteSet);
             return particle;
         }
     }

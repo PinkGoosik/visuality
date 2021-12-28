@@ -43,10 +43,10 @@ public class SlimeParticle extends TextureSheetParticle {
         return ParticleRenderType.PARTICLE_SHEET_TRANSLUCENT;
     }
 
-    public record Factory(SpriteSet spriteProvider) implements ParticleProvider<SimpleParticleType> {
-        public Particle createParticle(SimpleParticleType defaultParticleType, ClientLevel world, double x, double y, double z, double velX, double velY, double velZ) {
+    public record Factory(SpriteSet spriteSet) implements ParticleProvider<SimpleParticleType> {
+        public Particle createParticle(SimpleParticleType simpleParticleType, ClientLevel world, double x, double y, double z, double velX, double velY, double velZ) {
             SlimeParticle particle = new SlimeParticle(world, x, y, z, velX, velY);
-            particle.setSprite(spriteProvider.get(world.random));
+            particle.setSprite(spriteSet.get(world.random));
             return particle;
         }
     }

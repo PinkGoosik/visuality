@@ -38,10 +38,10 @@ public class FeatherParticle extends RisingParticle {
         return ParticleRenderType.PARTICLE_SHEET_TRANSLUCENT;
     }
 
-    public record Factory(SpriteSet spriteProvider) implements ParticleProvider<SimpleParticleType> {
-        public Particle createParticle(SimpleParticleType defaultParticleType, ClientLevel world, double x, double y, double z, double velX, double velY, double velZ) {
+    public record Factory(SpriteSet spriteSet) implements ParticleProvider<SimpleParticleType> {
+        public Particle createParticle(SimpleParticleType simpleParticleType, ClientLevel world, double x, double y, double z, double velX, double velY, double velZ) {
             FeatherParticle particle = new FeatherParticle(world, x, y, z, velX, velY, velZ);
-            particle.setSpriteFromAge(spriteProvider);
+            particle.setSpriteFromAge(spriteSet);
             return particle;
         }
     }
