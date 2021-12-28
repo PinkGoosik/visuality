@@ -18,6 +18,7 @@ public class VisualityParticles {
     public static final SimpleParticleType CHARGE = add("charge");
     public static final SimpleParticleType WATER_CIRCLE = add("water_circle");
     public static final SimpleParticleType EMERALD = add("emerald");
+    public static final SimpleParticleType SOUL = add("soul");
 
     public static void register() {
         ParticleFactoryRegistry registry = ParticleFactoryRegistry.getInstance();
@@ -31,6 +32,7 @@ public class VisualityParticles {
         registry.register(CHARGE, ChargeParticle.Factory::new);
         registry.register(WATER_CIRCLE, WaterCircleParticle.Factory::new);
         registry.register(EMERALD, EmeraldParticle.Factory::new);
+        registry.register(SOUL, SoulParticle.Provider::new);
     }
 
     private static SimpleParticleType add(String name) {

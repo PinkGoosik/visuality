@@ -6,8 +6,8 @@ import net.minecraft.core.particles.SimpleParticleType;
 
 public class SlimeParticle extends TextureSheetParticle {
 
-    private SlimeParticle(ClientLevel world, double x, double y, double z, double color, double size) {
-        super(world, x, y, z, 0, 0, 0);
+    private SlimeParticle(ClientLevel level, double x, double y, double z, double color, double size) {
+        super(level, x, y, z, 0, 0, 0);
         this.setColor((int)color);
         this.setAlpha(0.8F);
         this.xd *= 0.10000000149011612D;
@@ -43,10 +43,10 @@ public class SlimeParticle extends TextureSheetParticle {
         return ParticleRenderType.PARTICLE_SHEET_TRANSLUCENT;
     }
 
-    public record Factory(SpriteSet spriteSet) implements ParticleProvider<SimpleParticleType> {
+    public record Factory(SpriteSet sprites) implements ParticleProvider<SimpleParticleType> {
         public Particle createParticle(SimpleParticleType simpleParticleType, ClientLevel world, double x, double y, double z, double velX, double velY, double velZ) {
             SlimeParticle particle = new SlimeParticle(world, x, y, z, velX, velY);
-            particle.setSprite(spriteSet.get(world.random));
+            particle.setSprite(sprites.get(world.random));
             return particle;
         }
     }

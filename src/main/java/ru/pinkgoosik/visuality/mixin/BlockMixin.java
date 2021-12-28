@@ -1,9 +1,11 @@
 package ru.pinkgoosik.visuality.mixin;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import org.spongepowered.asm.mixin.Mixin;
@@ -22,6 +24,20 @@ public abstract class BlockMixin extends BlockBehaviour implements ItemLike {
 
     public BlockMixin(Properties properties) {
         super(properties);
+    }
+
+    @Inject(method = "fallOn", at = @At("TAIL"))
+    void fallOn(Level level, BlockState state, BlockPos pos, Entity entity, float f, CallbackInfo ci) {
+        if(VisualityMod.CONFIG.getBoolean("soul", "particles")) {
+            if(state.is(Blocks.SOUL_SAND) || state.is(Blocks.SOUL_SOIL)) {
+                for(int i = 0; i <= level.random.nextInt(5) + 1; i++) {
+                    double x = entity.getX();
+                    double y = entity.getY() + 0.1;
+                    double z = entity.getZ();
+                    ParticleUtils.add(level, VisualityParticles.SOUL, x, y, z);
+                }
+            }
+        }
     }
 
     @Inject(method = "animateTick", at = @At("TAIL"))

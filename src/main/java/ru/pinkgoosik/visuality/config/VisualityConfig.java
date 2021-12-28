@@ -13,6 +13,7 @@ public class VisualityConfig extends Config {
         addBoolean("slime", "particles", true);
         addBoolean("charge", "particles", true);
         addBoolean("crystal_sparkle", "particles", true);
+        addBoolean("soul", "particles", true);
 
         addBoolean("enabled", "water_circles", true);
         addBoolean("colored", "water_circles", true);

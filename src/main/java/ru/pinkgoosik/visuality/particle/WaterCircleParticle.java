@@ -11,17 +11,17 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.phys.Vec3;
 
 public class WaterCircleParticle extends TextureSheetParticle {
-    private final SpriteSet spriteSet;
+    private final SpriteSet sprites;
     private static final Quaternion QUATERNION = new Quaternion(0F, -0.7F, 0.7F, 0F);
 
-    private WaterCircleParticle(ClientLevel world, double x, double y, double z, double color, SpriteSet spriteSet) {
-        super(world, x, y, z, 0, 0, 0);
+    private WaterCircleParticle(ClientLevel level, double x, double y, double z, double color, SpriteSet sprites) {
+        super(level, x, y, z, 0, 0, 0);
         this.lifetime = 5 + this.random.nextInt(3);
         this.setParticleSpeed(0D, 0D, 0D);
         if(color != 0) this.setColor((int)color);
         this.scale(2F + (float)this.random.nextInt(11) / 10);
-        this.spriteSet = spriteSet;
-        this.setSpriteFromAge(spriteSet);
+        this.sprites = sprites;
+        this.setSpriteFromAge(sprites);
     }
 
     public void setColor(int rgbHex) {
@@ -39,7 +39,7 @@ public class WaterCircleParticle extends TextureSheetParticle {
         if (this.age++ >= this.lifetime) {
             this.remove();
         }else {
-            this.setSpriteFromAge(spriteSet);
+            this.setSpriteFromAge(sprites);
         }
     }
 
@@ -75,9 +75,9 @@ public class WaterCircleParticle extends TextureSheetParticle {
         return ParticleRenderType.PARTICLE_SHEET_TRANSLUCENT;
     }
 
-    public record Factory(SpriteSet spriteSet) implements ParticleProvider<SimpleParticleType> {
+    public record Factory(SpriteSet sprites) implements ParticleProvider<SimpleParticleType> {
         public Particle createParticle(SimpleParticleType simpleParticleType, ClientLevel world, double x, double y, double z, double velX, double velY, double velZ) {
-            return new WaterCircleParticle(world, x, y, z, velX, spriteSet);
+            return new WaterCircleParticle(world, x, y, z, velX, sprites);
         }
     }
 }

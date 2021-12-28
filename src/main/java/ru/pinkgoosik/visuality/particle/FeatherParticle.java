@@ -6,9 +6,9 @@ import net.minecraft.core.particles.SimpleParticleType;
 
 public class FeatherParticle extends RisingParticle {
 
-    private FeatherParticle(ClientLevel world, double x, double y, double z, double velX, double velY, double velZ) {
-        super(world, x, y, z, velX, velY, velZ);
-        this.scale(0.7F + (float)world.random.nextInt(6) / 10);
+    private FeatherParticle(ClientLevel level, double x, double y, double z, double velX, double velY, double velZ) {
+        super(level, x, y, z, velX, velY, velZ);
+        this.scale(0.7F + (float)level.random.nextInt(6) / 10);
         this.roll = oRoll = random.nextFloat() * (float)(2 * Math.PI);
         this.yd = -0.25D;
         this.lifetime = (int)(8.0D / (Math.random() * 0.8D + 0.2D)) + 12;
@@ -38,10 +38,10 @@ public class FeatherParticle extends RisingParticle {
         return ParticleRenderType.PARTICLE_SHEET_TRANSLUCENT;
     }
 
-    public record Factory(SpriteSet spriteSet) implements ParticleProvider<SimpleParticleType> {
+    public record Factory(SpriteSet sprites) implements ParticleProvider<SimpleParticleType> {
         public Particle createParticle(SimpleParticleType simpleParticleType, ClientLevel world, double x, double y, double z, double velX, double velY, double velZ) {
             FeatherParticle particle = new FeatherParticle(world, x, y, z, velX, velY, velZ);
-            particle.setSpriteFromAge(spriteSet);
+            particle.setSpriteFromAge(sprites);
             return particle;
         }
     }

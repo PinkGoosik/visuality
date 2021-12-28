@@ -8,14 +8,14 @@ import net.minecraft.core.particles.SimpleParticleType;
 
 public class EmeraldParticle extends SolidFallingParticle {
 
-    public EmeraldParticle(ClientLevel world, double x, double y, double z, double velX, double velY, double velZ) {
-        super(world, x, y, z, velX, velY, velZ);
+    public EmeraldParticle(ClientLevel level, double x, double y, double z, double velX, double velY, double velZ) {
+        super(level, x, y, z, velX, velY, velZ);
     }
 
-    public record Factory(SpriteSet spriteProvider) implements ParticleProvider<SimpleParticleType> {
+    public record Factory(SpriteSet sprites) implements ParticleProvider<SimpleParticleType> {
         public Particle createParticle(SimpleParticleType simpleParticleType, ClientLevel world, double x, double y, double z, double velX, double velY, double velZ) {
             EmeraldParticle particle = new EmeraldParticle(world, x, y, z, velX, velY, velZ);
-            particle.setSpriteFromAge(spriteProvider);
+            particle.setSpriteFromAge(sprites);
             return particle;
         }
     }
