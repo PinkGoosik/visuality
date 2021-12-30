@@ -31,7 +31,7 @@ public class VisualityParticles {
         registry.register(BIG_SLIME_BLOB, SlimeParticle.Factory::new);
         registry.register(CHARGE, ChargeParticle.Factory::new);
         registry.register(WATER_CIRCLE, WaterCircleParticle.Factory::new);
-        registry.register(EMERALD, EmeraldParticle.Factory::new);
+        registry.register(EMERALD, SolidFallingParticle.Factory::new);
         registry.register(SOUL, SoulParticle.Provider::new);
     }
 

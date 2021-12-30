@@ -1,11 +1,11 @@
 package ru.pinkgoosik.visuality.mixin;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import org.spongepowered.asm.mixin.Mixin;
@@ -29,7 +29,7 @@ public abstract class BlockMixin extends BlockBehaviour implements ItemLike {
     @Inject(method = "fallOn", at = @At("TAIL"))
     void fallOn(Level level, BlockState state, BlockPos pos, Entity entity, float f, CallbackInfo ci) {
         if(VisualityMod.CONFIG.getBoolean("soul", "particles")) {
-            if(state.is(Blocks.SOUL_SAND) || state.is(Blocks.SOUL_SOIL)) {
+            if(state.is(BlockTags.WITHER_SUMMON_BASE_BLOCKS)) {
                 for(int i = 0; i <= level.random.nextInt(5) + 1; i++) {
                     double x = entity.getX();
                     double y = entity.getY() + 0.1;
@@ -42,13 +42,25 @@ public abstract class BlockMixin extends BlockBehaviour implements ItemLike {
 
     @Inject(method = "animateTick", at = @At("TAIL"))
     void animateTick(BlockState state, Level level, BlockPos pos, Random random, CallbackInfo ci) {
+        if(VisualityMod.CONFIG.getBoolean("soul", "particles")) {
+            if(state.is(BlockTags.WITHER_SUMMON_BASE_BLOCKS)) {
+                if(level.getBlockState(pos.above()).isAir()) {
+                    if(random.nextFloat() > 0.995F) {
+                        double x = pos.getX() + random.nextDouble();
+                        double y = pos.getY() + 1.1D;
+                        double z = pos.getZ() + random.nextDouble();
+                        ParticleUtils.add(level, VisualityParticles.SOUL, x, y, z);
+                    }
+                }
+            }
+        }
         if (VisualityMod.CONFIG.getBoolean("enabled", "shiny_blocks")) {
             if(ShinyBlockRegistry.ENTRIES.contains(this) && visuality$isAirAttached(level, pos)) {
                 if (random.nextFloat() > 0.4) {
-                    double x = random.nextFloat() * 2 - 0.5;
-                    double y = random.nextFloat() + 0.5;
-                    double z = random.nextFloat() * 2 - 0.5;
-                    ParticleUtils.add(level, VisualityParticles.SPARKLE, pos.getX() + x, pos.getY() + y, pos.getZ() + z);
+                    double x = pos.getX() + random.nextFloat() * 2 - 0.5;
+                    double y = pos.getY() + random.nextFloat() + 0.5;
+                    double z = pos.getZ() + random.nextFloat() * 2 - 0.5;
+                    ParticleUtils.add(level, VisualityParticles.SPARKLE, x, y, z);
                 }
             }
         }
