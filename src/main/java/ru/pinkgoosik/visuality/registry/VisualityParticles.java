@@ -36,6 +36,6 @@ public class VisualityParticles {
     }
 
     private static SimpleParticleType add(String name) {
-        return Registry.register(Registry.PARTICLE_TYPE, VisualityMod.newId(name), FabricParticleTypes.simple());
+        return Registry.register(Registry.PARTICLE_TYPE, VisualityMod.locate(name), FabricParticleTypes.simple());
     }
 }

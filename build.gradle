@@ -1,17 +1,17 @@
 plugins {
-	id 'fabric-loom' version '0.10-SNAPSHOT'
+	id 'fabric-loom' version '0.11-SNAPSHOT'
 	id 'maven-publish'
-	id 'io.github.juuxel.loom-quiltflower-mini' version '1.2.1'
+	id 'io.github.juuxel.loom-quiltflower' version '1.6.0'
 }
 
 sourceCompatibility = targetCompatibility = JavaVersion.VERSION_17
 
 archivesBaseName = project.archives_base_name
-version = project.mod_version + "-" + project.minecraft_version + "-fabric"
+version = project.mod_version
 group = project.maven_group
 
 repositories {
-	maven { url "https://maven.gegy.dev" } //databreaker
+	maven { url "https://cursemaven.com" }
 	maven { url "https://maven.pinkgoosik.ru" } //cosmetica, goosik-config
 	maven { url "https://maven.terraformersmc.com" } //modmenu
 	maven { url "https://maven.parchmentmc.org" } //parchment
@@ -26,11 +26,11 @@ dependencies {
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-	include modImplementation ("ru.pinkgoosik:cosmetica:0.3.2-1.17.1-fabric")
 	include modImplementation ("ru.pinkgoosik:goosik-config:0.2.0-1.17.1-fabric")
 
-	modRuntimeOnly "supercoder79:databreaker:0.2.8"
 	modRuntimeOnly "com.terraformersmc:modmenu:3.0.1"
+	modRuntimeOnly "curse.maven:lazydfu-433518:3209972"
+	modRuntimeOnly "curse.maven:ferritecore-fabric-459857:3550048"
 }
 
 processResources {
@@ -64,8 +64,8 @@ publishing {
 		maven {
 			url "https://maven.pinkgoosik.ru/"
 			credentials {
-				username System.getenv("MAVEN_REPO_USER")
-				password System.getenv("MAVEN_REPO_PASS")
+				username System.getenv("MAVEN_USER")
+				password System.getenv("MAVEN_PASS")
 			}
 		}
 	}

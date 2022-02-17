@@ -1,6 +1,7 @@
 package ru.pinkgoosik.visuality.mixin;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.ItemLike;
@@ -55,25 +56,20 @@ public abstract class BlockMixin extends BlockBehaviour implements ItemLike {
             }
         }
         if (VisualityMod.CONFIG.getBoolean("enabled", "shiny_blocks")) {
-            if(ShinyBlockRegistry.ENTRIES.contains(this) && visuality$isAirAttached(level, pos)) {
-                if (random.nextFloat() > 0.4) {
-                    double x = pos.getX() + random.nextFloat() * 2 - 0.5;
-                    double y = pos.getY() + random.nextFloat() + 0.5;
-                    double z = pos.getZ() + random.nextFloat() * 2 - 0.5;
-                    ParticleUtils.add(level, VisualityParticles.SPARKLE, x, y, z);
+            if(ShinyBlockRegistry.ENTRIES.contains(this)) {
+                for(Direction direction : Direction.values()) {
+                    BlockPos blockPos = pos.relative(direction);
+                    if (!level.getBlockState(blockPos).isSolidRender(level, blockPos)) {
+                        if (random.nextFloat() > 0.8) {
+                            Direction.Axis axis = direction.getAxis();
+                            double x = axis == Direction.Axis.X ? 0.5 + 0.5625 * (double)direction.getStepX() : (double)random.nextFloat();
+                            double y = axis == Direction.Axis.Y ? 0.5 + 0.5625 * (double)direction.getStepY() : (double)random.nextFloat();
+                            double z = axis == Direction.Axis.Z ? 0.5 + 0.5625 * (double)direction.getStepZ() : (double)random.nextFloat();
+                            ParticleUtils.add(level, VisualityParticles.SPARKLE, (double)pos.getX() + x, (double)pos.getY() + y, (double)pos.getZ() + z);
+                        }
+                    }
                 }
             }
         }
-    }
-
-    private boolean visuality$isAirAttached(Level level, BlockPos pos) {
-        boolean bl;
-        if(level.getBlockState(pos.above()).isAir()) bl = true;
-        else if(level.getBlockState(pos.below()).isAir()) bl = true;
-        else if(level.getBlockState(pos.north()).isAir()) bl = true;
-        else if(level.getBlockState(pos.south()).isAir()) bl = true;
-        else if(level.getBlockState(pos.west()).isAir()) bl = true;
-        else bl = level.getBlockState(pos.east()).isAir();
-        return bl;
     }
 }

@@ -19,7 +19,7 @@ import java.util.Random;
 
 @Mixin(AmethystClusterBlock.class)
 public abstract class AmethystClusterBlockMixin extends AmethystBlock implements SimpleWaterloggedBlock {
-    private int hgHeight;
+    private int visuality$height;
 
     protected AmethystClusterBlockMixin(BlockBehaviour.Properties props) {
         super(props);
@@ -27,14 +27,14 @@ public abstract class AmethystClusterBlockMixin extends AmethystBlock implements
 
     @Inject(method = "<init>", at=@At("RETURN"))
     public void onInit(int i, int j, Properties props, CallbackInfo ci) {
-        this.hgHeight = i;
+        this.visuality$height = i;
     }
 
     @Override
     public void animateTick(BlockState state, Level level, BlockPos pos, Random random) {
         super.animateTick(state, level, pos, random);
-        if(VisualityMod.CONFIG.getBoolean("crystal_sparkle")){
-            if(state.getBlock() instanceof AmethystClusterBlock && hgHeight > 5 && random.nextFloat() > 0.5) {
+        if(VisualityMod.CONFIG.getBoolean("crystal_sparkle")) {
+            if(state.getBlock() instanceof AmethystClusterBlock && visuality$height > 5 && random.nextFloat() > 0.5) {
                 double x = pos.getX() + random.nextDouble();
                 double y = pos.getY() + random.nextDouble();
                 double z = pos.getZ() + random.nextDouble();
