@@ -11,7 +11,7 @@ version = project.mod_version
 group = project.maven_group
 
 repositories {
-	maven { url "https://cursemaven.com" }
+	maven { url "https://api.modrinth.com/maven" }
 	maven { url "https://maven.pinkgoosik.ru" } //cosmetica, goosik-config
 	maven { url "https://maven.terraformersmc.com" } //modmenu
 	maven { url "https://maven.parchmentmc.org" } //parchment
@@ -21,16 +21,16 @@ dependencies {
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
 	mappings loom.layered() {
 		officialMojangMappings()
-		parchment("org.parchmentmc.data:parchment-1.18.1:2021.12.19@zip")
+		parchment("org.parchmentmc.data:parchment-1.18.1:2022.02.13@zip")
 	}
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-	include modImplementation ("ru.pinkgoosik:goosik-config:0.2.0-1.17.1-fabric")
-
-	modRuntimeOnly "com.terraformersmc:modmenu:3.0.1"
-	modRuntimeOnly "curse.maven:lazydfu-433518:3209972"
-	modRuntimeOnly "curse.maven:ferritecore-fabric-459857:3550048"
+	include modImplementation("ru.pinkgoosik:goosik-config:0.2.0-1.17.1-fabric")
+	include modImplementation("ru.pinkgoosik:cosmetica:0.4.0")
+	
+	modLocalRuntime "com.terraformersmc:modmenu:3.0.1"
+	modLocalRuntime "maven.modrinth:lazydfu:0.1.2"
 }
 
 processResources {

@@ -33,6 +33,6 @@
     "fabricloader": "*",
     "fabric": "*",
     "minecraft": ">=1.18",
-    "java": ">=16"
+    "java": ">=17"
   }
 }

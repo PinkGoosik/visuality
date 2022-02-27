@@ -31,8 +31,7 @@ jobs:
           loaders: |
             fabric
           game-versions: |
-            1.18.1
-            1.18
+            1.18.2
           dependencies: |
             fabric-api | depends | *
 
