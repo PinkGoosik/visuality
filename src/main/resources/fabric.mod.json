@@ -7,7 +7,7 @@
   "description": "Visual improvements by adding a bunch of new particles.",
   "authors": ["PinkGoosik"],
   "contact": {
-    "homepage": "https://curseforge.com/minecraft/mc-mods/visuality",
+    "homepage": "https://modrinth.com/mod/visuality",
     "sources": "https://github.com/PinkGoosik/visuality",
     "issues": "https://github.com/PinkGoosik/visuality/issues"
   },
@@ -32,7 +32,7 @@
   "depends": {
     "fabricloader": "*",
     "fabric": "*",
-    "minecraft": ">=1.18",
+    "minecraft": ">=1.18.2",
     "java": ">=17"
   }
 }
