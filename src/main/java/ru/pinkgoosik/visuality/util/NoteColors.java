@@ -44,6 +44,16 @@ public enum NoteColors {
         this.color = color;
     }
 
+    public static NoteColors getByIndex(int index) {
+        for (NoteColors noteColor : NoteColors.values()) {
+            if(noteColor.getIndex() == index) {
+                return noteColor;
+            }
+        }
+
+        return NoteColors.Fb1;
+    }
+
     public static int getRandomColor() {
         Random random = new Random();
         int size = NoteColors.values().length;
@@ -51,5 +61,6 @@ public enum NoteColors {
         return NoteColors.values()[random.nextInt(size)].getColor();
     }
 
+    public int getIndex() { return this.index; }
     public int getColor() { return this.color; }
 }
