@@ -62,5 +62,6 @@ public enum NoteColors {
     }
 
     public int getIndex() { return this.index; }
+    public String getNote() { return this.note; }
     public int getColor() { return this.color; }
 }

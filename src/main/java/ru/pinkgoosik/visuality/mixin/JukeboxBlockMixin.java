@@ -12,7 +12,6 @@ import ru.pinkgoosik.visuality.VisualityMod;
 import ru.pinkgoosik.visuality.registry.VisualityParticles;
 import ru.pinkgoosik.visuality.util.NoteColors;
 import ru.pinkgoosik.visuality.util.ParticleUtils;
-import ru.pinkgoosik.visuality.util.SlimeColors;
 
 import java.util.Random;
 
