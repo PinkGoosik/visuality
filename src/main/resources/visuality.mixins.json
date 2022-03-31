@@ -9,6 +9,7 @@
     "LivingEntityMixin",
     "SlimeEntityMixin",
     "BlockMixin",
+    "JukeboxBlockEntityMixin",
     "JukeboxBlockMixin"
   ],
   "injectors": {

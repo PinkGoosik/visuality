@@ -20,6 +20,7 @@ public class VisualityParticles {
     public static final SimpleParticleType EMERALD = add("emerald");
     public static final SimpleParticleType SOUL = add("soul");
     public static final SimpleParticleType NOTE = add("note");
+    public static final SimpleParticleType BROKEN_NOTE = add("broken_note");
 
     public static void register() {
         ParticleFactoryRegistry registry = ParticleFactoryRegistry.getInstance();
@@ -35,6 +36,7 @@ public class VisualityParticles {
         registry.register(EMERALD, SolidFallingParticle.Factory::new);
         registry.register(SOUL, SoulParticle.Provider::new);
         registry.register(NOTE, JukeboxNoteParticle.Factory::new);
+        registry.register(BROKEN_NOTE, JukeboxNoteParticle.Factory::new);
     }
 
     private static SimpleParticleType add(String name) {
