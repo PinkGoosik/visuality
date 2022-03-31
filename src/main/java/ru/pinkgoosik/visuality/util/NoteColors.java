@@ -51,7 +51,7 @@ public enum NoteColors {
             }
         }
 
-        return NoteColors.Fb1;
+        return NoteColors.Fb;
     }
 
     public static int getRandomColor() {

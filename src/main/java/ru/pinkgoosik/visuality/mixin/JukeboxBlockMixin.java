@@ -1,9 +1,8 @@
 package ru.pinkgoosik.visuality.mixin;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.SimpleParticleType;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.JukeboxBlockEntity;
@@ -22,6 +21,7 @@ import java.util.Random;
 @Mixin(JukeboxBlock.class)
 public abstract class JukeboxBlockMixin extends BaseEntityBlock {
     @Shadow @Final public static BooleanProperty HAS_RECORD;
+    private static final int BROKEN_NOTE_COLOR = 5329233;
 
     protected JukeboxBlockMixin(Properties props) {
         super(props);
@@ -32,7 +32,7 @@ public abstract class JukeboxBlockMixin extends BaseEntityBlock {
         super.animateTick(state, level, pos, random);
         if(state.getValue(HAS_RECORD)) {
             JukeboxBlockEntity blockEntity = (JukeboxBlockEntity) level.getBlockEntity(pos);
-            String discId = blockEntity.getRecord().getDescriptionId();
+            ItemStack recordItem = blockEntity.getRecord();
 
             if(VisualityMod.CONFIG.getBoolean("note")) {
                 if(state.getBlock() instanceof JukeboxBlock && random.nextFloat() > 0.5F) {
@@ -40,8 +40,8 @@ public abstract class JukeboxBlockMixin extends BaseEntityBlock {
                     double y = pos.getY() + 1.1D;
                     double z = pos.getZ()  + random.nextDouble();
 
-                    if(discId.equals("item.minecraft.music_disc_11")) {
-                        ParticleUtils.add(level, VisualityParticles.BROKEN_NOTE, x, y, z, 2500134);
+                    if(recordItem.getItem().equals(Items.MUSIC_DISC_11)) {
+                        ParticleUtils.add(level, VisualityParticles.BROKEN_NOTE, x, y, z, BROKEN_NOTE_COLOR);
                         return;
                     }
 
