@@ -19,15 +19,16 @@ public class CirclesOnWaterEvent {
     static final Random random = new Random();
 
     public static void onTick(ClientLevel world) {
+        var GetInstance = Minecraft.getInstance();
         if (!VisualityMod.CONFIG.getBoolean("enabled", "water_circles")) return;
         if(Minecraft.getInstance().isPaused()) return;
-        if (Minecraft.getInstance().options.particles == ParticleStatus.MINIMAL) return;
-        AbstractClientPlayer player = Minecraft.getInstance().player;
+        if (GetInstance.options.particles == ParticleStatus.MINIMAL) return;
+        AbstractClientPlayer player = GetInstance.player;
         if(player == null) return;
         if(player.isUnderWater() || !Level.OVERWORLD.equals(world.dimension())) return;
         if(!world.isRaining()) return;
-        Biome biome = world.getBiome(player.getOnPos()).value();
-        if (!(biome.getPrecipitation().equals(Biome.Precipitation.RAIN)) || !(biome.warmEnoughToRain(player.getOnPos()))) return;
+        Biome biome = world.getBiome(player.getOnPos());
+        if (!(biome.getPrecipitation().equals(Biome.Precipitation.RAIN)) || (biome.isColdEnoughToSnow(player.getOnPos()))) return;
 
         for (int i = 0; i<= random.nextInt(10) + 5; i++) {
             int x = random.nextInt(15) - 7;

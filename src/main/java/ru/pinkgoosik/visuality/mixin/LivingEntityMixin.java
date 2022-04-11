@@ -37,11 +37,12 @@ public abstract class LivingEntityMixin extends Entity {
 
     @Inject(method = "tick", at = @At("TAIL"))
     private void tick(CallbackInfo ci) {
+        var GetInstance = Minecraft.getInstance();
         if(level.isClientSide && ticksDelay != 0) ticksDelay--;
         if(level.isClientSide && this.isAlive() && Minecraft.getInstance().player != null && VisualityMod.CONFIG.getBoolean("enabled", "shiny_armor")) {
             int shinyLevel = ShinyArmorUtils.getShinyLevel(self);
-            if(Minecraft.getInstance().player.getUUID().equals(this.getUUID())) {
-                if(!Minecraft.getInstance().options.getCameraType().isFirstPerson()) {
+            if(GetInstance.player.getUUID().equals(this.getUUID())) {
+                if(!GetInstance.options.getCameraType().isFirstPerson()) {
                     spawnSparkles(shinyLevel);
                 }
             }else {
