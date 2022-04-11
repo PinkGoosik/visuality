@@ -7,6 +7,7 @@ plugins {
 sourceCompatibility = targetCompatibility = JavaVersion.VERSION_16
 
 archivesBaseName = project.archives_base_name
+
 version = project.mod_version
 group = project.maven_group
 
@@ -73,3 +74,41 @@ publishing {
 		}
 	}
 }
+
+//import com.modrinth.minotaur.TaskModrinthUpload
+//
+//task publishModrinth (type: TaskModrinthUpload){
+//	onlyIf {
+//		System.getenv("MODRINTH")
+//	}
+//	failSilently = true
+//	token = System.getenv("MODRINTH")
+//	projectId = 'rI0hvYcd'
+//	versionName = "[" + project.minecraft_version + "] " + "Visuality" + " " + project.mod_version
+//	versionNumber = project.minecraft_version + "-" + project.mod_version + "-fabric"
+//	versionType = "BETA"
+//	changelog = project.mod_changelog
+//	uploadFile = remapJar
+//	addGameVersion(project.minecraft_version)
+//	addLoader("fabric")
+//}
+
+//curseforge {
+//	apiKey = System.getenv("CURSEFORGE")
+//	project {
+//		id = "521126"
+//		changelog = project.mod_changelog
+//		releaseType =  "beta"
+//		addGameVersion project.minecraft_version
+//		mainArtifact(remapJar) {
+//			displayName = "[" + project.minecraft_version + "] " + "Visuality" + " " + project.mod_version
+//		}
+//	}
+//	options {
+//		forgeGradleIntegration = false
+//	}
+//}
+//
+//afterEvaluate {
+//	tasks.curseforge521126.dependsOn remapJar
+//}
