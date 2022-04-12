@@ -4,25 +4,14 @@ import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.*;
 import net.minecraft.core.particles.SimpleParticleType;
 
-public class SlimeParticle extends TextureSheetParticle {
+public class SolidFallingParticle extends RisingParticle {
 
-    private SlimeParticle(ClientLevel level, double x, double y, double z, double color, double size) {
-        super(level, x, y, z, 0, 0, 0);
-        this.setColor((int)color);
-        this.setAlpha(0.8F);
-        this.xd *= 0.10000000149011612D;
-        this.yd *= 0.10000000149011612D;
-        this.zd *= 0.10000000149011612D;
-        this.gravity = 1.0F;
-        this.scale((float)size + (float)random.nextInt(6) / 10);
-        this.lifetime = 10 + random.nextInt(7);
-    }
-
-    public void setColor(int rgbHex) {
-        float red = (float)((rgbHex & 16711680) >> 16) / 255.0F;
-        float green = (float)((rgbHex & '\uff00') >> 8) / 255.0F;
-        float blue = (float)((rgbHex & 255)) / 255.0F;
-        this.setColor(red, green, blue);
+    public SolidFallingParticle(ClientLevel level, double x, double y, double z, double velX, double velY, double velZ) {
+        super(level, x, y, z, velX, velY, velZ);
+        this.scale(1.1F + (float)level.random.nextInt(6) / 10);
+        this.roll = oRoll = random.nextFloat() * (float)(2 * Math.PI);
+        this.yd = -0.25D;
+        this.lifetime = (int)(8.0D / (Math.random() * 0.8D + 0.2D)) + 12;
     }
 
     @Override
@@ -31,8 +20,14 @@ public class SlimeParticle extends TextureSheetParticle {
             this.setAlpha(1.0F - ((float)this.age - (float)(this.lifetime / 2)) / (float)this.lifetime);
         }
         super.tick();
+        if(age == 1){
+            this.xd = xd + (Math.random() * 2.0D - 1.0D) * 0.2D;
+            this.yd = 0.3D + (double)random.nextInt(11) / 100;
+            this.zd = zd + (Math.random() * 2.0D - 1.0D) * 0.2D;
+        }else if(age <= 10){
+            this.yd = yd - (0.05D + (double)age / 200);
+        }
         if(this.onGround){
-            this.gravity = 0F;
             this.setParticleSpeed(0D, 0D, 0D);
             this.setPos(xo, yo + 0.1D, zo);
         }
@@ -45,8 +40,8 @@ public class SlimeParticle extends TextureSheetParticle {
 
     public record Factory(SpriteSet sprites) implements ParticleProvider<SimpleParticleType> {
         public Particle createParticle(SimpleParticleType simpleParticleType, ClientLevel world, double x, double y, double z, double velX, double velY, double velZ) {
-            SlimeParticle particle = new SlimeParticle(world, x, y, z, velX, velY);
-            particle.setSprite(sprites.get(world.random));
+            SolidFallingParticle particle = new SolidFallingParticle(world, x, y, z, velX, velY, velZ);
+            particle.setSpriteFromAge(sprites);
             return particle;
         }
     }

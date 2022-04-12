@@ -1,0 +1,42 @@
+name: publish-modrinth
+
+on:
+  release:
+    types:
+      - published
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v2
+      - name: Set up JDK 16
+        uses: actions/setup-java@v1
+        with:
+          java-version: 16
+      - name: Change wrapper permissions
+        run: chmod +x ./gradlew
+      - name: Build artifacts
+        run: ./gradlew build
+      - name: publish artifacts
+        uses: Kir-Antipov/mc-publish@v2.1
+        with:
+          modrinth-id: rI0hvYcd
+          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+
+          files-primary: build/libs/!(*-@(dev|sources)).jar
+
+          version-type: beta
+          loaders: |
+            fabric
+          game-versions: |
+            1.17.1
+          dependencies: |
+            fabric-api | depends | *
+
+          java: |
+            16
+
+          retry-attempts: 2
+          retry-delay: 10000

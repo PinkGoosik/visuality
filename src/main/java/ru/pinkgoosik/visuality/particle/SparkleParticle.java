@@ -1,46 +1,43 @@
 package ru.pinkgoosik.visuality.particle;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.*;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.particle.DefaultParticleType;
+import net.minecraft.core.particles.SimpleParticleType;
 
-public class SparkleParticle extends SpriteBillboardParticle {
-    private final SpriteProvider spriteProvider;
+public class SparkleParticle extends TextureSheetParticle {
+    private final SpriteSet sprites;
 
-    private SparkleParticle(ClientWorld world, double x, double y, double z, SpriteProvider spriteProvider) {
-        super(world, x, y, z, 0, 0, 0);
-        this.maxAge = 5 + this.random.nextInt(4);
-        this.setVelocity(0D, 0D, 0D);
+    private SparkleParticle(ClientLevel level, double x, double y, double z, SpriteSet sprites) {
+        super(level, x, y, z, 0, 0, 0);
+        this.lifetime = 5 + this.random.nextInt(4);
+        this.setParticleSpeed(0D, 0D, 0D);
         this.scale(1.1F);
-        this.spriteProvider = spriteProvider;
-        this.setSpriteForAge(spriteProvider);
+        this.sprites = sprites;
+        this.setSpriteFromAge(sprites);
     }
 
     @Override
     public void tick() {
-        if (this.age++ >= this.maxAge) {
-            this.markDead();
+        if (this.age++ >= this.lifetime) {
+            this.remove();
         }else {
-            this.setSpriteForAge(spriteProvider);
+            this.setSpriteFromAge(sprites);
         }
     }
 
     @Override
-    public ParticleTextureSheet getType() {
-        return ParticleTextureSheet.PARTICLE_SHEET_LIT;
+    public ParticleRenderType getRenderType() {
+        return ParticleRenderType.PARTICLE_SHEET_LIT;
     }
 
     @Override
-    public int getBrightness(float tint) {
+    public int getLightColor(float tint) {
         return 15728880;
     }
 
-    @Environment(EnvType.CLIENT)
-    public record Factory(SpriteProvider spriteProvider) implements ParticleFactory<DefaultParticleType> {
-        public Particle createParticle(DefaultParticleType defaultParticleType, ClientWorld world, double x, double y, double z, double velX, double velY, double velZ) {
-            return new SparkleParticle(world, x, y, z, spriteProvider);
+    public record Factory(SpriteSet sprites) implements ParticleProvider<SimpleParticleType> {
+        public Particle createParticle(SimpleParticleType simpleParticleType, ClientLevel world, double x, double y, double z, double velX, double velY, double velZ) {
+            return new SparkleParticle(world, x, y, z, sprites);
         }
     }
 }

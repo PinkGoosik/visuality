@@ -3,13 +3,12 @@
   "minVersion": "0.8",
   "package": "ru.pinkgoosik.visuality.mixin",
   "compatibilityLevel": "JAVA_16",
-  "mixins": [
-  ],
   "client": [
     "AmethystClusterBlockMixin",
+    "CreeperEntityMixin",
     "LivingEntityMixin",
     "SlimeEntityMixin",
-    "CreeperEntityMixin"
+    "BlockMixin"
   ],
   "injectors": {
     "defaultRequire": 1

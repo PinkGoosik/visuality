@@ -1,50 +1,47 @@
 package ru.pinkgoosik.visuality.particle;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.*;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.particle.DefaultParticleType;
+import net.minecraft.core.particles.SimpleParticleType;
 
-public class FeatherParticle extends AbstractSlowingParticle {
+public class FeatherParticle extends RisingParticle {
 
-    private FeatherParticle(ClientWorld world, double x, double y, double z, double velX, double velY, double velZ) {
-        super(world, x, y, z, velX, velY, velZ);
-        this.scale(0.7F + (float)world.random.nextInt(6) / 10);
-        this.angle = prevAngle = random.nextFloat() * (float)(2 * Math.PI);
-        this.velocityY = -0.25D;
-        this.maxAge = (int)(8.0D / (Math.random() * 0.8D + 0.2D)) + 12;
+    private FeatherParticle(ClientLevel level, double x, double y, double z, double velX, double velY, double velZ) {
+        super(level, x, y, z, velX, velY, velZ);
+        this.scale(0.7F + (float)level.random.nextInt(6) / 10);
+        this.roll = oRoll = random.nextFloat() * (float)(2 * Math.PI);
+        this.yd = -0.25D;
+        this.lifetime = (int)(8.0D / (Math.random() * 0.8D + 0.2D)) + 12;
     }
 
     @Override
     public void tick() {
-        if (this.age > this.maxAge / 2) {
-            this.setColorAlpha(1.0F - ((float)this.age - (float)(this.maxAge / 2)) / (float)this.maxAge);
+        if (this.age > this.lifetime / 2) {
+            this.setAlpha(1.0F - ((float)this.age - (float)(this.lifetime / 2)) / (float)this.lifetime);
         }
         super.tick();
         if(age == 1){
-            this.velocityX = velocityX + (Math.random() * 2.0D - 1.0D) * 0.2D;
-            this.velocityY = 0.3D + (double)random.nextInt(11) / 100;
-            this.velocityZ = velocityZ + (Math.random() * 2.0D - 1.0D) * 0.2D;
+            this.xd = xd + (Math.random() * 2.0D - 1.0D) * 0.2D;
+            this.yd = 0.3D + (double)random.nextInt(11) / 100;
+            this.zd = zd + (Math.random() * 2.0D - 1.0D) * 0.2D;
         }else if(age <= 10){
-            this.velocityY = velocityY - 0.05D;
+            this.yd = yd - 0.05D;
         }
         if(this.onGround){
-            this.setVelocity(0D, 0D, 0D);
-            this.setPos(prevPosX, prevPosY + 0.1D, prevPosZ);
+            this.setParticleSpeed(0D, 0D, 0D);
+            this.setPos(xo, yo + 0.1D, zo);
         }
     }
 
     @Override
-    public ParticleTextureSheet getType() {
-        return ParticleTextureSheet.PARTICLE_SHEET_TRANSLUCENT;
+    public ParticleRenderType getRenderType() {
+        return ParticleRenderType.PARTICLE_SHEET_TRANSLUCENT;
     }
 
-    @Environment(EnvType.CLIENT)
-    public record Factory(SpriteProvider spriteProvider) implements ParticleFactory<DefaultParticleType> {
-        public Particle createParticle(DefaultParticleType defaultParticleType, ClientWorld world, double x, double y, double z, double velX, double velY, double velZ) {
+    public record Factory(SpriteSet sprites) implements ParticleProvider<SimpleParticleType> {
+        public Particle createParticle(SimpleParticleType simpleParticleType, ClientLevel world, double x, double y, double z, double velX, double velY, double velZ) {
             FeatherParticle particle = new FeatherParticle(world, x, y, z, velX, velY, velZ);
-            particle.setSprite(spriteProvider);
+            particle.setSpriteFromAge(sprites);
             return particle;
         }
     }

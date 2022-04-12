@@ -1,64 +1,49 @@
 plugins {
 	id 'fabric-loom' version '0.10-SNAPSHOT'
 	id 'maven-publish'
-	id "com.modrinth.minotaur" version "1.2.1"
-	id 'com.matthewprenger.cursegradle' version '1.4.0'
+	id 'io.github.juuxel.loom-quiltflower-mini' version '1.3.0'
 }
 
-sourceCompatibility = JavaVersion.VERSION_16
-targetCompatibility = JavaVersion.VERSION_16
+sourceCompatibility = targetCompatibility = JavaVersion.VERSION_16
 
 archivesBaseName = project.archives_base_name
-version = project.mod_version + "-fabric"
+version = project.mod_version
 group = project.maven_group
 
 repositories {
-	maven { url "https://maven.gegy.dev" } //databreaker
+	maven { url "https://api.modrinth.com/maven" }
+	maven { url "https://maven.pinkgoosik.ru" } //cosmetica, goosik-config
 	maven { url "https://maven.terraformersmc.com" } //modmenu
-	maven { url "https://jitpack.io" } //goosik-config
-	maven { url "https://maven.pinkgoosik.ru" } //cosmetica
+	maven { url "https://maven.parchmentmc.org" } //parchment
 }
 
 dependencies {
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
-	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
+	mappings loom.layered() {
+		officialMojangMappings()
+		parchment("org.parchmentmc.data:parchment-1.17.1:2021.12.12@zip")
+	}
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-	modImplementation "ru.pinkgoosik:cosmetica:0.3.1-fabric"
-	include "ru.pinkgoosik:cosmetica:0.3.1-fabric"
+	include modImplementation("ru.pinkgoosik:goosik-config:0.2.0-1.17.1-fabric")
 
-	modImplementation "com.github.PinkGoosik:goosik-config:0.1.1"
-	include "com.github.PinkGoosik:goosik-config:0.1.1"
-
-	modRuntime "com.terraformersmc:modmenu:2.0.3"
-	modRuntime "supercoder79:databreaker:0.2.7"
-	modRuntime "com.ptsmods:devlogin:1.2"
+	modLocalRuntime "com.terraformersmc:modmenu:2.0.14"
+	modLocalRuntime "maven.modrinth:lazydfu:0.1.2"
 }
 
 processResources {
 	inputs.property "version", project.mod_version
-
 	filesMatching("fabric.mod.json") {
 		expand "version": project.mod_version
 	}
 }
 
 tasks.withType(JavaCompile).configureEach {
-	// ensure that the encoding is set to UTF-8, no matter what the system default is
-	// this fixes some edge cases with special characters not displaying correctly
-	// see http://yodaconditions.net/blog/fix-for-java-file-encoding-problems-with-gradle.html
-	// If Javadoc is generated, this must be specified in that task too.
-	it.options.encoding = "UTF-8"
-
-	// Minecraft 1.17 (21w19a) upwards uses Java 16.
 	it.options.release = 16
 }
 
 java {
-	// Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task
-	// if it is present.
-	// If you remove this line, sources will not be generated.
 	withSourcesJar()
 }
 
@@ -68,7 +53,6 @@ jar {
 	}
 }
 
-// configure the maven publication
 publishing {
 	publications {
 		mavenJava(MavenPublication) {
@@ -79,47 +63,9 @@ publishing {
 		maven {
 			url "https://maven.pinkgoosik.ru/"
 			credentials {
-				username System.getenv("MAVEN_REPO_USER")
-				password System.getenv("MAVEN_REPO_PASS")
+				username System.getenv("MAVEN_USER")
+				password System.getenv("MAVEN_PASS")
 			}
 		}
 	}
 }
-
-//import com.modrinth.minotaur.TaskModrinthUpload
-//
-//task publishModrinth (type: TaskModrinthUpload){
-//	onlyIf {
-//		System.getenv("MODRINTH")
-//	}
-//	failSilently = true
-//	token = System.getenv("MODRINTH")
-//	projectId = 'rI0hvYcd'
-//	versionName = "[" + project.minecraft_version + "] " + "Visuality" + " " + project.mod_version
-//	versionNumber = project.minecraft_version + "-" + project.mod_version + "-fabric"
-//	versionType = "BETA"
-//	changelog = project.mod_changelog
-//	uploadFile = remapJar
-//	addGameVersion(project.minecraft_version)
-//	addLoader("fabric")
-//}
-
-//curseforge {
-//	apiKey = System.getenv("CURSEFORGE")
-//	project {
-//		id = "521126"
-//		changelog = project.mod_changelog
-//		releaseType =  "beta"
-//		addGameVersion project.minecraft_version
-//		mainArtifact(remapJar) {
-//			displayName = "[" + project.minecraft_version + "] " + "Visuality" + " " + project.mod_version
-//		}
-//	}
-//	options {
-//		forgeGradleIntegration = false
-//	}
-//}
-//
-//afterEvaluate {
-//	tasks.curseforge521126.dependsOn remapJar
-//}

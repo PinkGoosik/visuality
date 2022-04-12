@@ -1,29 +1,27 @@
 package ru.pinkgoosik.visuality.particle;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
+import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.math.Quaternion;
+import com.mojang.math.Vector3f;
+import net.minecraft.client.Camera;
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.*;
-import net.minecraft.client.render.Camera;
-import net.minecraft.client.render.VertexConsumer;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.particle.DefaultParticleType;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Quaternion;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.math.Vec3f;
+import net.minecraft.core.particles.SimpleParticleType;
+import net.minecraft.util.Mth;
+import net.minecraft.world.phys.Vec3;
 
-public class WaterCircleParticle extends SpriteBillboardParticle {
-    private final SpriteProvider spriteProvider;
+public class WaterCircleParticle extends TextureSheetParticle {
+    private final SpriteSet sprites;
     private static final Quaternion QUATERNION = new Quaternion(0F, -0.7F, 0.7F, 0F);
 
-    private WaterCircleParticle(ClientWorld world, double x, double y, double z, double color, SpriteProvider spriteProvider) {
-        super(world, x, y, z, 0, 0, 0);
-        this.maxAge = 5 + this.random.nextInt(3);
-        this.setVelocity(0D, 0D, 0D);
-        this.setColor((int)color);
+    private WaterCircleParticle(ClientLevel level, double x, double y, double z, double color, SpriteSet sprites) {
+        super(level, x, y, z, 0, 0, 0);
+        this.lifetime = 5 + this.random.nextInt(3);
+        this.setParticleSpeed(0D, 0D, 0D);
+        if(color != 0) this.setColor((int)color);
         this.scale(2F + (float)this.random.nextInt(11) / 10);
-        this.spriteProvider = spriteProvider;
-        this.setSpriteForAge(spriteProvider);
+        this.sprites = sprites;
+        this.setSpriteFromAge(sprites);
     }
 
     public void setColor(int rgbHex) {
@@ -35,52 +33,51 @@ public class WaterCircleParticle extends SpriteBillboardParticle {
 
     @Override
     public void tick() {
-        if (this.age > this.maxAge / 2) {
-            this.setColorAlpha(1.0F - ((float)this.age - (float)(this.maxAge / 2)) / (float)this.maxAge);
+        if (this.age > this.lifetime / 2) {
+            this.setAlpha(1.0F - ((float)this.age - (float)(this.lifetime / 2)) / (float)this.lifetime);
         }
-        if (this.age++ >= this.maxAge) {
-            this.markDead();
+        if (this.age++ >= this.lifetime) {
+            this.remove();
         }else {
-            this.setSpriteForAge(spriteProvider);
+            this.setSpriteFromAge(sprites);
         }
     }
 
-    @Override
-    public void buildGeometry(VertexConsumer vertexConsumer, Camera camera, float tickDelta) {
-        Vec3d vec3d = camera.getPos();
-        float x = (float)(MathHelper.lerp(tickDelta, this.prevPosX, this.x) - vec3d.getX());
-        float y = (float)(MathHelper.lerp(tickDelta, this.prevPosY, this.y) - vec3d.getY());
-        float z = (float)(MathHelper.lerp(tickDelta, this.prevPosZ, this.z) - vec3d.getZ());
+    public void render(VertexConsumer buffer, Camera camera, float ticks) {
+        Vec3 vec3 = camera.getPosition();
+        float x = (float)(Mth.lerp(ticks, this.xo, this.x) - vec3.x());
+        float y = (float)(Mth.lerp(ticks, this.yo, this.y) - vec3.y());
+        float z = (float)(Mth.lerp(ticks, this.zo, this.z) - vec3.z());
 
-        Vec3f[] vec3fs = new Vec3f[]{new Vec3f(-1.0F, -1.0F, 0.0F), new Vec3f(-1.0F, 1.0F, 0.0F), new Vec3f(1.0F, 1.0F, 0.0F), new Vec3f(1.0F, -1.0F, 0.0F)};
-        float size = this.getSize(tickDelta);
+        Vector3f[] vector3fs = new Vector3f[]{new Vector3f(-1.0F, -1.0F, 0.0F), new Vector3f(-1.0F, 1.0F, 0.0F), new Vector3f(1.0F, 1.0F, 0.0F), new Vector3f(1.0F, -1.0F, 0.0F)};
+        float f4 = this.getQuadSize(ticks);
 
-        for (Vec3f vec3f : vec3fs){
-            vec3f.rotate(QUATERNION);
-            vec3f.scale(size);
-            vec3f.add(x, y, z);
+        for(int i = 0; i < 4; ++i) {
+            Vector3f vector3f = vector3fs[i];
+            vector3f.transform(QUATERNION);
+            vector3f.mul(f4);
+            vector3f.add(x, y, z);
         }
 
-        float minU = this.getMinU();
-        float maxU = this.getMaxU();
-        float minV = this.getMinV();
-        float maxV = this.getMaxV();
-        int light = this.getBrightness(tickDelta);
-        vertexConsumer.vertex(vec3fs[0].getX(), vec3fs[0].getY(), vec3fs[0].getZ()).texture(maxU, maxV).color(this.colorRed, this.colorGreen, this.colorBlue, this.colorAlpha).light(light).next();
-        vertexConsumer.vertex(vec3fs[1].getX(), vec3fs[1].getY(), vec3fs[1].getZ()).texture(maxU, minV).color(this.colorRed, this.colorGreen, this.colorBlue, this.colorAlpha).light(light).next();
-        vertexConsumer.vertex(vec3fs[2].getX(), vec3fs[2].getY(), vec3fs[2].getZ()).texture(minU, minV).color(this.colorRed, this.colorGreen, this.colorBlue, this.colorAlpha).light(light).next();
-        vertexConsumer.vertex(vec3fs[3].getX(), vec3fs[3].getY(), vec3fs[3].getZ()).texture(minU, maxV).color(this.colorRed, this.colorGreen, this.colorBlue, this.colorAlpha).light(light).next();
+        float f7 = this.getU0();
+        float f8 = this.getU1();
+        float f5 = this.getV0();
+        float f6 = this.getV1();
+        int j = this.getLightColor(ticks);
+        buffer.vertex(vector3fs[0].x(), vector3fs[0].y(), vector3fs[0].z()).uv(f8, f6).color(this.rCol, this.gCol, this.bCol, this.alpha).uv2(j).endVertex();
+        buffer.vertex(vector3fs[1].x(), vector3fs[1].y(), vector3fs[1].z()).uv(f8, f5).color(this.rCol, this.gCol, this.bCol, this.alpha).uv2(j).endVertex();
+        buffer.vertex(vector3fs[2].x(), vector3fs[2].y(), vector3fs[2].z()).uv(f7, f5).color(this.rCol, this.gCol, this.bCol, this.alpha).uv2(j).endVertex();
+        buffer.vertex(vector3fs[3].x(), vector3fs[3].y(), vector3fs[3].z()).uv(f7, f6).color(this.rCol, this.gCol, this.bCol, this.alpha).uv2(j).endVertex();
     }
 
     @Override
-    public ParticleTextureSheet getType() {
-        return ParticleTextureSheet.PARTICLE_SHEET_TRANSLUCENT;
+    public ParticleRenderType getRenderType() {
+        return ParticleRenderType.PARTICLE_SHEET_TRANSLUCENT;
     }
 
-    @Environment(EnvType.CLIENT)
-    public record Factory(SpriteProvider spriteProvider) implements ParticleFactory<DefaultParticleType> {
-        public Particle createParticle(DefaultParticleType defaultParticleType, ClientWorld world, double x, double y, double z, double velX, double velY, double velZ) {
-            return new WaterCircleParticle(world, x, y, z, velX, spriteProvider);
+    public record Factory(SpriteSet sprites) implements ParticleProvider<SimpleParticleType> {
+        public Particle createParticle(SimpleParticleType simpleParticleType, ClientLevel world, double x, double y, double z, double velX, double velY, double velZ) {
+            return new WaterCircleParticle(world, x, y, z, velX, sprites);
         }
     }
 }

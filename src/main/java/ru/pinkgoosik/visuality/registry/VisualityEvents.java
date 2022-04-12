@@ -5,7 +5,7 @@ import ru.pinkgoosik.visuality.event.CirclesOnWaterEvent;
 
 public class VisualityEvents {
 
-    public static void register(){
-        ClientTickEvents.START_WORLD_TICK.register(new CirclesOnWaterEvent());
+    public static void register() {
+        ClientTickEvents.START_WORLD_TICK.register(CirclesOnWaterEvent::onTick);
     }
 }

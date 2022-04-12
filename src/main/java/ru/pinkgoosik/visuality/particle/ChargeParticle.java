@@ -1,41 +1,38 @@
 package ru.pinkgoosik.visuality.particle;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.*;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.particle.DefaultParticleType;
+import net.minecraft.core.particles.SimpleParticleType;
 
-public class ChargeParticle extends SpriteBillboardParticle {
-    private final SpriteProvider spriteProvider;
+public class ChargeParticle extends TextureSheetParticle {
+    private final SpriteSet sprites;
 
-    protected ChargeParticle(ClientWorld world, double x, double y, double z, SpriteProvider spriteProvider) {
-        super(world, x, y, z);
-        this.maxAge = 8 + this.random.nextInt(4);
-        this.setVelocity(0D, 0D, 0D);
+    protected ChargeParticle(ClientLevel level, double x, double y, double z, SpriteSet sprites) {
+        super(level, x, y, z);
+        this.lifetime = 8 + this.random.nextInt(4);
+        this.setParticleSpeed(0D, 0D, 0D);
         this.scale(1.25F);
-        this.spriteProvider = spriteProvider;
-        this.setSpriteForAge(spriteProvider);
+        this.sprites = sprites;
+        this.setSpriteFromAge(sprites);
     }
 
     @Override
     public void tick() {
-        if (this.age++ >= this.maxAge) {
-            this.markDead();
+        if (this.age++ >= this.lifetime) {
+            this.remove();
         }else {
-            this.setSpriteForAge(spriteProvider);
+            this.setSpriteFromAge(sprites);
         }
     }
 
     @Override
-    public ParticleTextureSheet getType() {
-        return ParticleTextureSheet.PARTICLE_SHEET_LIT;
+    public ParticleRenderType getRenderType() {
+        return ParticleRenderType.PARTICLE_SHEET_LIT;
     }
 
-    @Environment(EnvType.CLIENT)
-    public record Factory(SpriteProvider spriteProvider) implements ParticleFactory<DefaultParticleType> {
-        public Particle createParticle(DefaultParticleType defaultParticleType, ClientWorld world, double x, double y, double z, double velX, double velY, double velZ) {
-            return new ChargeParticle(world, x, y, z, spriteProvider);
+    public record Factory(SpriteSet sprites) implements ParticleProvider<SimpleParticleType> {
+        public Particle createParticle(SimpleParticleType simpleParticleType, ClientLevel world, double x, double y, double z, double velX, double velY, double velZ) {
+            return new ChargeParticle(world, x, y, z, sprites);
         }
     }
 }

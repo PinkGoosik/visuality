@@ -1,46 +1,54 @@
 package ru.pinkgoosik.visuality.event;
 
-import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
-import net.minecraft.block.Blocks;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.client.option.ParticlesMode;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.Heightmap;
-import net.minecraft.world.World;
-import net.minecraft.world.biome.Biome;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.ParticleStatus;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.player.AbstractClientPlayer;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.levelgen.Heightmap;
 import ru.pinkgoosik.visuality.VisualityMod;
 import ru.pinkgoosik.visuality.registry.VisualityParticles;
 import ru.pinkgoosik.visuality.util.ParticleUtils;
 
 import java.util.Random;
 
-public class CirclesOnWaterEvent implements ClientTickEvents.StartWorldTick {
-    static Random random = new Random();
+public class CirclesOnWaterEvent {
+    static final Random random = new Random();
 
-    @Override
-    public void onStartTick(ClientWorld world) {
-        if (!VisualityMod.CONFIG.getBoolean("water_circle")) return;
-        if (MinecraftClient.getInstance().options.particles == ParticlesMode.MINIMAL) return;
-        ClientPlayerEntity player = MinecraftClient.getInstance().player;
+    public static void onTick(ClientLevel world) {
+        var client = Minecraft.getInstance();
+        if (!VisualityMod.CONFIG.getBoolean("enabled", "water_circles")) return;
+        if(Minecraft.getInstance().isPaused()) return;
+        if (client.options.particles == ParticleStatus.MINIMAL) return;
+        AbstractClientPlayer player = client.player;
         if(player == null) return;
-        if(player.isSubmergedInWater() || !world.getRegistryKey().equals(World.OVERWORLD)) return;
+        if(player.isUnderWater() || !Level.OVERWORLD.equals(world.dimension())) return;
         if(!world.isRaining()) return;
-        Biome biome = world.getBiome(player.getBlockPos());
-        if (!(biome.getPrecipitation().equals(Biome.Precipitation.RAIN)) || !(biome.getTemperature(player.getBlockPos()) >= 0.15F)) return;
+        Biome biome = world.getBiome(player.getOnPos());
+        if (!(biome.getPrecipitation().equals(Biome.Precipitation.RAIN)) || (biome.isColdEnoughToSnow(player.getOnPos()))) return;
 
-        for (int i = 0; i<= random.nextInt(10) + 5; i++){
+        for (int i = 0; i<= random.nextInt(10) + 5; i++) {
             int x = random.nextInt(15) - 7;
             int z = random.nextInt(15) - 7;
             BlockPos playerPos = new BlockPos((int)player.getX() + x, (int)player.getY(), (int)player.getZ() + z);
-            BlockPos pos = world.getTopPosition(Heightmap.Type.MOTION_BLOCKING, playerPos);
+            BlockPos pos = world.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING, playerPos);
 
-            if (world.getBlockState(pos.down()).isOf(Blocks.WATER) && world.getBlockState(pos).isAir()){
-                if(world.getFluidState(pos.down()).getLevel() == 8){
-                    ParticleUtils.add(world, VisualityParticles.WATER_CIRCLE, pos.getX() + random.nextDouble(), pos.getY() + 0.05D, pos.getZ()  + random.nextDouble(), biome.getWaterColor());
+            if (world.getBlockState(pos.below()).is(Blocks.WATER) && world.getBlockState(pos).isAir()){
+                if(world.getFluidState(pos.below()).getAmount() == 8) {
+
+                    int color;
+                    if(VisualityMod.CONFIG.getBoolean("colored", "water_circles")) {
+                        color = biome.getWaterColor();
+                    }
+                    else color = 0;
+
+                    ParticleUtils.add(world, VisualityParticles.WATER_CIRCLE, pos.getX() + random.nextDouble(), pos.getY() + 0.05D, pos.getZ()  + random.nextDouble(), color);
                 }
             }
         }
     }
+
 }
