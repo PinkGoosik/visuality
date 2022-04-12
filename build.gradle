@@ -27,8 +27,8 @@ dependencies {
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
 	include modImplementation("ru.pinkgoosik:goosik-config:0.2.0-1.17.1-fabric")
-	
-	modLocalRuntime "com.terraformersmc:modmenu:3.0.1"
+
+	modLocalRuntime "com.terraformersmc:modmenu:2.0.14"
 	modLocalRuntime "maven.modrinth:lazydfu:0.1.2"
 }
 

@@ -19,11 +19,11 @@ public class CirclesOnWaterEvent {
     static final Random random = new Random();
 
     public static void onTick(ClientLevel world) {
-        var GetInstance = Minecraft.getInstance();
+        var client = Minecraft.getInstance();
         if (!VisualityMod.CONFIG.getBoolean("enabled", "water_circles")) return;
         if(Minecraft.getInstance().isPaused()) return;
-        if (GetInstance.options.particles == ParticleStatus.MINIMAL) return;
-        AbstractClientPlayer player = GetInstance.player;
+        if (client.options.particles == ParticleStatus.MINIMAL) return;
+        AbstractClientPlayer player = client.player;
         if(player == null) return;
         if(player.isUnderWater() || !Level.OVERWORLD.equals(world.dimension())) return;
         if(!world.isRaining()) return;
@@ -50,4 +50,5 @@ public class CirclesOnWaterEvent {
             }
         }
     }
+
 }
