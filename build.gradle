@@ -15,9 +15,6 @@ repositories {
 	maven { url "https://maven.pinkgoosik.ru" } //cosmetica, goosik-config
 	maven { url "https://maven.terraformersmc.com" } //modmenu
 	maven { url "https://maven.parchmentmc.org" } //parchment
-	maven {name = 'Cotton' 
-			url = 'https://server.bbkr.space/artifactory/libs-release/'
-    	} //loom-quiltflower-mini
 }
 
 dependencies {
@@ -30,7 +27,6 @@ dependencies {
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
 	include modImplementation("ru.pinkgoosik:goosik-config:0.2.0-1.17.1-fabric")
-	include modImplementation("ru.pinkgoosik:cosmetica:0.4.0")
 	
 	modLocalRuntime "com.terraformersmc:modmenu:3.0.1"
 	modLocalRuntime "maven.modrinth:lazydfu:0.1.2"
@@ -73,41 +69,3 @@ publishing {
 		}
 	}
 }
-
-//import com.modrinth.minotaur.TaskModrinthUpload
-//
-//task publishModrinth (type: TaskModrinthUpload){
-//	onlyIf {
-//		System.getenv("MODRINTH")
-//	}
-//	failSilently = true
-//	token = System.getenv("MODRINTH")
-//	projectId = 'rI0hvYcd'
-//	versionName = "[" + project.minecraft_version + "] " + "Visuality" + " " + project.mod_version
-//	versionNumber = project.minecraft_version + "-" + project.mod_version + "-fabric"
-//	versionType = "BETA"
-//	changelog = project.mod_changelog
-//	uploadFile = remapJar
-//	addGameVersion(project.minecraft_version)
-//	addLoader("fabric")
-//}
-
-//curseforge {
-//	apiKey = System.getenv("CURSEFORGE")
-//	project {
-//		id = "521126"
-//		changelog = project.mod_changelog
-//		releaseType =  "beta"
-//		addGameVersion project.minecraft_version
-//		mainArtifact(remapJar) {
-//			displayName = "[" + project.minecraft_version + "] " + "Visuality" + " " + project.mod_version
-//		}
-//	}
-//	options {
-//		forgeGradleIntegration = false
-//	}
-//}
-//
-//afterEvaluate {
-//	tasks.curseforge521126.dependsOn remapJar
-//}
