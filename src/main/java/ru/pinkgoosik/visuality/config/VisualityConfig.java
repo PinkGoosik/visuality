@@ -5,9 +5,9 @@ import java.util.List;
 
 public class VisualityConfig {
     public static final ArrayList<String> DEFAULT_HIT_PARTICLES = new ArrayList<>(List.of(
-            "minecraft:skeleton|visuality:bone", "minecraft:skeleton_horse|visuality:bone",
-            "minecraft:stray|visuality:bone", "minecraft:wither_skeleton|visuality:wither_bone",
-            "minecraft:chicken|visuality:feather", "minecraft:villager|visuality:emerald"));
+            "minecraft:skeleton/visuality:bone", "minecraft:skeleton_horse/visuality:bone",
+            "minecraft:stray/visuality:bone", "minecraft:wither_skeleton/visuality:wither_bone",
+            "minecraft:chicken/visuality:feather", "minecraft:villager/visuality:emerald"));
 
     public static final ArrayList<String> DEFAULT_SHINY_ARMOR = new ArrayList<>(List.of(
             "minecraft:golden_helmet", "minecraft:golden_chestplate",
