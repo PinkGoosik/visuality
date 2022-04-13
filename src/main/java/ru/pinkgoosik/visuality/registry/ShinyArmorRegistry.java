@@ -14,7 +14,7 @@ public class ShinyArmorRegistry {
     public static void reload() {
         ENTRIES.clear();
         ArrayList<Item> entries = new ArrayList<>();
-        VisualityMod.config.shinyArmor.forEach(entry -> getItemFromString(entry).ifPresent(entries::add));
+        VisualityMod.config.shinyArmorEntries.forEach(entry -> getItemFromString(entry).ifPresent(entries::add));
         ENTRIES.addAll(entries);
     }
 

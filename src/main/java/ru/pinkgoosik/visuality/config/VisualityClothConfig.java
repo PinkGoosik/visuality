@@ -9,6 +9,8 @@ import me.shedaniel.clothconfig2.api.ConfigEntryBuilder;
 import net.minecraft.network.chat.TranslatableComponent;
 import ru.pinkgoosik.visuality.VisualityMod;
 
+import java.util.ArrayList;
+
 @Config(name = "visuality")
 public class VisualityClothConfig extends AbstractVisualityConfig implements ConfigData {
 
@@ -33,6 +35,47 @@ public class VisualityClothConfig extends AbstractVisualityConfig implements Con
                 .setDefaultValue(true)
                 .setSaveConsumer(newValue -> config.soulEnabled = newValue)
                 .build());
+
+        category.addEntry(builder.startBooleanToggle(text("option.waterCircle"), config.waterCircles.enabled)
+                .setDefaultValue(true)
+                .setSaveConsumer(newValue -> config.waterCircles.enabled = newValue)
+                .build());
+
+        category.addEntry(builder.startBooleanToggle(text("option.waterCircle.colored"), config.waterCircles.colored)
+                .setDefaultValue(true)
+                .setSaveConsumer(newValue -> config.waterCircles.colored = newValue)
+                .build());
+
+        category.addEntry(builder.startBooleanToggle(text("option.hitParticles"), config.hitParticlesEnabled)
+                .setDefaultValue(true)
+                .setSaveConsumer(newValue -> config.hitParticlesEnabled = newValue)
+                .build());
+
+        category.addEntry(builder.startStrList(text("option.hitParticles.entries"), config.hitParticleEntries)
+                .setDefaultValue(VisualityConfig.DEFAULT_HIT_PARTICLES)
+                .setSaveConsumer(newValue -> config.hitParticleEntries = (ArrayList<String>) newValue)
+                .build());
+
+        category.addEntry(builder.startBooleanToggle(text("option.shinyArmor"), config.shinyArmorEnabled)
+                .setDefaultValue(true)
+                .setSaveConsumer(newValue -> config.shinyArmorEnabled = newValue)
+                .build());
+
+        category.addEntry(builder.startStrList(text("option.shinyArmor.entries"), config.shinyArmorEntries)
+                .setDefaultValue(VisualityConfig.DEFAULT_SHINY_ARMOR)
+                .setSaveConsumer(newValue -> config.shinyArmorEntries = (ArrayList<String>) newValue)
+                .build());
+
+        category.addEntry(builder.startBooleanToggle(text("option.shinyBlocks"), config.shinyBlocksEnabled)
+                .setDefaultValue(true)
+                .setSaveConsumer(newValue -> config.shinyBlocksEnabled = newValue)
+                .build());
+
+        category.addEntry(builder.startStrList(text("option.shinyBlocks.entries"), config.shinyBlockEntries)
+                .setDefaultValue(VisualityConfig.DEFAULT_SHINY_BLOCKS)
+                .setSaveConsumer(newValue -> config.shinyBlockEntries = (ArrayList<String>) newValue)
+                .build());
+
     }
 
     private static TranslatableComponent text(String key) {

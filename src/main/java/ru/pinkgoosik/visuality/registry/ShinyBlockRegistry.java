@@ -15,7 +15,7 @@ public class ShinyBlockRegistry {
     public static void reload() {
         ENTRIES.clear();
         ArrayList<Block> entries = new ArrayList<>();
-        VisualityMod.config.shinyBlocks.forEach(entry -> getBlockFromString(entry).ifPresent(entries::add));
+        VisualityMod.config.shinyBlockEntries.forEach(entry -> getBlockFromString(entry).ifPresent(entries::add));
         ENTRIES.addAll(entries);
     }
 
