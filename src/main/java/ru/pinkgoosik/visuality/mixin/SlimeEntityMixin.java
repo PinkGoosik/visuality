@@ -28,7 +28,7 @@ public abstract class SlimeEntityMixin extends Mob implements Enemy {
 
     @Redirect(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;addParticle(Lnet/minecraft/core/particles/ParticleOptions;DDDDDD)V"))
     void addParticle(Level world, ParticleOptions particle, double x, double y, double z, double velocityX, double velocityY, double velocityZ) {
-        if(level.isClientSide && this.getType().equals(EntityType.SLIME) && VisualityMod.CONFIG.getBoolean("slime")) {
+        if(level.isClientSide && this.getType().equals(EntityType.SLIME) && VisualityMod.config.slimeEnabled) {
             spawnSlimeParticle(x, y, z);
         }else {
             this.level.addParticle(particle, x, y, z, velocityX, velocityY, velocityZ);
@@ -45,4 +45,5 @@ public abstract class SlimeEntityMixin extends Mob implements Enemy {
             ParticleUtils.add(level, VisualityParticles.BIG_SLIME_BLOB, x, y, z, SlimeColors.VANILLA, 2.0D);
         }
     }
+
 }
