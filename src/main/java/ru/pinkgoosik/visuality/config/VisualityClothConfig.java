@@ -1,5 +1,6 @@
 package ru.pinkgoosik.visuality.config;
 
+import com.terraformersmc.modmenu.api.ConfigScreenFactory;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.annotation.Config;
@@ -12,15 +13,13 @@ import ru.pinkgoosik.visuality.registry.HitParticleRegistry;
 import ru.pinkgoosik.visuality.registry.ShinyArmorRegistry;
 import ru.pinkgoosik.visuality.registry.ShinyBlockRegistry;
 import me.shedaniel.clothconfig2.api.ConfigBuilder;
-import me.shedaniel.clothconfig2.api.ConfigCategory;
-import me.shedaniel.clothconfig2.api.ConfigEntryBuilder;
 
 import java.util.ArrayList;
 
 @Config(name = "visuality")
 public class VisualityClothConfig extends AbstractVisualityConfig implements ConfigData {
 	
-	public ConfigScreenFactory<?> getModConfigScreenFactory() {
+	public static ConfigScreenFactory<?> getModConfigScreenFactory() {
 
         return parent -> {
             ConfigBuilder builder = ConfigBuilder.create()

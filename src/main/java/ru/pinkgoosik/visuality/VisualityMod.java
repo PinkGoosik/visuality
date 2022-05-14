@@ -31,4 +31,5 @@ public class VisualityMod implements ClientModInitializer {
 		}
 		else return new AbstractVisualityConfig();
 	}
+
 }

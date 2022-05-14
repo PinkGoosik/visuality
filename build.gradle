@@ -1,39 +1,41 @@
 plugins {
-	id 'fabric-loom' version '0.11-SNAPSHOT'
-	id 'maven-publish'
-	id 'io.github.juuxel.loom-quiltflower' version '1.6.0'
+	id "fabric-loom" version "0.12-SNAPSHOT"
+	id "io.github.juuxel.loom-quiltflower" version "1.7.2"
+	id "io.github.p03w.machete" version "1.0.11"
 }
-
-sourceCompatibility = targetCompatibility = JavaVersion.VERSION_17
 
 archivesBaseName = project.archives_base_name
 version = project.mod_version
 group = project.maven_group
 
 repositories {
-	maven { url "https://api.modrinth.com/maven" }
-	maven { url "https://maven.pinkgoosik.ru" } //cosmetica
-	maven { url "https://maven.terraformersmc.com" } //modmenu
+	maven {
+        url "https://api.modrinth.com/maven"
+        content { includeGroup "maven.modrinth" }
+    }
 	maven { url "https://maven.parchmentmc.org" } //parchment
-	maven { url "https://maven.shedaniel.me/" } //cloth-config
+	maven { url "https://maven.shedaniel.me" } //cloth-config
+	maven { url "https://pkgs.dev.azure.com/djtheredstoner/DevAuth/_packaging/public/maven/v1" } //dev-auth
 }
 
 dependencies {
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
 	mappings loom.layered() {
 		officialMojangMappings()
-		parchment("org.parchmentmc.data:parchment-1.18.1:2022.02.13@zip")
+		parchment("org.parchmentmc.data:parchment-1.18.2:2022.05.02@zip")
 	}
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
-	modImplementation "com.terraformersmc:modmenu:3.1.1"
+	modImplementation "maven.modrinth:modmenu:3.2.2"
 
-	modApi("me.shedaniel.cloth:cloth-config-fabric:6.2.57") {
+	modApi("me.shedaniel.cloth:cloth-config-fabric:6.2.62") {
         exclude(group: "net.fabricmc.fabric-api")
     }
 
-	include "ru.pinkgoosik:cosmetica:0.4.0"
 	modLocalRuntime "maven.modrinth:lazydfu:0.1.2"
+	modLocalRuntime "maven.modrinth:ferrite-core:4.2.0"
+	modLocalRuntime "maven.modrinth:starlight:1.0.2+1.18.2"
+	modLocalRuntime "me.djtheredstoner:DevAuth-fabric:1.0.0"
 }
 
 processResources {
@@ -44,32 +46,19 @@ processResources {
 }
 
 tasks.withType(JavaCompile).configureEach {
+	it.options.encoding = "UTF-8"
 	it.options.release = 17
 }
 
 java {
+	sourceCompatibility = JavaVersion.VERSION_17
+	targetCompatibility = JavaVersion.VERSION_17
+	
 	withSourcesJar()
 }
 
 jar {
 	from("LICENSE") {
 		rename { "${it}_${project.archivesBaseName}"}
-	}
-}
-
-publishing {
-	publications {
-		mavenJava(MavenPublication) {
-			from components.java
-		}
-	}
-	repositories {
-		maven {
-			url "https://maven.pinkgoosik.ru/"
-			credentials {
-				username System.getenv("MAVEN_USER")
-				password System.getenv("MAVEN_PASS")
-			}
-		}
 	}
 }
