@@ -8,11 +8,37 @@ import me.shedaniel.clothconfig2.api.ConfigCategory;
 import me.shedaniel.clothconfig2.api.ConfigEntryBuilder;
 import net.minecraft.network.chat.TranslatableComponent;
 import ru.pinkgoosik.visuality.VisualityMod;
+import ru.pinkgoosik.visuality.registry.HitParticleRegistry;
+import ru.pinkgoosik.visuality.registry.ShinyArmorRegistry;
+import ru.pinkgoosik.visuality.registry.ShinyBlockRegistry;
+import me.shedaniel.clothconfig2.api.ConfigBuilder;
+import me.shedaniel.clothconfig2.api.ConfigCategory;
+import me.shedaniel.clothconfig2.api.ConfigEntryBuilder;
 
 import java.util.ArrayList;
 
 @Config(name = "visuality")
 public class VisualityClothConfig extends AbstractVisualityConfig implements ConfigData {
+	
+	public ConfigScreenFactory<?> getModConfigScreenFactory() {
+
+        return parent -> {
+            ConfigBuilder builder = ConfigBuilder.create()
+                    .setParentScreen(parent)
+                    .setTitle(text("title"))
+                    .setSavingRunnable(() -> {
+                        HitParticleRegistry.reload();
+                        ShinyArmorRegistry.reload();
+                        ShinyBlockRegistry.reload();
+                    });
+
+            ConfigCategory general = builder.getOrCreateCategory(text("general"));
+            ConfigEntryBuilder entryBuilder = builder.entryBuilder();
+            VisualityClothConfig.setupEntries(general, entryBuilder);
+
+            return builder.build();
+        };
+    }
 
     public static void setupEntries(ConfigCategory category, ConfigEntryBuilder builder) {
         var config = VisualityMod.config;
