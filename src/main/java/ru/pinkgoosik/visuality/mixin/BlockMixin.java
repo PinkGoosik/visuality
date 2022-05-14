@@ -29,7 +29,7 @@ public abstract class BlockMixin extends BlockBehaviour implements ItemLike {
 
     @Inject(method = "fallOn", at = @At("TAIL"))
     void fallOn(Level level, BlockState state, BlockPos pos, Entity entity, float f, CallbackInfo ci) {
-        if(VisualityMod.CONFIG.getBoolean("soul", "particles")) {
+        if(VisualityMod.config.soulEnabled) {
             if(state.is(BlockTags.WITHER_SUMMON_BASE_BLOCKS)) {
                 for(int i = 0; i <= level.random.nextInt(5) + 1; i++) {
                     double x = entity.getX();
@@ -43,7 +43,7 @@ public abstract class BlockMixin extends BlockBehaviour implements ItemLike {
 
     @Inject(method = "animateTick", at = @At("TAIL"))
     void animateTick(BlockState state, Level level, BlockPos pos, Random random, CallbackInfo ci) {
-        if(VisualityMod.CONFIG.getBoolean("soul", "particles")) {
+        if(VisualityMod.config.soulEnabled) {
             if(state.is(BlockTags.WITHER_SUMMON_BASE_BLOCKS)) {
                 if(level.getBlockState(pos.above()).isAir()) {
                     if(random.nextFloat() > 0.995F) {
@@ -55,7 +55,7 @@ public abstract class BlockMixin extends BlockBehaviour implements ItemLike {
                 }
             }
         }
-        if (VisualityMod.CONFIG.getBoolean("enabled", "shiny_blocks")) {
+        if (VisualityMod.config.shinyBlocksEnabled) {
             if(ShinyBlockRegistry.ENTRIES.contains(this)) {
                 for(Direction direction : Direction.values()) {
                     BlockPos blockPos = pos.relative(direction);
@@ -72,4 +72,5 @@ public abstract class BlockMixin extends BlockBehaviour implements ItemLike {
             }
         }
     }
+
 }

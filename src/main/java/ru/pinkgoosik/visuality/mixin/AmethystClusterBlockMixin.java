@@ -33,7 +33,7 @@ public abstract class AmethystClusterBlockMixin extends AmethystBlock implements
     @Override
     public void animateTick(BlockState state, Level level, BlockPos pos, Random random) {
         super.animateTick(state, level, pos, random);
-        if(VisualityMod.CONFIG.getBoolean("crystal_sparkle")) {
+        if(VisualityMod.config.sparkleEnabled) {
             if(state.getBlock() instanceof AmethystClusterBlock && visuality$height > 5 && random.nextFloat() > 0.5) {
                 double x = pos.getX() + random.nextDouble();
                 double y = pos.getY() + random.nextDouble();
@@ -42,4 +42,5 @@ public abstract class AmethystClusterBlockMixin extends AmethystBlock implements
             }
         }
     }
+
 }

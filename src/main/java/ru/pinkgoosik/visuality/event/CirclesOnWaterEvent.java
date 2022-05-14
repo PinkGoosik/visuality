@@ -19,10 +19,12 @@ public class CirclesOnWaterEvent {
     static final Random random = new Random();
 
     public static void onTick(ClientLevel world) {
-        if (!VisualityMod.CONFIG.getBoolean("enabled", "water_circles")) return;
-        if(Minecraft.getInstance().isPaused()) return;
-        if (Minecraft.getInstance().options.particles == ParticleStatus.MINIMAL) return;
-        AbstractClientPlayer player = Minecraft.getInstance().player;
+        var client = Minecraft.getInstance();
+
+        if (!VisualityMod.config.waterCircles.enabled) return;
+        if(client.isPaused()) return;
+        if (client.options.particles == ParticleStatus.MINIMAL) return;
+        AbstractClientPlayer player = client.player;
         if(player == null) return;
         if(player.isUnderWater() || !Level.OVERWORLD.equals(world.dimension())) return;
         if(!world.isRaining()) return;
@@ -35,11 +37,11 @@ public class CirclesOnWaterEvent {
             BlockPos playerPos = new BlockPos((int)player.getX() + x, (int)player.getY(), (int)player.getZ() + z);
             BlockPos pos = world.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING, playerPos);
 
-            if (world.getBlockState(pos.below()).is(Blocks.WATER) && world.getBlockState(pos).isAir()){
+            if (world.getBlockState(pos.below()).is(Blocks.WATER) && world.getBlockState(pos).isAir()) {
                 if(world.getFluidState(pos.below()).getAmount() == 8) {
 
                     int color;
-                    if(VisualityMod.CONFIG.getBoolean("colored", "water_circles")) {
+                    if(VisualityMod.config.waterCircles.colored) {
                         color = biome.getWaterColor();
                     }
                     else color = 0;
@@ -49,4 +51,5 @@ public class CirclesOnWaterEvent {
             }
         }
     }
+
 }

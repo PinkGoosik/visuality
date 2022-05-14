@@ -37,11 +37,12 @@ public abstract class LivingEntityMixin extends Entity {
 
     @Inject(method = "tick", at = @At("TAIL"))
     private void tick(CallbackInfo ci) {
+        var client = Minecraft.getInstance();
         if(level.isClientSide && ticksDelay != 0) ticksDelay--;
-        if(level.isClientSide && this.isAlive() && Minecraft.getInstance().player != null && VisualityMod.CONFIG.getBoolean("enabled", "shiny_armor")) {
+        if(level.isClientSide && this.isAlive() && client.player != null && VisualityMod.config.shinyArmorEnabled) {
             int shinyLevel = ShinyArmorUtils.getShinyLevel(self);
-            if(Minecraft.getInstance().player.getUUID().equals(this.getUUID())) {
-                if(!Minecraft.getInstance().options.getCameraType().isFirstPerson()) {
+            if(client.player.getUUID().equals(this.getUUID())) {
+                if(!client.options.getCameraType().isFirstPerson()) {
                     spawnSparkles(shinyLevel);
                 }
             }else {
@@ -52,7 +53,7 @@ public abstract class LivingEntityMixin extends Entity {
 
     @Inject(method = "hurt", at = @At("HEAD"))
     void damage(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
-        if(level.isClientSide && source.getEntity() instanceof LivingEntity attacker && ticksDelay == 0 && this.isAlive() && VisualityMod.CONFIG.getBoolean("enabled", "hit_particles")) {
+        if(level.isClientSide && source.getEntity() instanceof LivingEntity attacker && ticksDelay == 0 && this.isAlive() && VisualityMod.config.hitParticlesEnabled) {
             HitParticleRegistry.ENTRIES.forEach(entry -> {
                 if(this.getType().equals(entry.entity())) {
                     ticksDelay = 10;
@@ -88,4 +89,5 @@ public abstract class LivingEntityMixin extends Entity {
             }
         }
     }
+
 }

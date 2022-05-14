@@ -12,9 +12,10 @@ group = project.maven_group
 
 repositories {
 	maven { url "https://api.modrinth.com/maven" }
-	maven { url "https://maven.pinkgoosik.ru" } //cosmetica, goosik-config
+	maven { url "https://maven.pinkgoosik.ru" } //cosmetica
 	maven { url "https://maven.terraformersmc.com" } //modmenu
 	maven { url "https://maven.parchmentmc.org" } //parchment
+	maven { url "https://maven.shedaniel.me/" } //cloth-config
 }
 
 dependencies {
@@ -25,11 +26,13 @@ dependencies {
 	}
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+	modImplementation "com.terraformersmc:modmenu:3.1.1"
 
-	include modImplementation("ru.pinkgoosik:goosik-config:0.2.0-1.17.1-fabric")
-	include modImplementation("ru.pinkgoosik:cosmetica:0.4.0")
-	
-	modLocalRuntime "com.terraformersmc:modmenu:3.0.1"
+	modApi("me.shedaniel.cloth:cloth-config-fabric:6.2.57") {
+        exclude(group: "net.fabricmc.fabric-api")
+    }
+
+	include "ru.pinkgoosik:cosmetica:0.4.0"
 	modLocalRuntime "maven.modrinth:lazydfu:0.1.2"
 }
 

@@ -25,10 +25,10 @@ public abstract class CreeperEntityMixin extends Monster {
     }
 
     @Inject(method = "tick", at = @At("TAIL"))
-    void tick(CallbackInfo ci){
-        if(this.level.isClientSide && this.isAlive() && getEntityData().get(DATA_IS_POWERED)){
-            if(VisualityMod.CONFIG.getBoolean("charge")){
-                if(this.random.nextInt(20) == 0){
+    void tick(CallbackInfo ci) {
+        if(this.level.isClientSide && this.isAlive() && getEntityData().get(DATA_IS_POWERED)) {
+            if(VisualityMod.config.chargeEnabled) {
+                if(this.random.nextInt(20) == 0) {
                     double x = random.nextFloat() * 2 - 1;
                     double y = random.nextFloat();
                     double z = random.nextFloat() * 2 - 1;
@@ -37,4 +37,5 @@ public abstract class CreeperEntityMixin extends Monster {
             }
         }
     }
+
 }

@@ -17,7 +17,8 @@
 
   "environment": "client",
   "entrypoints": {
-    "client": ["ru.pinkgoosik.visuality.VisualityMod"]
+    "client": ["ru.pinkgoosik.visuality.VisualityMod"],
+    "modmenu": ["ru.pinkgoosik.visuality.compat.VisualityModMenuIntegration"]
   },
   "mixins": ["visuality.mixins.json"],
 

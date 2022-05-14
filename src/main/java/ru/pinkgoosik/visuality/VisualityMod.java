@@ -1,14 +1,15 @@
 package ru.pinkgoosik.visuality;
 
 import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.resources.ResourceLocation;
-import ru.pinkgoosik.goosikconfig.api.Config;
-import ru.pinkgoosik.visuality.config.VisualityConfig;
+import ru.pinkgoosik.visuality.config.AbstractVisualityConfig;
+import ru.pinkgoosik.visuality.config.VisualityClothConfig;
 import ru.pinkgoosik.visuality.registry.*;
 
 public class VisualityMod implements ClientModInitializer {
 	public static final String MOD_ID = "visuality";
-	public static final Config CONFIG = new VisualityConfig(MOD_ID);
+	public static AbstractVisualityConfig config = createConfig();
 
 	@Override
 	public void onInitializeClient() {
@@ -21,5 +22,13 @@ public class VisualityMod implements ClientModInitializer {
 
 	public static ResourceLocation locate(String path) {
 		return new ResourceLocation(MOD_ID, path);
+	}
+
+	private static AbstractVisualityConfig createConfig() {
+		if (FabricLoader.getInstance().isModLoaded("cloth-config")) {
+			VisualityClothConfig.init();
+			return VisualityClothConfig.getConfig();
+		}
+		else return new AbstractVisualityConfig();
 	}
 }
