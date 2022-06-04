@@ -9,10 +9,7 @@
 </div>
 
 ## About
-Visuality is a simple client-sided Cosmetic Mod that will add a bunch of new particles such as crystal sparkles, particles on mob hitting, custom particles for slimes, environmental particles to your Minecraft world, expect particles collection expanding with the Mod updates!
+Visuality is a simple client-sided cosmetic mod that will add a bunch of new particles such as crystal sparkles, particles on mob hitting, custom particles for slimes, environmental particles to your Minecraft world, expect particles collection expanding with the mod updates!
 
 ## Configuration
-You can configure the Mod by editing visuality.json in the config folder of your Minecraft directory.
-
-## Community
-Let any Issues or Suggestions be known on the Visuality [GitHub Repo](https://github.com/PinkGoosik/visuality), or on our [Discord Server](https://discord.gg/DcemWeskeZ)!
+You can configure the mod by editing visuality.json in the config folder of your Minecraft directory or simply through ModMenu integration.
