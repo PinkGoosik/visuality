@@ -8,8 +8,11 @@
   "config.visuality.option.charge": "Charge Particle Enabled",
   "config.visuality.option.sparkle": "Sparkle Particle Enabled",
   "config.visuality.option.soul": "Soul Particle Enabled",
+
   "config.visuality.option.waterCircle": "Water Circles Enabled",
   "config.visuality.option.waterCircle.colored": "Water Circles Colored",
+  "config.visuality.option.waterCircle.density": "Water Circles Density",
+  "config.visuality.option.waterCircle.radius": "Water Circles Radius",
 
   "config.visuality.option.hitParticles": "Hit Particles Enabled",
   "config.visuality.option.hitParticles.entries": "Hit Particles Entries",

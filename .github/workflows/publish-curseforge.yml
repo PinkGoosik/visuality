@@ -20,18 +20,19 @@ jobs:
       - name: Build artifacts
         run: ./gradlew build
       - name: publish artifacts
-        uses: Kir-Antipov/mc-publish@v2.1
+        uses: Kir-Antipov/mc-publish@v3.0
         with:
           curseforge-id: 521126
           curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
 
           files-primary: build/libs/!(*-@(dev|sources)).jar
+          files-secondary: build/libs/*-@(dev|sources).jar
 
           version-type: beta
           loaders: |
             fabric
           game-versions: |
-            1.18.2
+            1.19
           dependencies: |
             fabric-api | depends | *
 

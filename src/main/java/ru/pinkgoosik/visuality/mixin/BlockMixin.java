@@ -3,6 +3,7 @@ package ru.pinkgoosik.visuality.mixin;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
@@ -17,8 +18,6 @@ import ru.pinkgoosik.visuality.VisualityMod;
 import ru.pinkgoosik.visuality.registry.ShinyBlockRegistry;
 import ru.pinkgoosik.visuality.registry.VisualityParticles;
 import ru.pinkgoosik.visuality.util.ParticleUtils;
-
-import java.util.Random;
 
 @Mixin(Block.class)
 public abstract class BlockMixin extends BlockBehaviour implements ItemLike {
@@ -42,7 +41,7 @@ public abstract class BlockMixin extends BlockBehaviour implements ItemLike {
     }
 
     @Inject(method = "animateTick", at = @At("TAIL"))
-    void animateTick(BlockState state, Level level, BlockPos pos, Random random, CallbackInfo ci) {
+    void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random, CallbackInfo ci) {
         if(VisualityMod.config.soulEnabled) {
             if(state.is(BlockTags.WITHER_SUMMON_BASE_BLOCKS)) {
                 if(level.getBlockState(pos.above()).isAir()) {

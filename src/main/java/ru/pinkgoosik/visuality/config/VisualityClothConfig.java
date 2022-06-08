@@ -7,7 +7,7 @@ import me.shedaniel.autoconfig.annotation.Config;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import me.shedaniel.clothconfig2.api.ConfigCategory;
 import me.shedaniel.clothconfig2.api.ConfigEntryBuilder;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import ru.pinkgoosik.visuality.VisualityMod;
 import ru.pinkgoosik.visuality.registry.HitParticleRegistry;
 import ru.pinkgoosik.visuality.registry.ShinyArmorRegistry;
@@ -22,7 +22,7 @@ public class VisualityClothConfig extends AbstractVisualityConfig implements Con
 	public static ConfigScreenFactory<?> getModConfigScreenFactory() {
 
         return parent -> {
-            ConfigBuilder builder = ConfigBuilder.create()
+            ConfigBuilder configBuilder = ConfigBuilder.create()
                     .setParentScreen(parent)
                     .setTitle(text("title"))
                     .setSavingRunnable(() -> {
@@ -31,80 +31,90 @@ public class VisualityClothConfig extends AbstractVisualityConfig implements Con
                         ShinyBlockRegistry.reload();
                     });
 
-            ConfigCategory general = builder.getOrCreateCategory(text("general"));
-            ConfigEntryBuilder entryBuilder = builder.entryBuilder();
+            ConfigCategory general = configBuilder.getOrCreateCategory(text("general"));
+            ConfigEntryBuilder entryBuilder = configBuilder.entryBuilder();
             VisualityClothConfig.setupEntries(general, entryBuilder);
 
-            return builder.build();
+            return configBuilder.build();
         };
     }
 
-    public static void setupEntries(ConfigCategory category, ConfigEntryBuilder builder) {
+    public static void setupEntries(ConfigCategory category, ConfigEntryBuilder entryBuilder) {
         var config = VisualityMod.config;
-        category.addEntry(builder.startBooleanToggle(text("option.slime"), config.slimeEnabled)
+        category.addEntry(entryBuilder.startBooleanToggle(text("option.slime"), config.slimeEnabled)
                 .setDefaultValue(true)
                 .setSaveConsumer(newValue -> config.slimeEnabled = newValue)
                 .build());
 
-        category.addEntry(builder.startBooleanToggle(text("option.charge"), config.chargeEnabled)
+        category.addEntry(entryBuilder.startBooleanToggle(text("option.charge"), config.chargeEnabled)
                 .setDefaultValue(true)
                 .setSaveConsumer(newValue -> config.chargeEnabled = newValue)
                 .build());
 
-        category.addEntry(builder.startBooleanToggle(text("option.sparkle"), config.sparkleEnabled)
+        category.addEntry(entryBuilder.startBooleanToggle(text("option.sparkle"), config.sparkleEnabled)
                 .setDefaultValue(true)
                 .setSaveConsumer(newValue -> config.sparkleEnabled = newValue)
                 .build());
 
-        category.addEntry(builder.startBooleanToggle(text("option.soul"), config.soulEnabled)
+        category.addEntry(entryBuilder.startBooleanToggle(text("option.soul"), config.soulEnabled)
                 .setDefaultValue(true)
                 .setSaveConsumer(newValue -> config.soulEnabled = newValue)
                 .build());
 
-        category.addEntry(builder.startBooleanToggle(text("option.waterCircle"), config.waterCircles.enabled)
+        category.addEntry(entryBuilder.startBooleanToggle(text("option.waterCircle"), config.waterCircles.enabled)
                 .setDefaultValue(true)
                 .setSaveConsumer(newValue -> config.waterCircles.enabled = newValue)
                 .build());
 
-        category.addEntry(builder.startBooleanToggle(text("option.waterCircle.colored"), config.waterCircles.colored)
+        category.addEntry(entryBuilder.startBooleanToggle(text("option.waterCircle.colored"), config.waterCircles.colored)
                 .setDefaultValue(true)
                 .setSaveConsumer(newValue -> config.waterCircles.colored = newValue)
                 .build());
 
-        category.addEntry(builder.startBooleanToggle(text("option.hitParticles"), config.hitParticlesEnabled)
+        category.addEntry(entryBuilder.startIntField(text("option.waterCircle.density"), config.waterCircles.density)
+                .setDefaultValue(10)
+                .setSaveConsumer(newValue -> config.waterCircles.density = newValue)
+                .build());
+
+        category.addEntry(entryBuilder.startIntField(text("option.waterCircle.radius"), config.waterCircles.radius)
+                .setDefaultValue(16)
+                .setSaveConsumer(newValue -> config.waterCircles.radius = newValue)
+                .build());
+
+        category.addEntry(entryBuilder.startBooleanToggle(text("option.hitParticles"), config.hitParticlesEnabled)
                 .setDefaultValue(true)
                 .setSaveConsumer(newValue -> config.hitParticlesEnabled = newValue)
                 .build());
 
-        category.addEntry(builder.startStrList(text("option.hitParticles.entries"), config.hitParticleEntries)
+        category.addEntry(entryBuilder.startStrList(text("option.hitParticles.entries"), config.hitParticleEntries)
                 .setDefaultValue(VisualityConfig.DEFAULT_HIT_PARTICLES)
                 .setSaveConsumer(newValue -> config.hitParticleEntries = (ArrayList<String>) newValue)
                 .build());
 
-        category.addEntry(builder.startBooleanToggle(text("option.shinyArmor"), config.shinyArmorEnabled)
+        category.addEntry(entryBuilder.startBooleanToggle(text("option.shinyArmor"), config.shinyArmorEnabled)
                 .setDefaultValue(true)
                 .setSaveConsumer(newValue -> config.shinyArmorEnabled = newValue)
                 .build());
 
-        category.addEntry(builder.startStrList(text("option.shinyArmor.entries"), config.shinyArmorEntries)
+        category.addEntry(entryBuilder.startStrList(text("option.shinyArmor.entries"), config.shinyArmorEntries)
                 .setDefaultValue(VisualityConfig.DEFAULT_SHINY_ARMOR)
                 .setSaveConsumer(newValue -> config.shinyArmorEntries = (ArrayList<String>) newValue)
                 .build());
 
-        category.addEntry(builder.startBooleanToggle(text("option.shinyBlocks"), config.shinyBlocksEnabled)
+        category.addEntry(entryBuilder.startBooleanToggle(text("option.shinyBlocks"), config.shinyBlocksEnabled)
                 .setDefaultValue(true)
                 .setSaveConsumer(newValue -> config.shinyBlocksEnabled = newValue)
                 .build());
 
-        category.addEntry(builder.startStrList(text("option.shinyBlocks.entries"), config.shinyBlockEntries)
+        category.addEntry(entryBuilder.startStrList(text("option.shinyBlocks.entries"), config.shinyBlockEntries)
                 .setDefaultValue(VisualityConfig.DEFAULT_SHINY_BLOCKS)
                 .setSaveConsumer(newValue -> config.shinyBlockEntries = (ArrayList<String>) newValue)
                 .build());
 
     }
 
-    private static TranslatableComponent text(String key) {
-        return new TranslatableComponent("config.visuality." + key);
+    private static Component text(String key) {
+        return Component.translatable("config.visuality." + key);
     }
 
     public static void init() {

@@ -39,9 +39,11 @@ public abstract class SlimeEntityMixin extends Mob implements Enemy {
     private void spawnSlimeParticle(double x, double y, double z) {
         if(getEntityData().get(ID_SIZE) == 1) {
             ParticleUtils.add(level, VisualityParticles.SMALL_SLIME_BLOB, x, y, z, SlimeColors.VANILLA, 1.0D);
-        }else if(getEntityData().get(ID_SIZE) == 2) {
+        }
+        else if(getEntityData().get(ID_SIZE) == 2) {
             ParticleUtils.add(level, VisualityParticles.MEDIUM_SLIME_BLOB, x, y, z, SlimeColors.VANILLA, 1.0D);
-        }else {
+        }
+        else {
             ParticleUtils.add(level, VisualityParticles.BIG_SLIME_BLOB, x, y, z, SlimeColors.VANILLA, 2.0D);
         }
     }

@@ -1,6 +1,7 @@
 package ru.pinkgoosik.visuality.mixin;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.AmethystBlock;
 import net.minecraft.world.level.block.AmethystClusterBlock;
@@ -14,8 +15,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import ru.pinkgoosik.visuality.VisualityMod;
 import ru.pinkgoosik.visuality.registry.VisualityParticles;
 import ru.pinkgoosik.visuality.util.ParticleUtils;
-
-import java.util.Random;
 
 @Mixin(AmethystClusterBlock.class)
 public abstract class AmethystClusterBlockMixin extends AmethystBlock implements SimpleWaterloggedBlock {
@@ -31,7 +30,7 @@ public abstract class AmethystClusterBlockMixin extends AmethystBlock implements
     }
 
     @Override
-    public void animateTick(BlockState state, Level level, BlockPos pos, Random random) {
+    public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
         super.animateTick(state, level, pos, random);
         if(VisualityMod.config.sparkleEnabled) {
             if(state.getBlock() instanceof AmethystClusterBlock && visuality$height > 5 && random.nextFloat() > 0.5) {

@@ -45,7 +45,8 @@ public abstract class LivingEntityMixin extends Entity {
                 if(!client.options.getCameraType().isFirstPerson()) {
                     spawnSparkles(shinyLevel);
                 }
-            }else {
+            }
+            else {
                 spawnSparkles(shinyLevel);
             }
         }

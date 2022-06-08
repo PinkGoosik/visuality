@@ -20,18 +20,19 @@ jobs:
       - name: Build artifacts
         run: ./gradlew build
       - name: publish artifacts
-        uses: Kir-Antipov/mc-publish@v2.1
+        uses: Kir-Antipov/mc-publish@v3.0
         with:
           modrinth-id: rI0hvYcd
           modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
 
           files-primary: build/libs/!(*-@(dev|sources)).jar
+          files-secondary: build/libs/*-@(dev|sources).jar
 
           version-type: beta
           loaders: |
             fabric
           game-versions: |
-            1.18.2
+            1.19
           dependencies: |
             fabric-api | depends | *
 

@@ -1,7 +1,7 @@
 plugins {
 	id "fabric-loom" version "0.12-SNAPSHOT"
 	id "io.github.juuxel.loom-quiltflower" version "1.7.2"
-	id "io.github.p03w.machete" version "1.0.11"
+	id "io.github.p03w.machete" version "1.1.2"
 }
 
 archivesBaseName = project.archives_base_name
@@ -13,6 +13,7 @@ repositories {
         url "https://api.modrinth.com/maven"
         content { includeGroup "maven.modrinth" }
     }
+	maven { url "https://maven.terraformersmc.com" } //modmenu
 	maven { url "https://maven.parchmentmc.org" } //parchment
 	maven { url "https://maven.shedaniel.me" } //cloth-config
 	maven { url "https://pkgs.dev.azure.com/djtheredstoner/DevAuth/_packaging/public/maven/v1" } //dev-auth
@@ -22,19 +23,19 @@ dependencies {
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
 	mappings loom.layered() {
 		officialMojangMappings()
-		parchment("org.parchmentmc.data:parchment-1.18.2:2022.05.02@zip")
+//		parchment("org.parchmentmc.data:parchment-1.18.2:2022.05.02@zip")
 	}
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
-	modImplementation "maven.modrinth:modmenu:3.2.2"
-
-	modApi("me.shedaniel.cloth:cloth-config-fabric:6.2.62") {
+	modImplementation "com.terraformersmc:modmenu:4.0.0"
+	modImplementation("me.shedaniel.cloth:cloth-config-fabric:7.0.65") {
         exclude(group: "net.fabricmc.fabric-api")
+		exclude(group: "com.terraformersmc")
     }
 
 	modLocalRuntime "maven.modrinth:lazydfu:0.1.2"
-	modLocalRuntime "maven.modrinth:ferrite-core:4.2.0"
-	modLocalRuntime "maven.modrinth:starlight:1.0.2+1.18.2"
+//	modLocalRuntime "maven.modrinth:ferrite-core:4.2.0"
+	modLocalRuntime "maven.modrinth:starlight:1.1.0+1.19"
 	modLocalRuntime "me.djtheredstoner:DevAuth-fabric:1.0.0"
 }
 

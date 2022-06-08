@@ -20,7 +20,7 @@ public class VisualityMod implements ClientModInitializer {
 		ShinyBlockRegistry.reload();
 	}
 
-	public static ResourceLocation locate(String path) {
+	public static ResourceLocation id(String path) {
 		return new ResourceLocation(MOD_ID, path);
 	}
 

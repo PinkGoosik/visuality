@@ -20,6 +20,8 @@ public class AbstractVisualityConfig {
     public ArrayList<String> shinyBlockEntries = VisualityConfig.DEFAULT_SHINY_BLOCKS;
 
     public static class WaterCirclesConfigOption {
+        public int density = 10;
+        public int radius = 16;
         public boolean enabled = true;
         public boolean colored = true;
     }

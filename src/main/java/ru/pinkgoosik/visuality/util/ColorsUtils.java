@@ -3,6 +3,7 @@ package ru.pinkgoosik.visuality.util;
 import java.util.ArrayList;
 import java.util.Random;
 
+@SuppressWarnings("unused")
 public class ColorsUtils {
     public static final ArrayList<Integer> RAINBOW = new ArrayList<>();
 
@@ -13,12 +14,12 @@ public class ColorsUtils {
     public static final int BLUE = add(8245247);
     public static final int PURPLE = add(16750831);
 
-    private static int add(int color){
+    private static int add(int color) {
         RAINBOW.add(color);
         return color;
     }
 
-    public static int getRandomColorOfRainbow(Random random){
+    public static int getRandomColorOfRainbow(Random random) {
         return RAINBOW.get(random.nextInt(RAINBOW.size()));
     }
 }
