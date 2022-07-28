@@ -20,7 +20,7 @@ jobs:
       - name: Build artifacts
         run: ./gradlew build
       - name: publish artifacts
-        uses: Kir-Antipov/mc-publish@v3.0
+        uses: Kir-Antipov/mc-publish@v3.1
         with:
           curseforge-id: 521126
           curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
@@ -31,10 +31,13 @@ jobs:
           version-type: beta
           loaders: |
             fabric
+            quilt
           game-versions: |
             1.19
+            1.19.1
           dependencies: |
             fabric-api | depends | *
+            cloth-config | depends | *
 
           java: |
             17

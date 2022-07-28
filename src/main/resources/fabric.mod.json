@@ -2,26 +2,30 @@
   "schemaVersion": 1,
   "id": "visuality",
   "version": "${version}",
-
   "name": "Visuality",
-  "description": "Visual improvements by adding a bunch of new particles.",
-  "authors": ["PinkGoosik"],
+  "description": "Little visual improvements by adding a bunch of new particles.",
+  "authors": [
+    "PinkGoosik"
+  ],
   "contact": {
     "homepage": "https://modrinth.com/mod/visuality",
     "sources": "https://github.com/PinkGoosik/visuality",
     "issues": "https://github.com/PinkGoosik/visuality/issues"
   },
-
   "license": "MIT",
   "icon": "assets/visuality/icon.png",
-
   "environment": "client",
   "entrypoints": {
-    "client": ["ru.pinkgoosik.visuality.VisualityMod"],
-    "modmenu": ["ru.pinkgoosik.visuality.compat.VisualityModMenuIntegration"]
+    "client": [
+      "visuality.VisualityMod"
+    ],
+    "modmenu": [
+      "visuality.compat.VisualityModMenu"
+    ]
   },
-  "mixins": ["visuality.mixins.json"],
-
+  "mixins": [
+    "visuality.mixins.json"
+  ],
   "custom": {
     "modmenu": {
       "links": {
@@ -29,10 +33,10 @@
       }
     }
   },
-
   "depends": {
     "fabricloader": "*",
     "fabric": "*",
+    "cloth-config": "*",
     "minecraft": ">=1.19",
     "java": ">=17"
   }

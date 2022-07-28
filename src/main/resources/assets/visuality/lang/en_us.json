@@ -1,25 +1,19 @@
 {
   "modmenu.descriptionTranslation.visuality": "Visual improvements by adding a bunch of new particles.",
-
   "config.visuality.title": "Visuality Config",
   "config.visuality.general": "General",
-
   "config.visuality.option.slime": "Slime Blobs Enabled",
   "config.visuality.option.charge": "Charge Particle Enabled",
   "config.visuality.option.sparkle": "Sparkle Particle Enabled",
   "config.visuality.option.soul": "Soul Particle Enabled",
-
   "config.visuality.option.waterCircle": "Water Circles Enabled",
   "config.visuality.option.waterCircle.colored": "Water Circles Colored",
   "config.visuality.option.waterCircle.density": "Water Circles Density",
   "config.visuality.option.waterCircle.radius": "Water Circles Radius",
-
   "config.visuality.option.hitParticles": "Hit Particles Enabled",
   "config.visuality.option.hitParticles.entries": "Hit Particles Entries",
-
   "config.visuality.option.shinyArmor": "Shiny Armor Enabled",
   "config.visuality.option.shinyArmor.entries": "Shiny Armor Entries",
-
   "config.visuality.option.shinyBlocks": "Shiny Blocks Enabled",
   "config.visuality.option.shinyBlocks.entries": "Shiny Blocks Entries"
 }
