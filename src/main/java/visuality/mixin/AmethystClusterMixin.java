@@ -1,13 +1,9 @@
 package visuality.mixin;
 
-import net.minecraft.core.BlockPos;
-import net.minecraft.util.RandomSource;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.AmethystBlock;
-import net.minecraft.world.level.block.AmethystClusterBlock;
-import net.minecraft.world.level.block.SimpleWaterloggedBlock;
-import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.block.*;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.random.Random;
+import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -17,27 +13,28 @@ import visuality.registry.VisualityParticles;
 import visuality.util.ParticleUtils;
 
 @Mixin(AmethystClusterBlock.class)
-public abstract class AmethystClusterMixin extends AmethystBlock implements SimpleWaterloggedBlock {
+public abstract class AmethystClusterMixin extends AmethystBlock implements Waterloggable {
 	private int visuality$height;
 
-	protected AmethystClusterMixin(BlockBehaviour.Properties props) {
-		super(props);
+	public AmethystClusterMixin(Settings settings) {
+		super(settings);
 	}
 
+
 	@Inject(method = "<init>", at = @At("RETURN"))
-	public void onInit(int i, int j, Properties props, CallbackInfo ci) {
-		this.visuality$height = i;
+	public void onInit(int height, int xzOffset, Settings settings, CallbackInfo ci) {
+		this.visuality$height = height;
 	}
 
 	@Override
-	public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
-		super.animateTick(state, level, pos, random);
+	public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
+		super.randomDisplayTick(state, world, pos, random);
 		if(VisualityMod.config.sparkleEnabled) {
 			if(state.getBlock() instanceof AmethystClusterBlock && visuality$height > 5 && random.nextFloat() > 0.5) {
 				double x = pos.getX() + random.nextDouble();
 				double y = pos.getY() + random.nextDouble();
 				double z = pos.getZ() + random.nextDouble();
-				ParticleUtils.add(level, VisualityParticles.SPARKLE, x, y, z);
+				ParticleUtils.add(world, VisualityParticles.SPARKLE, x, y, z);
 			}
 		}
 	}

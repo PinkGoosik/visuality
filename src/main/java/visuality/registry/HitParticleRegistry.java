@@ -1,10 +1,10 @@
 package visuality.registry;
 
-import net.minecraft.core.Registry;
-import net.minecraft.core.particles.ParticleOptions;
-import net.minecraft.core.particles.ParticleType;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.EntityType;
+import net.minecraft.entity.EntityType;
+import net.minecraft.particle.ParticleEffect;
+import net.minecraft.particle.ParticleType;
+import net.minecraft.util.Identifier;
+import net.minecraft.util.registry.Registry;
 import visuality.VisualityMod;
 
 import java.util.ArrayList;
@@ -22,20 +22,20 @@ public class HitParticleRegistry {
 			Optional<EntityType<?>> entity = getEntityFromString(args[0]);
 			Optional<ParticleType<?>> particle = getParticleFromString(args[1]);
 			if(entity.isPresent() && particle.isPresent()) {
-				entries.add(new Entry(entity.get(), (ParticleOptions) particle.get()));
+				entries.add(new Entry(entity.get(), (ParticleEffect) particle.get()));
 			}
 		});
 		ENTRIES.addAll(entries);
 	}
 
 	private static Optional<EntityType<?>> getEntityFromString(String id) {
-		return Registry.ENTITY_TYPE.getOptional(new ResourceLocation(id));
+		return Registry.ENTITY_TYPE.getOrEmpty(new Identifier(id));
 	}
 
 	private static Optional<ParticleType<?>> getParticleFromString(String id) {
-		return Registry.PARTICLE_TYPE.getOptional(new ResourceLocation(id));
+		return Registry.PARTICLE_TYPE.getOrEmpty(new Identifier(id));
 	}
 
-	public record Entry(EntityType<?> entity, ParticleOptions particle) {
+	public record Entry(EntityType<?> entity, ParticleEffect particle) {
 	}
 }

@@ -1,10 +1,10 @@
 package visuality.mixin;
 
-import net.minecraft.network.syncher.EntityDataAccessor;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.monster.Creeper;
-import net.minecraft.world.entity.monster.Monster;
-import net.minecraft.world.level.Level;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.data.TrackedData;
+import net.minecraft.entity.mob.CreeperEntity;
+import net.minecraft.entity.mob.HostileEntity;
+import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -15,26 +15,26 @@ import visuality.VisualityMod;
 import visuality.registry.VisualityParticles;
 import visuality.util.ParticleUtils;
 
-@Mixin(Creeper.class)
-public abstract class CreeperEntityMixin extends Monster {
+@Mixin(CreeperEntity.class)
+public abstract class CreeperEntityMixin extends HostileEntity {
 
 	@Shadow
 	@Final
-	private static EntityDataAccessor<Boolean> DATA_IS_POWERED;
+	private static TrackedData<Boolean> CHARGED;
 
-	protected CreeperEntityMixin(EntityType<? extends Monster> entityType, Level world) {
+	protected CreeperEntityMixin(EntityType<? extends HostileEntity> entityType, World world) {
 		super(entityType, world);
 	}
 
 	@Inject(method = "tick", at = @At("TAIL"))
 	void tick(CallbackInfo ci) {
-		if(this.level.isClientSide && this.isAlive() && getEntityData().get(DATA_IS_POWERED)) {
+		if(this.world.isClient && this.isAlive() && getDataTracker().get(CHARGED)) {
 			if(VisualityMod.config.chargeEnabled) {
 				if(this.random.nextInt(20) == 0) {
 					double x = random.nextFloat() * 2 - 1;
 					double y = random.nextFloat();
 					double z = random.nextFloat() * 2 - 1;
-					ParticleUtils.add(level, VisualityParticles.CHARGE, this.getX() + x, this.getY() + y + 1, this.getZ() + z);
+					ParticleUtils.add(world, VisualityParticles.CHARGE, this.getX() + x, this.getY() + y + 1, this.getZ() + z);
 				}
 			}
 		}

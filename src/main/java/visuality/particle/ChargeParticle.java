@@ -1,38 +1,38 @@
 package visuality.particle;
 
-import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.*;
-import net.minecraft.core.particles.SimpleParticleType;
+import net.minecraft.client.world.ClientWorld;
+import net.minecraft.particle.DefaultParticleType;
 
-public class ChargeParticle extends TextureSheetParticle {
-	private final SpriteSet sprites;
+public class ChargeParticle extends SpriteBillboardParticle {
+	private final SpriteProvider sprites;
 
-	protected ChargeParticle(ClientLevel level, double x, double y, double z, SpriteSet sprites) {
-		super(level, x, y, z);
-		this.lifetime = 8 + this.random.nextInt(4);
-		this.setParticleSpeed(0D, 0D, 0D);
+	protected ChargeParticle(ClientWorld world, double x, double y, double z, SpriteProvider sprites) {
+		super(world, x, y, z);
+		this.maxAge = 8 + this.random.nextInt(4);
+		this.setVelocity(0D, 0D, 0D);
 		this.scale(1.25F);
 		this.sprites = sprites;
-		this.setSpriteFromAge(sprites);
+		this.setSpriteForAge(sprites);
 	}
 
 	@Override
 	public void tick() {
-		if(this.age++ >= this.lifetime) {
-			this.remove();
+		if(this.age++ >= this.maxAge) {
+			this.markDead();
 		}
 		else {
-			this.setSpriteFromAge(sprites);
+			this.setSpriteForAge(sprites);
 		}
 	}
 
 	@Override
-	public ParticleRenderType getRenderType() {
-		return ParticleRenderType.PARTICLE_SHEET_LIT;
+	public ParticleTextureSheet getType() {
+		return ParticleTextureSheet.PARTICLE_SHEET_LIT;
 	}
 
-	public record Factory(SpriteSet sprites) implements ParticleProvider<SimpleParticleType> {
-		public Particle createParticle(SimpleParticleType simpleParticleType, ClientLevel world, double x, double y, double z, double velX, double velY, double velZ) {
+	public record Factory(SpriteProvider sprites) implements ParticleFactory<DefaultParticleType> {
+		public Particle createParticle(DefaultParticleType simpleParticleType, ClientWorld world, double x, double y, double z, double velX, double velY, double velZ) {
 			return new ChargeParticle(world, x, y, z, sprites);
 		}
 	}

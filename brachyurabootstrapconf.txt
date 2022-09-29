@@ -43,7 +43,3 @@ https://repo1.maven.org/maven2/com/moandjiezana/toml/toml4j/0.7.2/toml4j-0.7.2.j
 https://repo1.maven.org/maven2/com/moandjiezana/toml/toml4j/0.7.2/toml4j-0.7.2-sources.jar	b957d79fcb9e8a7d06c9634a0c1110128f65405a	toml4j-0.7.2-sources.jar	false
 https://repo1.maven.org/maven2/org/yaml/snakeyaml/1.33/snakeyaml-1.33.jar	2cd0a87ff7df953f810c344bdf2fe3340b954c69	snakeyaml-1.33.jar	true
 https://repo1.maven.org/maven2/org/yaml/snakeyaml/1.33/snakeyaml-1.33-sources.jar	97257a0e34679175cc00444a64fa42d6bb53e23f	snakeyaml-1.33-sources.jar	false
-https://repo1.maven.org/maven2/com/electronwill/night-config/core/3.6.6/core-3.6.6.jar	1dccdc2c372ad0846561a2bd40c9db0543e55863	night-config-core-3.6.6.jar	true
-https://repo1.maven.org/maven2/com/electronwill/night-config/core/3.6.6/core-3.6.6-sources.jar	10be58693a93502f94a2dbaf13364dabe7871d7f	night-config-core-3.6.6-sources.jar	false
-https://repo1.maven.org/maven2/com/electronwill/night-config/toml/3.6.6/toml-3.6.6.jar	f300021dfeece6a2907a0e7545574598220e4ef0	night-config-toml-3.6.6.jar	true
-https://repo1.maven.org/maven2/com/electronwill/night-config/toml/3.6.6/toml-3.6.6-sources.jar	e88e033d7d6057baaebea0541ad02cbb3810fdac	night-config-toml-3.6.6-sources.jar	false

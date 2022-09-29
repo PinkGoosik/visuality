@@ -7,8 +7,8 @@ import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import me.shedaniel.clothconfig2.api.ConfigBuilder;
 import me.shedaniel.clothconfig2.api.ConfigCategory;
 import me.shedaniel.clothconfig2.api.ConfigEntryBuilder;
-import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.network.chat.Component;
+import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.text.Text;
 import visuality.VisualityMod;
 import visuality.registry.HitParticleRegistry;
 import visuality.registry.ShinyArmorRegistry;
@@ -110,8 +110,8 @@ public class VisualityClothConfig extends VisualityConfig implements ConfigData 
 				.build());
 	}
 
-	private static Component text(String key) {
-		return Component.translatable("config.visuality." + key);
+	private static Text text(String key) {
+		return Text.translatable("config.visuality." + key);
 	}
 
 	public static VisualityClothConfig init() {

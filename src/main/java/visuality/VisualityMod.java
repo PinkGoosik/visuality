@@ -1,7 +1,7 @@
 package visuality;
 
 import net.fabricmc.api.ClientModInitializer;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Identifier;
 import visuality.config.VisualityConfig;
 import visuality.config.VisualityClothConfig;
 import visuality.registry.*;
@@ -19,7 +19,7 @@ public class VisualityMod implements ClientModInitializer {
 		ShinyBlockRegistry.reload();
 	}
 
-	public static ResourceLocation id(String path) {
-		return new ResourceLocation(MOD_ID, path);
+	public static Identifier id(String path) {
+		return new Identifier(MOD_ID, path);
 	}
 }

@@ -1,16 +1,16 @@
 package visuality.registry;
 
-import net.minecraft.core.Registry;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.block.AbstractBlock;
+import net.minecraft.block.Block;
+import net.minecraft.util.Identifier;
+import net.minecraft.util.registry.Registry;
 import visuality.VisualityMod;
 
 import java.util.ArrayList;
 import java.util.Optional;
 
 public class ShinyBlockRegistry {
-	public static final ArrayList<BlockBehaviour> ENTRIES = new ArrayList<>();
+	public static final ArrayList<AbstractBlock> ENTRIES = new ArrayList<>();
 
 	public static void reload() {
 		ENTRIES.clear();
@@ -20,6 +20,6 @@ public class ShinyBlockRegistry {
 	}
 
 	private static Optional<Block> getBlockFromString(String id) {
-		return Registry.BLOCK.getOptional(new ResourceLocation(id));
+		return Registry.BLOCK.getOrEmpty(new Identifier(id));
 	}
 }
