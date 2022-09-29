@@ -5,6 +5,11 @@ build/
 out/
 classes/
 
+# brachyura
+
+.brachyura/
+buildscript/build/
+
 # eclipse
 
 *.launch
@@ -31,3 +36,7 @@ bin/
 # fabric
 
 run/
+
+# netbeans
+
+netbeans/
