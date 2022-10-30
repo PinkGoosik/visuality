@@ -8,6 +8,7 @@ import io.github.coolcrabs.brachyura.maven.MavenId;
 import io.github.coolcrabs.brachyura.minecraft.Minecraft;
 import io.github.coolcrabs.brachyura.minecraft.VersionMeta;
 import io.github.coolcrabs.brachyura.quilt.QuiltMaven;
+import io.github.coolcrabs.brachyura.processing.ProcessorChain;
 import net.fabricmc.mappingio.tree.MappingTree;
 
 public class Buildscript extends SimpleFabricProject {
@@ -81,5 +82,9 @@ public class Buildscript extends SimpleFabricProject {
 	public BrachyuraDecompiler decompiler() {
 		return new FernflowerDecompiler(Maven.getMavenJarDep(QuiltMaven.URL, new MavenId("org.quiltmc", "quiltflower", Properties.QUILTFLOWER)));
 	}
-
+	
+	@Override
+	public ProcessorChain resourcesProcessingChain() {
+		return new ProcessorChain(super.resourcesProcessingChain(), new FmjVersionFixer(this));
+	}
 }
