@@ -2,8 +2,8 @@
 
 <img align="right" width="160" src="src/main/resources/assets/visuality/icon.png">
 
-[![CurseForge Downloads](https://cf.way2muchnoise.eu/full_visuality_downloads.svg)](https://curseforge.com/minecraft/mc-mods/visuality)
-[![Minecraft Versions](https://cf.way2muchnoise.eu/versions/visuality.svg)](https://curseforge.com/minecraft/mc-mods/visuality)
+[![CurseForge Downloads](https://cf.way2muchnoise.eu/full_521126_downloads.svg)](https://curseforge.com/minecraft/mc-mods/visuality)
+[![Minecraft Versions](https://cf.way2muchnoise.eu/versions/521126.svg)](https://curseforge.com/minecraft/mc-mods/visuality)
 
 Visuality is a Minecraft mod for fabric loader. This is a simple client-sided cosmetic mod that will add a bunch of new
 particles such as crystal sparkles, particles on mob hitting, custom blob particles for slimes, environmental particles
