@@ -43,3 +43,7 @@ https://repo1.maven.org/maven2/com/moandjiezana/toml/toml4j/0.7.2/toml4j-0.7.2.j
 https://repo1.maven.org/maven2/com/moandjiezana/toml/toml4j/0.7.2/toml4j-0.7.2-sources.jar	b957d79fcb9e8a7d06c9634a0c1110128f65405a	toml4j-0.7.2-sources.jar	false
 https://repo1.maven.org/maven2/org/yaml/snakeyaml/1.33/snakeyaml-1.33.jar	2cd0a87ff7df953f810c344bdf2fe3340b954c69	snakeyaml-1.33.jar	true
 https://repo1.maven.org/maven2/org/yaml/snakeyaml/1.33/snakeyaml-1.33-sources.jar	97257a0e34679175cc00444a64fa42d6bb53e23f	snakeyaml-1.33-sources.jar	false
+https://repo1.maven.org/maven2/org/apache/maven/maven-model/3.8.6/maven-model-3.8.6.jar	8ad31867c493c63ac60a3fa42356a72d20f8457b	maven-model-3.8.6.jar	true
+https://repo1.maven.org/maven2/org/apache/maven/maven-model/3.8.6/maven-model-3.8.6-sources.jar	3f2471220d4a7124aee2bbe9ff801b83c4c32ef6	maven-model-3.8.6-sources.jar	false
+https://repo1.maven.org/maven2/org/codehaus/plexus/plexus-utils/3.5.0/plexus-utils-3.5.0.jar	ff9f0881396a06b31ff548048256e9a7c8f1207a	plexus-utils-3.5.0.jar	true
+https://repo1.maven.org/maven2/org/codehaus/plexus/plexus-utils/3.5.0/plexus-utils-3.5.0-sources.jar	3dea705bdf7a667bc72b982cab5c32610fc1774a	plexus-utils-3.5.0-sources.jar	false
