@@ -10,10 +10,10 @@
     "config.visuality.option.waterCircle.colored": "Круги на воде цветные",
     "config.visuality.option.waterCircle.density": "Плотность кругов на воде",
     "config.visuality.option.waterCircle.radius": "Радиус кругов на воде",
-    "config.visuality.option.hitParticles": "Частицы попадания включены",
-    "config.visuality.option.hitParticles.entries": "Список для частиц попадания",
+    "config.visuality.option.hitParticles": "Частицы удара включены",
+    "config.visuality.option.hitParticles.entries": "Список частиц удара",
     "config.visuality.option.shinyArmor": "Блестящая броня включена",
-    "config.visuality.option.shinyArmor.entries": "Список для блестящей брони",
+    "config.visuality.option.shinyArmor.entries": "Список блестящей брони",
     "config.visuality.option.shinyBlocks": "Блестящие блоки включены",
-    "config.visuality.option.shinyBlocks.entries": "Список для блестящих блоков"
+    "config.visuality.option.shinyBlocks.entries": "Список блестящих блоков"
 }
