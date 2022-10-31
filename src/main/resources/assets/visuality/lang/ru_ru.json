@@ -1,0 +1,19 @@
+{
+    "modmenu.descriptionTranslation.visuality": "Визуальные улучшения за счет добавления множества новых частиц.",
+    "config.visuality.title": "Настройки Visuality",
+    "config.visuality.general": "Общее",
+    "config.visuality.option.slime": "Включены слизевые шарики",
+    "config.visuality.option.charge": "Частицы зарядов включены",
+    "config.visuality.option.sparkle": "Частицы искр включены",
+    "config.visuality.option.soul": "Частицы души включены",
+    "config.visuality.option.waterCircle": "Водные круги включены",
+    "config.visuality.option.waterCircle.colored": "Круги на воде цветные",
+    "config.visuality.option.waterCircle.density": "Плотность кругов на воде",
+    "config.visuality.option.waterCircle.radius": "Радиус кругов на воде",
+    "config.visuality.option.hitParticles": "Частицы удара включены",
+    "config.visuality.option.hitParticles.entries": "Список частиц удара",
+    "config.visuality.option.shinyArmor": "Блестящая броня включена",
+    "config.visuality.option.shinyArmor.entries": "Список блестящей брони",
+    "config.visuality.option.shinyBlocks": "Блестящие блоки включены",
+    "config.visuality.option.shinyBlocks.entries": "Список блестящих блоков"
+}
