@@ -1,0 +1,19 @@
+{
+  "modmenu.descriptionTranslation.visuality": "通过加入一些粒子来提升视觉体验",
+  "config.visuality.title": "可视性 设置",
+  "config.visuality.general": "通用",
+  "config.visuality.option.slime": "启用黏液液滴",
+  "config.visuality.option.charge": "启用充能粒子",
+  "config.visuality.option.sparkle": "启用闪烁粒子",
+  "config.visuality.option.soul": "启用灵魂粒子",
+  "config.visuality.option.waterCircle": "启用水波粒子",
+  "config.visuality.option.waterCircle.colored": "启用水波粒子着色",
+  "config.visuality.option.waterCircle.density": "水波粒子密度",
+  "config.visuality.option.waterCircle.radius": "水波粒子渲染半径",
+  "config.visuality.option.hitParticles": "启用攻击粒子",
+  "config.visuality.option.hitParticles.entries": "攻击粒子列表",
+  "config.visuality.option.shinyArmor": "启用闪亮盔甲",
+  "config.visuality.option.shinyArmor.entries": "闪亮盔甲列表",
+  "config.visuality.option.shinyBlocks": "启用闪亮方块",
+  "config.visuality.option.shinyBlocks.entries": "闪亮方块列表"
+}
