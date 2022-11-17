@@ -1,6 +1,6 @@
 public class Properties {
 	public static final String MOD_ID = "visuality";
-	public static final String MOD_VERSION = "0.5.4";
+	public static final String MOD_VERSION = "0.5.5";
 
 	public static final String MINECRAFT = "1.19.2";
 	public static final String FABRIC_LOADER = "0.14.10";
