@@ -3,8 +3,8 @@ package visuality.registry;
 import net.minecraft.entity.EntityType;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleType;
+import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 import visuality.VisualityMod;
 
 import java.util.ArrayList;
@@ -29,11 +29,11 @@ public class HitParticleRegistry {
 	}
 
 	private static Optional<EntityType<?>> getEntityFromString(String id) {
-		return Registry.ENTITY_TYPE.getOrEmpty(new Identifier(id));
+		return Registries.ENTITY_TYPE.getOrEmpty(new Identifier(id));
 	}
 
 	private static Optional<ParticleType<?>> getParticleFromString(String id) {
-		return Registry.PARTICLE_TYPE.getOrEmpty(new Identifier(id));
+		return Registries.PARTICLE_TYPE.getOrEmpty(new Identifier(id));
 	}
 
 	public record Entry(EntityType<?> entity, ParticleEffect particle) {

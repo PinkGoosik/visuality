@@ -2,8 +2,8 @@ package visuality.registry;
 
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
+import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 import visuality.VisualityMod;
 
 import java.util.ArrayList;
@@ -20,6 +20,6 @@ public class ShinyBlockRegistry {
 	}
 
 	private static Optional<Block> getBlockFromString(String id) {
-		return Registry.BLOCK.getOrEmpty(new Identifier(id));
+		return Registries.BLOCK.getOrEmpty(new Identifier(id));
 	}
 }

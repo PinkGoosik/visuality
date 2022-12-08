@@ -45,6 +45,7 @@ public class CirclesOnWaterEvent {
 		}
 	}
 
+	@SuppressWarnings("RedundantIfStatement")
 	private static boolean shown(ClientWorld world) {
 		var client = MinecraftClient.getInstance();
 		if(!config.waterCircles.enabled) return false;

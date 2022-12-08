@@ -58,13 +58,13 @@ public class Buildscript extends SimpleFabricProject {
 		d.addMaven("https://maven.shedaniel.me", new MavenId("me.shedaniel.cloth", "basic-math", "0.6.1"), RUNTIME, COMPILE);
 
 		// Runtime Mods
-		d.addMaven("https://api.modrinth.com/maven", new MavenId("maven.modrinth", "lazydfu", "0.1.3"), RUNTIME);
-		d.addMaven("https://api.modrinth.com/maven", new MavenId("maven.modrinth", "ferrite-core", "5.0.0-fabric"), RUNTIME);
-		d.addMaven("https://api.modrinth.com/maven", new MavenId("maven.modrinth", "starlight", "1.1.1+1.19"), RUNTIME);
-		d.addMaven("https://api.modrinth.com/maven", new MavenId("maven.modrinth", "lithium", "mc1.19.2-0.10.2"), RUNTIME);
+		//d.addMaven("https://api.modrinth.com/maven", new MavenId("maven.modrinth", "lazydfu", "0.1.3"), RUNTIME);
+		d.addMaven("https://api.modrinth.com/maven", new MavenId("maven.modrinth", "ferrite-core", "5.1.0-fabric"), RUNTIME);
+		//d.addMaven("https://api.modrinth.com/maven", new MavenId("maven.modrinth", "starlight", "1.1.1+1.19"), RUNTIME);
+		//d.addMaven("https://api.modrinth.com/maven", new MavenId("maven.modrinth", "lithium", "mc1.19.3-0.10.3"), RUNTIME);
 
 		// Compatibility
-		d.addMaven("https://maven.terraformersmc.com", new MavenId("com.terraformersmc", "modmenu", "4.1.1"), RUNTIME, COMPILE);
+		d.addMaven("https://maven.terraformersmc.com", new MavenId("com.terraformersmc", "modmenu", "5.0.1"), RUNTIME, COMPILE);
 	}
 
 	public void addFabricModules(ModDependencyCollector d) {

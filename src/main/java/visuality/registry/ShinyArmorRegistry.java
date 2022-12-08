@@ -1,8 +1,8 @@
 package visuality.registry;
 
 import net.minecraft.item.Item;
+import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 import visuality.VisualityMod;
 
 import java.util.ArrayList;
@@ -19,6 +19,6 @@ public class ShinyArmorRegistry {
 	}
 
 	private static Optional<Item> getItemFromString(String id) {
-		return Registry.ITEM.getOrEmpty(new Identifier(id));
+		return Registries.ITEM.getOrEmpty(new Identifier(id));
 	}
 }
