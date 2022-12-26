@@ -1,6 +1,6 @@
 {
-  "modmenu.descriptionTranslation.visuality": "通过加入一些粒子来提升视觉体验",
-  "config.visuality.title": "可视性 设置",
+  "modmenu.descriptionTranslation.visuality": "通过添加一堆新的粒子，在视觉上有了小小的改进。",
+  "config.visuality.title": "Visuality 设置",
   "config.visuality.general": "通用",
   "config.visuality.option.slime": "启用黏液液滴",
   "config.visuality.option.charge": "启用充能粒子",
