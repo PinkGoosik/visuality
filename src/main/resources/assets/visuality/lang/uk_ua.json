@@ -1,0 +1,19 @@
+{
+  "modmenu.descriptionTranslation.visuality": "Невелике візуальне покращення шляхом додавання купи нових частинок.",
+  "config.visuality.title": "Налаштування Visuality",
+  "config.visuality.general": "Загальне",
+  "config.visuality.option.slime": "Слизневі краплі увімкнені",
+  "config.visuality.option.charge": "Заряджені частинки увімкнені",
+  "config.visuality.option.sparkle": "Іскристі частинки увімкнені",
+  "config.visuality.option.soul": "Частинки душі увімкнені",
+  "config.visuality.option.waterCircle": "Кола на воді увімкнені",
+  "config.visuality.option.waterCircle.colored": "Кольорові кола на воді",
+  "config.visuality.option.waterCircle.density": "Щільність кіл на воді",
+  "config.visuality.option.waterCircle.radius": "Радіус кіл на воді",
+  "config.visuality.option.hitParticles": "Частинки ударів увімкнено",
+  "config.visuality.option.hitParticles.entries": "Записи частинок ударів",
+  "config.visuality.option.shinyArmor": "Блискучу броню увімкнено",
+  "config.visuality.option.shinyArmor.entries": "Записи блискучої броні",
+  "config.visuality.option.shinyBlocks": "Блискучі блоки увімкнено",
+  "config.visuality.option.shinyBlocks.entries": "Записи блискучих блоків"
+}
