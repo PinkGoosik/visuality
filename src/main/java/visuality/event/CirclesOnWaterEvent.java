@@ -36,6 +36,7 @@ public class CirclesOnWaterEvent {
 			BlockPos playerPos = new BlockPos((int) player.getX() + x, (int) player.getY(), (int) player.getZ() + z);
 			BlockPos topPos = world.getTopPosition(Heightmap.Type.MOTION_BLOCKING, playerPos);
 
+			if(!(biome.getPrecipitation(topPos).equals(Biome.Precipitation.RAIN)) || !(biome.doesNotSnow(player.getSteppingPos()))) continue;
 			if(world.getBlockState(topPos.down()).isOf(Blocks.WATER) && world.getBlockState(topPos).isAir()) {
 				if(world.getFluidState(topPos.down()).getLevel() == 8) {
 					int color = config.waterCircles.colored ? biome.getWaterColor() : 0;
@@ -45,7 +46,6 @@ public class CirclesOnWaterEvent {
 		}
 	}
 
-	@SuppressWarnings("RedundantIfStatement")
 	private static boolean shown(ClientWorld world) {
 		var client = MinecraftClient.getInstance();
 		if(!config.waterCircles.enabled) return false;
@@ -56,8 +56,6 @@ public class CirclesOnWaterEvent {
 		if(player.isSubmergedInWater() || !World.OVERWORLD.equals(world.getRegistryKey())) return false;
 		if(!world.isRaining()) return false;
 		CirclesOnWaterEvent.biome = world.getBiome(player.getSteppingPos()).value();
-		if(!(biome.getPrecipitation().equals(Biome.Precipitation.RAIN)) || !(biome.doesNotSnow(player.getSteppingPos())))
-			return false;
 		return true;
 	}
 }
