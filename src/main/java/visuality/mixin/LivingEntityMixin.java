@@ -39,8 +39,8 @@ public abstract class LivingEntityMixin extends Entity {
 	@Inject(method = "tick", at = @At("TAIL"))
 	private void tick(CallbackInfo ci) {
 		var client = MinecraftClient.getInstance();
-		if(world.isClient && ticksDelay != 0) ticksDelay--;
-		if(world.isClient && this.isAlive() && client.player != null && VisualityMod.config.shinyArmorEnabled) {
+		if(getWorld().isClient() && ticksDelay != 0) ticksDelay--;
+		if(getWorld().isClient() && this.isAlive() && client.player != null && VisualityMod.config.shinyArmorEnabled) {
 			int shinyLevel = ShinyArmorUtils.getShinyLevel(self);
 			if(client.player.getUuid().equals(this.getUuid())) {
 				if(!client.options.getPerspective().isFirstPerson()) {
@@ -55,7 +55,7 @@ public abstract class LivingEntityMixin extends Entity {
 
 	@Inject(method = "damage", at = @At("HEAD"))
 	void damage(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
-		if(world.isClient && source.getAttacker() instanceof LivingEntity attacker && ticksDelay == 0 && this.isAlive() && VisualityMod.config.hitParticlesEnabled) {
+		if(getWorld().isClient() && source.getAttacker() instanceof LivingEntity attacker && ticksDelay == 0 && this.isAlive() && VisualityMod.config.hitParticlesEnabled) {
 			HitParticleRegistry.ENTRIES.forEach(entry -> {
 				if(this.getType().equals(entry.entity())) {
 					ticksDelay = 10;
@@ -77,7 +77,7 @@ public abstract class LivingEntityMixin extends Entity {
 		else height = height + 0.5F;
 		for(int i = 0; i <= count; i++) {
 			double randomHeight = (double) this.random.nextInt((int) height * 10) / 10;
-			ParticleUtils.add(world, particle, this.getX(), this.getY() + 0.2D + randomHeight, this.getZ());
+			ParticleUtils.add(getWorld(), particle, this.getX(), this.getY() + 0.2D + randomHeight, this.getZ());
 		}
 	}
 
@@ -88,7 +88,7 @@ public abstract class LivingEntityMixin extends Entity {
 				double x = random.nextFloat() * 2 - 1;
 				double y = random.nextFloat();
 				double z = random.nextFloat() * 2 - 1;
-				ParticleUtils.add(world, VisualityParticles.SPARKLE, this.getX() + x, this.getY() + y + 1, this.getZ() + z);
+				ParticleUtils.add(getWorld(), VisualityParticles.SPARKLE, this.getX() + x, this.getY() + y + 1, this.getZ() + z);
 			}
 		}
 	}

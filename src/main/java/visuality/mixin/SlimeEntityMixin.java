@@ -34,20 +34,20 @@ public abstract class SlimeEntityMixin extends MobEntity implements Monster {
 			spawnSlimeParticle(x, y, z);
 		}
 		else {
-			this.world.addParticle(particle, x, y, z, velocityX, velocityY, velocityZ);
+			this.getWorld().addParticle(particle, x, y, z, velocityX, velocityY, velocityZ);
 		}
 	}
 
 	@Unique
 	private void spawnSlimeParticle(double x, double y, double z) {
 		if(getDataTracker().get(SLIME_SIZE) == 1) {
-			ParticleUtils.add(world, VisualityParticles.SMALL_SLIME_BLOB, x, y, z, SlimeColors.VANILLA, 1.0D);
+			ParticleUtils.add(this.getWorld(), VisualityParticles.SMALL_SLIME_BLOB, x, y, z, SlimeColors.VANILLA, 1.0D);
 		}
 		else if(getDataTracker().get(SLIME_SIZE) == 2) {
-			ParticleUtils.add(world, VisualityParticles.MEDIUM_SLIME_BLOB, x, y, z, SlimeColors.VANILLA, 1.0D);
+			ParticleUtils.add(this.getWorld(), VisualityParticles.MEDIUM_SLIME_BLOB, x, y, z, SlimeColors.VANILLA, 1.0D);
 		}
 		else {
-			ParticleUtils.add(world, VisualityParticles.BIG_SLIME_BLOB, x, y, z, SlimeColors.VANILLA, 2.0D);
+			ParticleUtils.add(this.getWorld(), VisualityParticles.BIG_SLIME_BLOB, x, y, z, SlimeColors.VANILLA, 2.0D);
 		}
 	}
 
