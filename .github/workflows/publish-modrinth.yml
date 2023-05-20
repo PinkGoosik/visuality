@@ -30,25 +30,27 @@ jobs:
         run: java -jar brachyura-bootstrap-0.jar build
 
       - name: Publish artifacts to Modrinth
-        uses: Kir-Antipov/mc-publish@v3.2
+        uses: Kir-Antipov/mc-publish@v3.3
         with:
           modrinth-id: rI0hvYcd
           modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
 
-          files-primary: build/libs/!(*-@(dev|sources)).jar
+          files: build/libs/!(*-@(dev|sources)).jar
 
           version-type: beta
           loaders: |
             fabric
             quilt
-          game-versions: |
-            1.19.4-rc3
+            
+          game-version-filter: releases
+
           dependencies: |
-            fabric-api | depends | *
-            cloth-config | depends | *
+            fabric-api(required){modrinth:P7dR8mSH}{curseforge:306612}#(ignore:github)
+            cloth-config(required){modrinth:9s6osm5g}{curseforge:348521}#(ignore:github)
 
           java: |
             17
 
           retry-attempts: 2
           retry-delay: 10000
+          fail-mode: fail
