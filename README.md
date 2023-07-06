@@ -15,3 +15,8 @@ to your Minecraft world. Expect particles collection expanding with the mod upda
 
 You can configure the mod by editing visuality.json in the config folder of your Minecraft directory or simply through
 ModMenu integration.
+
+## Development
+Unlike any other projects Visuality uses [brachyura build tool](https://github.com/CoolCrabs/brachyura), to set up development environment close you IDE and open
+a command prompt or terminal, run `java -jar brachyura-bootstrap-0.jar idea`, replace `idea` with `jdt` if you use VS Code
+or Eclipse, and `netbeans` if its Netbeans, reopen the IDE and allow it to import the project.
