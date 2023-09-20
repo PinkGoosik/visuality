@@ -6,7 +6,6 @@ import io.github.coolcrabs.brachyura.maven.Maven;
 import io.github.coolcrabs.brachyura.maven.MavenId;
 import io.github.coolcrabs.brachyura.minecraft.Minecraft;
 import io.github.coolcrabs.brachyura.minecraft.VersionMeta;
-import io.github.coolcrabs.brachyura.quilt.QuiltMaven;
 import io.github.coolcrabs.brachyura.processing.ProcessorChain;
 import net.fabricmc.mappingio.tree.MappingTree;
 import org.apache.maven.model.Model;
@@ -108,7 +107,7 @@ public class Buildscript extends SimpleFabricProject {
 
 	@Override
 	public BrachyuraDecompiler decompiler() {
-		return new FernflowerDecompiler(Maven.getMavenJarDep(QuiltMaven.URL, new MavenId("org.quiltmc", "quiltflower", this.getProperties().getProperty("quiltflower"))));
+		return new FernflowerDecompiler(Maven.getMavenJarDep("https://repo1.maven.org/maven2/", new MavenId("org.vineflower", "vineflower", this.getProperties().getProperty("vineflower"))));
 	}
 
 	@Override
