@@ -14,15 +14,14 @@ import visuality.util.ParticleUtils;
 
 @Mixin(AmethystClusterBlock.class)
 public abstract class AmethystClusterMixin extends AmethystBlock implements Waterloggable {
-	private int visuality$height;
+	private float visuality$height;
 
 	public AmethystClusterMixin(Settings settings) {
 		super(settings);
 	}
 
-
 	@Inject(method = "<init>", at = @At("RETURN"))
-	public void onInit(int height, int xzOffset, Settings settings, CallbackInfo ci) {
+	public void onInit(float height, float xzOffset, AbstractBlock.Settings settings, CallbackInfo ci) {
 		this.visuality$height = height;
 	}
 
