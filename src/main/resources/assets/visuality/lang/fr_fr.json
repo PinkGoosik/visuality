@@ -1,0 +1,19 @@
+{
+  "modmenu.descriptionTranslation.visuality": "Petites améliorations visuelles en ajoutant une multitude de nouvelles particules.",
+  "config.visuality.title": "Configuration de la Visibilité",
+  "config.visuality.general": "Général",
+  "config.visuality.option.slime": "Blobs de Slime Activés",
+  "config.visuality.option.charge": "Particules de Charge Activées",
+  "config.visuality.option.sparkle": "Particules d'Étincelle Activées",
+  "config.visuality.option.soul": "Particules d'Âme Activées",
+  "config.visuality.option.waterCircle": "Cercles d'Eau Activés",
+  "config.visuality.option.waterCircle.colored": "Cercles d'Eau Colorés",
+  "config.visuality.option.waterCircle.density": "Densité des Cercles d'Eau",
+  "config.visuality.option.waterCircle.radius": "Rayon des Cercles d'Eau",
+  "config.visuality.option.hitParticles": "Particules de Coup Activées",
+  "config.visuality.option.hitParticles.entries": "Entrées des Particules de Coup",
+  "config.visuality.option.shinyArmor": "Armure Brillante Activée",
+  "config.visuality.option.shinyArmor.entries": "Entrées d'Armure Brillante",
+  "config.visuality.option.shinyBlocks": "Blocs Brillants Activés",
+  "config.visuality.option.shinyBlocks.entries": "Entrées de Blocs Brillants"
+}
