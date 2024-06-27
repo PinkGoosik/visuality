@@ -1,0 +1,20 @@
+{
+  "modmenu.descriptionTranslation.visuality": "透過新增一堆新的粒子效果來改進視覺效果。",
+  "config.visuality.title": "Visuality 設定",
+  "config.visuality.general": "一般",
+  "config.visuality.option.slime": "啟用史萊姆泡泡",
+  "config.visuality.option.slime.color": "史萊姆泡泡顏色",
+  "config.visuality.option.charge": "啟用充能粒子效果",
+  "config.visuality.option.sparkle": "啟用火花粒子效果",
+  "config.visuality.option.soul": "啟用靈魂粒子效果",
+  "config.visuality.option.waterCircle": "啟用水圈圈",
+  "config.visuality.option.waterCircle.colored": "水圈圈顏色",
+  "config.visuality.option.waterCircle.density": "水圈圈密度",
+  "config.visuality.option.waterCircle.radius": "水圈圈範圍",
+  "config.visuality.option.hitParticles": "啟用擊中粒子效果",
+  "config.visuality.option.hitParticles.entries": "擊中粒子效果項目",
+  "config.visuality.option.shinyArmor": "啟用耀眼的裝備",
+  "config.visuality.option.shinyArmor.entries": "耀眼的裝備項目",
+  "config.visuality.option.shinyBlocks": "啟用耀眼的方塊",
+  "config.visuality.option.shinyBlocks.entries": "耀眼的方塊項目"
+}
