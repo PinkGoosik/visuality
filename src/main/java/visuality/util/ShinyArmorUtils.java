@@ -9,7 +9,7 @@ public class ShinyArmorUtils {
 	public static int getShinyLevel(LivingEntity entity) {
 		int shinyArmor = 0;
 		for(ItemStack stack : entity.getArmorItems()) {
-			if(ShinyArmorRegistry.ENTRIES.contains(stack.getItem())) {
+			if(ShinyArmorRegistry.isShiny(stack)) {
 				shinyArmor++;
 			}
 		}

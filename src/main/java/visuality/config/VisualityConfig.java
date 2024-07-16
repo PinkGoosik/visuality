@@ -18,10 +18,7 @@ public class VisualityConfig {
 			"minecraft:diamond_leggings", "minecraft:diamond_boots"));
 
 	public static final ArrayList<String> DEFAULT_SHINY_BLOCKS = new ArrayList<>(List.of(
-			"minecraft:gold_ore", "minecraft:deepslate_gold_ore",
-			"minecraft:nether_gold_ore", "minecraft:diamond_ore",
-			"minecraft:deepslate_diamond_ore", "minecraft:emerald_ore",
-			"minecraft:deepslate_emerald_ore"));
+			"#minecraft:gold_ores", "#minecraft:diamond_ores", "#minecraft:emerald_ores"));
 
 	public boolean slimeEnabled = true;
 	public TextColor slimeColor = TextColor.fromRgb(8978297);
