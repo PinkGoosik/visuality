@@ -1,13 +1,13 @@
 package visuality.mixin;
 
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.component.DataComponentTypes;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.item.Item;
-import net.minecraft.item.MiningToolItem;
-import net.minecraft.item.SwordItem;
+import net.minecraft.item.ItemStack;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
@@ -16,7 +16,6 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import visuality.VisualityMod;
 import visuality.registry.HitParticleRegistry;
 import visuality.registry.VisualityParticles;
@@ -53,21 +52,29 @@ public abstract class LivingEntityMixin extends Entity {
 		}
 	}
 
-	@Inject(method = "damage", at = @At("HEAD"))
-	void damage(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
+	@Override
+	public boolean clientDamage(DamageSource source) {
 		if(getWorld().isClient() && source.getAttacker() instanceof LivingEntity attacker && ticksDelay == 0 && this.isAlive() && VisualityMod.config.hitParticlesEnabled) {
 			HitParticleRegistry.ENTRIES.forEach(entry -> {
 				if(this.getType().equals(entry.entity())) {
 					ticksDelay = 10;
-					Item item = attacker.getMainHandStack().getItem();
-					int count = this.random.nextInt(2);
-					if(item instanceof SwordItem sword) count = (int)sword.getMaterial().getAttackDamage() / 2;
-					else if(item instanceof MiningToolItem tool)
-						count = (int)tool.getMaterial().getAttackDamage() / 2;
+					ItemStack stack = attacker.getMainHandStack();
+					int count = this.random.nextInt(3);
+
+					if(stack.getComponents().contains(DataComponentTypes.ATTRIBUTE_MODIFIERS)) {
+						var data = stack.getComponents().get(DataComponentTypes.ATTRIBUTE_MODIFIERS);
+						for(var att : data.modifiers()) {
+							if(att.attribute().equals(EntityAttributes.ATTACK_DAMAGE)) {
+								count =  (int)((float)att.modifier().value() * 0.5F);
+							}
+						}
+					}
+
 					spawnHitParticles(entry.particle(), count);
 				}
 			});
 		}
+		return super.clientDamage(source);
 	}
 
 	@Unique
@@ -75,7 +82,7 @@ public abstract class LivingEntityMixin extends Entity {
 		float height = this.getHeight();
 		if(height * 100 < 100) height = 1.0F;
 		else height = height + 0.5F;
-		for(int i = 0; i <= count; i++) {
+		for(int i = 0; i <= Math.min(count, 10); i++) {
 			double randomHeight = (double) this.random.nextInt((int) height * 10) / 10;
 			ParticleUtils.add(getWorld(), particle, this.getX(), this.getY() + 0.2D + randomHeight, this.getZ());
 		}

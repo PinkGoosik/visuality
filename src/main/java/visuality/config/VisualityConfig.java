@@ -29,6 +29,7 @@ public class VisualityConfig {
 	public VisualityClothConfig.WaterCirclesConfigOption waterCircles = new VisualityClothConfig.WaterCirclesConfigOption();
 
 	public boolean hitParticlesEnabled = true;
+//	public float hitParticlesPer1Damage = 0.5F;
 	public ArrayList<String> hitParticleEntries = DEFAULT_HIT_PARTICLES;
 
 	public boolean shinyArmorEnabled = true;

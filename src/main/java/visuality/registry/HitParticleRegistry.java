@@ -29,11 +29,11 @@ public class HitParticleRegistry {
 	}
 
 	private static Optional<EntityType<?>> getEntityFromString(String id) {
-		return Registries.ENTITY_TYPE.getOrEmpty(Identifier.of(id));
+		return Registries.ENTITY_TYPE.getOptionalValue(Identifier.of(id));
 	}
 
 	private static Optional<ParticleType<?>> getParticleFromString(String id) {
-		return Registries.PARTICLE_TYPE.getOrEmpty(Identifier.of(id));
+		return Registries.PARTICLE_TYPE.getOptionalValue(Identifier.of(id));
 	}
 
 	public record Entry(EntityType<?> entity, ParticleEffect particle) {

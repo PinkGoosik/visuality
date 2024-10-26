@@ -43,6 +43,6 @@ public class ShinyBlockRegistry {
 	}
 
 	private static Optional<Block> getBlockFromString(String id) {
-		return Registries.BLOCK.getOrEmpty(Identifier.of(id));
+		return Registries.BLOCK.getOptionalValue(Identifier.of(id));
 	}
 }

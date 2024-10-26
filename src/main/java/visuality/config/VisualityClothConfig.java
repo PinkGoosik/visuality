@@ -81,6 +81,11 @@ public class VisualityClothConfig extends VisualityConfig implements ConfigData 
 				.setSaveConsumer(newValue -> config.hitParticlesEnabled = newValue)
 				.build());
 
+//		category.addEntry(entryBuilder.startFloatField(text("option.hitParticlesPer1Damage"), config.hitParticlesPer1Damage)
+//			.setDefaultValue(0.5F)
+//			.setSaveConsumer(newValue -> config.hitParticlesPer1Damage = newValue)
+//			.build());
+
 		category.addEntry(entryBuilder.startStrList(text("option.hitParticles.entries"), config.hitParticleEntries)
 				.setDefaultValue(VisualityConfig.DEFAULT_HIT_PARTICLES)
 				.setSaveConsumer(newValue -> {

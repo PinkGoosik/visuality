@@ -28,7 +28,7 @@ public class ChargeParticle extends SpriteBillboardParticle {
 
 	@Override
 	public ParticleTextureSheet getType() {
-		return ParticleTextureSheet.PARTICLE_SHEET_LIT;
+		return ParticleTextureSheet.PARTICLE_SHEET_TRANSLUCENT;
 	}
 
 	public record Factory(SpriteProvider sprites) implements ParticleFactory<SimpleParticleType> {

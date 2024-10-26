@@ -42,6 +42,6 @@ public class ShinyArmorRegistry {
 	}
 
 	private static Optional<Item> getItemFromString(String id) {
-		return Registries.ITEM.getOrEmpty(Identifier.of(id));
+		return Registries.ITEM.getOptionalValue(Identifier.of(id));
 	}
 }

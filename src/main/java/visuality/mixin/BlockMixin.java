@@ -55,7 +55,7 @@ public abstract class BlockMixin extends AbstractBlock implements ItemConvertibl
 		if(VisualityMod.config.shinyBlocksEnabled && ShinyBlockRegistry.isShiny(state)) {
 			for(Direction direction : Direction.values()) {
 				BlockPos offset = pos.offset(direction);
-				if(!world.getBlockState(offset).isOpaqueFullCube(world, offset)) {
+				if(!world.getBlockState(offset).isOpaqueFullCube()) {
 					if(random.nextFloat() > 0.8) {
 						Direction.Axis axis = direction.getAxis();
 						double x = axis == Direction.Axis.X ? 0.5 + 0.5625 * (double) direction.getOffsetX() : (double) random.nextFloat();

@@ -30,9 +30,9 @@ public class WaterCircleParticle extends SpriteBillboardParticle {
 
 	public void setColor() {
 		var waterColor = BiomeColors.getWaterColor(this.world, BlockPos.ofFloored(x, y, z));
-		var red = ColorHelper.Argb.getRed(waterColor) / 255.0f;
-		var green = ColorHelper.Argb.getGreen(waterColor) / 255.0f;
-		var blue = ColorHelper.Argb.getBlue(waterColor) / 255.0f;
+		var red = ColorHelper.getRed(waterColor) / 255.0f;
+		var green = ColorHelper.getGreen(waterColor) / 255.0f;
+		var blue = ColorHelper.getBlue(waterColor) / 255.0f;
 		this.setColor(red, green, blue);
 	}
 

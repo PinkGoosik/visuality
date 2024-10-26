@@ -3,8 +3,8 @@ package visuality.event;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
-import net.minecraft.client.option.ParticlesMode;
 import net.minecraft.client.world.ClientWorld;
+import net.minecraft.particle.ParticlesMode;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.Heightmap;
 import net.minecraft.world.World;
@@ -36,7 +36,7 @@ public class CirclesOnWaterEvent {
 			BlockPos playerPos = new BlockPos((int) player.getX() + x, (int) player.getY(), (int) player.getZ() + z);
 			BlockPos topPos = world.getTopPosition(Heightmap.Type.MOTION_BLOCKING, playerPos);
 
-			if(!(biome.getPrecipitation(topPos).equals(Biome.Precipitation.RAIN)) || !(biome.doesNotSnow(player.getSteppingPos()))) continue;
+			if(!(biome.getPrecipitation(topPos, world.getSeaLevel()).equals(Biome.Precipitation.RAIN)) || !(biome.doesNotSnow(player.getSteppingPos(), world.getSeaLevel()))) continue;
 			if(world.getBlockState(topPos.down()).isOf(Blocks.WATER) && world.getBlockState(topPos).isAir()) {
 				if(world.getFluidState(topPos.down()).getLevel() == 8) {
 					ParticleUtils.add(world, VisualityParticles.WATER_CIRCLE, topPos.getX() + random.nextDouble(), topPos.getY() + 0.05D, topPos.getZ() + random.nextDouble());
