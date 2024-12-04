@@ -24,11 +24,13 @@ import visuality.util.ParticleUtils;
 
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin extends Entity {
+	@Unique
 	LivingEntity self = LivingEntity.class.cast(this);
 
 	@Shadow
 	public abstract boolean isAlive();
 
+	@Unique
 	int ticksDelay = 0;
 
 	public LivingEntityMixin(EntityType<?> type, World world) {

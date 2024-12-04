@@ -3,7 +3,6 @@ package visuality.mixin;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.util.math.BlockPos;
@@ -24,20 +23,6 @@ public abstract class BlockMixin extends AbstractBlock implements ItemConvertibl
 
 	public BlockMixin(Settings settings) {
 		super(settings);
-	}
-
-	@Inject(method = "onLandedUpon", at = @At("TAIL"))
-	void onLandedUpon(World world, BlockState state, BlockPos pos, Entity entity, float fallDistance, CallbackInfo ci) {
-		if(VisualityMod.config.soulEnabled) {
-			if(state.isIn(BlockTags.WITHER_SUMMON_BASE_BLOCKS)) {
-				for(int i = 0; i <= world.random.nextInt(5) + 1; i++) {
-					double x = entity.getX();
-					double y = entity.getY() + 0.1;
-					double z = entity.getZ();
-					ParticleUtils.add(world, VisualityParticles.SOUL, x, y, z);
-				}
-			}
-		}
 	}
 
 	@Inject(method = "randomDisplayTick", at = @At("TAIL"))

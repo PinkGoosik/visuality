@@ -50,7 +50,7 @@ public class WaterCircleParticle extends SpriteBillboardParticle {
 	}
 
 	@Override
-	public void buildGeometry(VertexConsumer buffer, Camera camera, float ticks) {
+	public void render(VertexConsumer buffer, Camera camera, float ticks) {
 		Vec3d vec3 = camera.getPos();
 		float x = (float) (MathHelper.lerp(ticks, this.prevPosX, this.x) - vec3.getX());
 		float y = (float) (MathHelper.lerp(ticks, this.prevPosY, this.y) - vec3.getY());

@@ -8,7 +8,8 @@
     "CreeperEntityMixin",
     "LivingEntityMixin",
     "SlimeEntityMixin",
-    "BlockMixin"
+    "BlockMixin",
+    "EntityMixin"
   ],
   "injectors": {
     "defaultRequire": 1
