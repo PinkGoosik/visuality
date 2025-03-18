@@ -1,12 +1,15 @@
 package visuality.mixin;
 
+import com.google.common.collect.Lists;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.mob.ZombieEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.world.World;
@@ -18,9 +21,11 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import visuality.VisualityMod;
 import visuality.registry.HitParticleRegistry;
+import visuality.registry.ShinyArmorRegistry;
 import visuality.registry.VisualityParticles;
-import visuality.util.ShinyArmorUtils;
 import visuality.util.ParticleUtils;
+
+import java.util.ArrayList;
 
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin extends Entity {
@@ -42,14 +47,14 @@ public abstract class LivingEntityMixin extends Entity {
 		var client = MinecraftClient.getInstance();
 		if(getWorld().isClient() && ticksDelay != 0) ticksDelay--;
 		if(getWorld().isClient() && this.isAlive() && client.player != null && VisualityMod.config.shinyArmorEnabled) {
-			int shinyLevel = ShinyArmorUtils.getShinyLevel(self);
+
 			if(client.player.getUuid().equals(this.getUuid())) {
 				if(!client.options.getPerspective().isFirstPerson()) {
-					spawnSparkles(shinyLevel);
+					spawnSparkles();
 				}
 			}
 			else {
-				spawnSparkles(shinyLevel);
+				spawnSparkles();
 			}
 		}
 	}
@@ -91,15 +96,37 @@ public abstract class LivingEntityMixin extends Entity {
 	}
 
 	@Unique
-	private void spawnSparkles(int shinyLevel) {
-		if(shinyLevel > 0) {
-			if(this.random.nextInt(20 - shinyLevel) == 0) {
-				double x = random.nextFloat() * 2 - 1;
-				double y = random.nextFloat();
-				double z = random.nextFloat() * 2 - 1;
-				ParticleUtils.add(getWorld(), VisualityParticles.SPARKLE, this.getX() + x, this.getY() + y + 1, this.getZ() + z);
+	private void spawnSparkles() {
+		if(self instanceof ZombieEntity zomb && zomb.isBaby()) return;
+		if(!hasShinyArmor()) return;
+
+		ArrayList<Float> heights = Lists.newArrayList();
+
+		if(ShinyArmorRegistry.isShiny(self.getEquippedStack(EquipmentSlot.FEET))) heights.add(0.25F);
+		if(ShinyArmorRegistry.isShiny(self.getEquippedStack(EquipmentSlot.LEGS))) heights.add(0.65F);
+		if(ShinyArmorRegistry.isShiny(self.getEquippedStack(EquipmentSlot.CHEST))) heights.add(1.1F);
+		if(ShinyArmorRegistry.isShiny(self.getEquippedStack(EquipmentSlot.HEAD)) && self.isSneaking()) heights.add(1.65F);
+		else if(ShinyArmorRegistry.isShiny(self.getEquippedStack(EquipmentSlot.HEAD))) heights.add(1.85F);
+
+		if(!heights.isEmpty()) {
+			float height = heights.get(random.nextInt(heights.size()));
+
+			if(this.random.nextInt(20 - (heights.size() * 2)) == 0) {
+				double randX = random.nextFloat() - 0.5;
+				double randY = (random.nextFloat() * 2 - 1) / 5D;
+				double randZ = random.nextFloat() - 0.5;
+
+				ParticleUtils.add(getWorld(), VisualityParticles.SPARKLE, this.getX() + randX, this.getY() + randY + height, this.getZ() + randZ);
 			}
 		}
+
+	}
+
+	private boolean hasShinyArmor() {
+		if(ShinyArmorRegistry.isShiny(self.getEquippedStack(EquipmentSlot.FEET))) return true;
+		if(ShinyArmorRegistry.isShiny(self.getEquippedStack(EquipmentSlot.LEGS))) return true;
+		if(ShinyArmorRegistry.isShiny(self.getEquippedStack(EquipmentSlot.CHEST))) return true;
+		return ShinyArmorRegistry.isShiny(self.getEquippedStack(EquipmentSlot.HEAD));
 	}
 
 }

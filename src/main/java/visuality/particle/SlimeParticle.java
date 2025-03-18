@@ -34,7 +34,7 @@ public class SlimeParticle extends SpriteBillboardParticle {
 		if(this.onGround) {
 			this.gravityStrength = 0F;
 			this.setVelocity(0D, 0D, 0D);
-			this.setPos(prevPosX, prevPosY + 0.1D, prevPosZ);
+			this.setPos(lastX, lastY + 0.1D, lastZ);
 		}
 	}
 

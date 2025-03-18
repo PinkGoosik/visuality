@@ -27,13 +27,13 @@ public abstract class SlimeEntityMixin extends MobEntity implements Monster {
 		super(entityType, world);
 	}
 
-	@Redirect(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/World;addParticle(Lnet/minecraft/particle/ParticleEffect;DDDDDD)V"))
+	@Redirect(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/World;addParticleClient(Lnet/minecraft/particle/ParticleEffect;DDDDDD)V"))
 	void addParticle(World world, ParticleEffect particle, double x, double y, double z, double velocityX, double velocityY, double velocityZ) {
 		if(world.isClient && this.getType().equals(EntityType.SLIME) && VisualityMod.config.slimeEnabled) {
 			spawnSlimeParticle(x, y, z);
 		}
 		else {
-			this.getWorld().addParticle(particle, x, y, z, velocityX, velocityY, velocityZ);
+			this.getWorld().addParticleClient(particle, x, y, z, velocityX, velocityY, velocityZ);
 		}
 	}
 

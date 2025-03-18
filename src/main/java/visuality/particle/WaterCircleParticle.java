@@ -52,9 +52,9 @@ public class WaterCircleParticle extends SpriteBillboardParticle {
 	@Override
 	public void render(VertexConsumer buffer, Camera camera, float ticks) {
 		Vec3d vec3 = camera.getPos();
-		float x = (float) (MathHelper.lerp(ticks, this.prevPosX, this.x) - vec3.getX());
-		float y = (float) (MathHelper.lerp(ticks, this.prevPosY, this.y) - vec3.getY());
-		float z = (float) (MathHelper.lerp(ticks, this.prevPosZ, this.z) - vec3.getZ());
+		float x = (float) (MathHelper.lerp(ticks, this.lastX, this.x) - vec3.getX());
+		float y = (float) (MathHelper.lerp(ticks, this.lastY, this.y) - vec3.getY());
+		float z = (float) (MathHelper.lerp(ticks, this.lastZ, this.z) - vec3.getZ());
 
 		Vector3f[] vector3fs = new Vector3f[]{new Vector3f(-1.0F, -1.0F, 0.0F), new Vector3f(-1.0F, 1.0F, 0.0F), new Vector3f(1.0F, 1.0F, 0.0F), new Vector3f(1.0F, -1.0F, 0.0F)};
 		float f4 = this.getSize(ticks);

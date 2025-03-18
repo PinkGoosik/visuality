@@ -9,7 +9,7 @@ public class SolidFallingParticle extends AbstractSlowingParticle {
 	public SolidFallingParticle(ClientWorld world, double x, double y, double z, double velX, double velY, double velZ) {
 		super(world, x, y, z, velX, velY, velZ);
 		this.scale(1.1F + (float) world.random.nextInt(6) / 10);
-		this.angle = prevAngle = random.nextFloat() * (float) (2 * Math.PI);
+		this.angle = lastAngle = random.nextFloat() * (float) (2 * Math.PI);
 		this.velocityY = -0.25D;
 		this.maxAge = (int) (8.0D / (Math.random() * 0.8D + 0.2D)) + 12;
 	}
@@ -30,7 +30,7 @@ public class SolidFallingParticle extends AbstractSlowingParticle {
 		}
 		if(this.onGround) {
 			this.setVelocity(0D, 0D, 0D);
-			this.setPos(prevPosX, prevPosY + 0.1D, prevPosZ);
+			this.setPos(lastX, lastY + 0.1D, lastZ);
 		}
 	}
 
