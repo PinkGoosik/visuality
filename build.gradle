@@ -1,5 +1,5 @@
 plugins {
-	id "fabric-loom" version "1.10-SNAPSHOT"
+	id "fabric-loom" version "1.11-SNAPSHOT"
 }
 
 version = project.mod_version
@@ -18,7 +18,7 @@ dependencies {
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api}"
 
 	modApi("me.shedaniel.cloth:cloth-config-fabric:${project.cloth_config}") { exclude(group: "net.fabricmc.fabric-api") }
-	modApi "com.terraformersmc:modmenu:${project.modmenu_version}"
+	modCompileOnlyApi "com.terraformersmc:modmenu:${project.modmenu_version}"
 }
 
 base {

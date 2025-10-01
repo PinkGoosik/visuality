@@ -18,12 +18,12 @@ import visuality.util.ParticleUtils;
 abstract class EntityMixin {
 
 	@Shadow
-	public abstract World getWorld();
+	public abstract World getEntityWorld();
 
 	@Inject(method = "spawnSprintingParticles", at = @At("TAIL"))
 	void spawnSprintingParticles(CallbackInfo ci, @Local BlockState state) {
 		Entity entity = Entity.class.cast(this);
-		World world = getWorld();
+		World world = getEntityWorld();
 
 		if(world.isClient() && VisualityMod.config.soulEnabled && state.isIn(BlockTags.WITHER_SUMMON_BASE_BLOCKS)) {
 			if(world.random.nextInt(5) == 0) {

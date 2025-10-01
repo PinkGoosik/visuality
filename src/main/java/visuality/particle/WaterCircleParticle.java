@@ -3,29 +3,25 @@ package visuality.particle;
 import net.minecraft.client.color.world.BiomeColors;
 import net.minecraft.client.particle.*;
 import net.minecraft.client.render.Camera;
-import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.particle.SimpleParticleType;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.ColorHelper;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.*;
+import net.minecraft.util.math.random.Random;
 import visuality.VisualityMod;
 import org.joml.Quaternionf;
-import org.joml.Vector3f;
 
-public class WaterCircleParticle extends SpriteBillboardParticle {
+public class WaterCircleParticle extends BillboardParticle {
 	private final SpriteProvider sprites;
-	private static final Quaternionf QUATERNION = new Quaternionf(0F, -0.7F, 0.7F, 0F);
+	private static final Quaternionf ROTATION = RotationAxis.POSITIVE_X.rotationDegrees(-90);
 
 	private WaterCircleParticle(ClientWorld world, double x, double y, double z, SpriteProvider sprites) {
-		super(world, x, y, z, 0, 0, 0);
+		super(world, x, y, z, 0, 0, 0, sprites.getFirst());
 		this.maxAge = 5 + this.random.nextInt(3);
 		this.setVelocity(0D, 0D, 0D);
 		if (VisualityMod.config.waterCircles.colored) this.setColor();
 		this.scale(2F + (float) this.random.nextInt(11) / 10);
 		this.sprites = sprites;
-		this.setSpriteForAge(sprites);
+		this.updateSprite(sprites);
 	}
 
 	public void setColor() {
@@ -45,45 +41,22 @@ public class WaterCircleParticle extends SpriteBillboardParticle {
 			this.markDead();
 		}
 		else {
-			this.setSpriteForAge(sprites);
+			this.updateSprite(sprites);
 		}
 	}
 
 	@Override
-	public void render(VertexConsumer buffer, Camera camera, float ticks) {
-		Vec3d vec3 = camera.getPos();
-		float x = (float) (MathHelper.lerp(ticks, this.lastX, this.x) - vec3.getX());
-		float y = (float) (MathHelper.lerp(ticks, this.lastY, this.y) - vec3.getY());
-		float z = (float) (MathHelper.lerp(ticks, this.lastZ, this.z) - vec3.getZ());
-
-		Vector3f[] vector3fs = new Vector3f[]{new Vector3f(-1.0F, -1.0F, 0.0F), new Vector3f(-1.0F, 1.0F, 0.0F), new Vector3f(1.0F, 1.0F, 0.0F), new Vector3f(1.0F, -1.0F, 0.0F)};
-		float f4 = this.getSize(ticks);
-
-		for(int i = 0; i < 4; ++i) {
-			Vector3f vector3f = vector3fs[i];
-			vector3f.rotate(QUATERNION);
-			vector3f.mul(f4);
-			vector3f.add(x, y, z);
-		}
-
-		float f7 = this.getMinU();
-		float f8 = this.getMaxU();
-		float f5 = this.getMinV();
-		float f6 = this.getMaxV();
-		int light = this.getBrightness(ticks);
-		buffer.vertex(vector3fs[0].x(), vector3fs[0].y(), vector3fs[0].z()).texture(f8, f6).color(this.red, this.green, this.blue, this.alpha).light(light);
-		buffer.vertex(vector3fs[1].x(), vector3fs[1].y(), vector3fs[1].z()).texture(f8, f5).color(this.red, this.green, this.blue, this.alpha).light(light);
-		buffer.vertex(vector3fs[2].x(), vector3fs[2].y(), vector3fs[2].z()).texture(f7, f5).color(this.red, this.green, this.blue, this.alpha).light(light);
-		buffer.vertex(vector3fs[3].x(), vector3fs[3].y(), vector3fs[3].z()).texture(f7, f6).color(this.red, this.green, this.blue, this.alpha).light(light);
+	protected RenderType getRenderType() {
+		return RenderType.PARTICLE_ATLAS_TRANSLUCENT;
 	}
 
-	@Override
-	public ParticleTextureSheet getType() {
-		return ParticleTextureSheet.PARTICLE_SHEET_TRANSLUCENT;
+	protected void render(BillboardParticleSubmittable submittable, Camera camera, Quaternionf rotation, float ticks) {
+		super.render(submittable, camera, ROTATION, ticks);
 	}
 
 	public record Factory(SpriteProvider sprites) implements ParticleFactory<SimpleParticleType> {
-		public Particle createParticle(SimpleParticleType type, ClientWorld world, double x, double y, double z, double velX, double velY, double velZ) {
+		@Override
+		public Particle createParticle(SimpleParticleType parameters, ClientWorld world, double x, double y, double z, double velocityX, double velocityY, double velocityZ, Random random) {
 			return new WaterCircleParticle(world, x, y, z, sprites);
 		}
 	}

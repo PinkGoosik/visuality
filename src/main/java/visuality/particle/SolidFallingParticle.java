@@ -1,17 +1,24 @@
 package visuality.particle;
 
 import net.minecraft.client.particle.*;
+import net.minecraft.client.texture.Sprite;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.particle.SimpleParticleType;
+import net.minecraft.util.math.random.Random;
 
 public class SolidFallingParticle extends AbstractSlowingParticle {
 
-	public SolidFallingParticle(ClientWorld world, double x, double y, double z, double velX, double velY, double velZ) {
-		super(world, x, y, z, velX, velY, velZ);
+	public SolidFallingParticle(ClientWorld world, double x, double y, double z, double velX, double velY, double velZ, Sprite sprite) {
+		super(world, x, y, z, velX, velY, velZ, sprite);
 		this.scale(1.1F + (float) world.random.nextInt(6) / 10);
-		this.angle = lastAngle = random.nextFloat() * (float) (2 * Math.PI);
+		this.zRotation = lastZRotation = random.nextFloat() * (float) (2 * Math.PI);
 		this.velocityY = -0.25D;
 		this.maxAge = (int) (8.0D / (Math.random() * 0.8D + 0.2D)) + 12;
+	}
+
+	@Override
+	protected RenderType getRenderType() {
+		return RenderType.PARTICLE_ATLAS_TRANSLUCENT;
 	}
 
 	@Override
@@ -34,15 +41,11 @@ public class SolidFallingParticle extends AbstractSlowingParticle {
 		}
 	}
 
-	@Override
-	public ParticleTextureSheet getType() {
-		return ParticleTextureSheet.PARTICLE_SHEET_TRANSLUCENT;
-	}
-
 	public record Factory(SpriteProvider sprites) implements ParticleFactory<SimpleParticleType> {
-		public Particle createParticle(SimpleParticleType type, ClientWorld world, double x, double y, double z, double velX, double velY, double velZ) {
-			SolidFallingParticle particle = new SolidFallingParticle(world, x, y, z, velX, velY, velZ);
-			particle.setSpriteForAge(sprites);
+		@Override
+		public Particle createParticle(SimpleParticleType parameters, ClientWorld world, double x, double y, double z, double velocityX, double velocityY, double velocityZ, Random random) {
+			SolidFallingParticle particle = new SolidFallingParticle(world, x, y, z, velocityX, velocityY, velocityZ, sprites.getFirst());
+			particle.updateSprite(sprites);
 			return particle;
 		}
 	}

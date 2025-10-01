@@ -3,17 +3,18 @@ package visuality.particle;
 import net.minecraft.client.particle.*;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.particle.SimpleParticleType;
+import net.minecraft.util.math.random.Random;
 
-public class SparkleParticle extends SpriteBillboardParticle {
+public class SparkleParticle extends BillboardParticle {
 	private final SpriteProvider sprites;
 
 	private SparkleParticle(ClientWorld world, double x, double y, double z, SpriteProvider sprites) {
-		super(world, x, y, z, 0, 0, 0);
+		super(world, x, y, z, 0, 0, 0, sprites.getFirst());
 		this.maxAge = 5 + this.random.nextInt(4);
 		this.setVelocity(0D, 0D, 0D);
 		this.scale(1.1F);
 		this.sprites = sprites;
-		this.setSpriteForAge(sprites);
+		this.updateSprite(sprites);
 	}
 
 	@Override
@@ -22,13 +23,8 @@ public class SparkleParticle extends SpriteBillboardParticle {
 			this.markDead();
 		}
 		else {
-			this.setSpriteForAge(sprites);
+			this.updateSprite(sprites);
 		}
-	}
-
-	@Override
-	public ParticleTextureSheet getType() {
-		return ParticleTextureSheet.PARTICLE_SHEET_TRANSLUCENT;
 	}
 
 	@Override
@@ -36,8 +32,15 @@ public class SparkleParticle extends SpriteBillboardParticle {
 		return 15728880;
 	}
 
+	@Override
+	protected RenderType getRenderType() {
+		return RenderType.PARTICLE_ATLAS_TRANSLUCENT;
+	}
+
 	public record Factory(SpriteProvider sprites) implements ParticleFactory<SimpleParticleType> {
-		public Particle createParticle(SimpleParticleType type, ClientWorld world, double x, double y, double z, double velX, double velY, double velZ) {
+
+		@Override
+		public Particle createParticle(SimpleParticleType parameters, ClientWorld world, double x, double y, double z, double velocityX, double velocityY, double velocityZ, Random random) {
 			return new SparkleParticle(world, x, y, z, sprites);
 		}
 	}

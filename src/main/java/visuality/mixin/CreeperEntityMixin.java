@@ -28,13 +28,13 @@ public abstract class CreeperEntityMixin extends HostileEntity {
 
 	@Inject(method = "tick", at = @At("TAIL"))
 	void tick(CallbackInfo ci) {
-		if(this.getWorld().isClient() && this.isAlive() && getDataTracker().get(CHARGED)) {
+		if(this.getEntityWorld().isClient() && this.isAlive() && getDataTracker().get(CHARGED)) {
 			if(VisualityMod.config.chargeEnabled) {
 				if(this.random.nextInt(20) == 0) {
 					double x = random.nextFloat() * 2 - 1;
 					double y = random.nextFloat();
 					double z = random.nextFloat() * 2 - 1;
-					ParticleUtils.add(this.getWorld(), VisualityParticles.CHARGE, this.getX() + x, this.getY() + y + 1, this.getZ() + z);
+					ParticleUtils.add(this.getEntityWorld(), VisualityParticles.CHARGE, this.getX() + x, this.getY() + y + 1, this.getZ() + z);
 				}
 			}
 		}

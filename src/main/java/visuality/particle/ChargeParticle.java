@@ -3,17 +3,18 @@ package visuality.particle;
 import net.minecraft.client.particle.*;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.particle.SimpleParticleType;
+import net.minecraft.util.math.random.Random;
 
-public class ChargeParticle extends SpriteBillboardParticle {
+public class ChargeParticle extends BillboardParticle {
 	private final SpriteProvider sprites;
 
 	protected ChargeParticle(ClientWorld world, double x, double y, double z, SpriteProvider sprites) {
-		super(world, x, y, z);
+		super(world, x, y, z, sprites.getFirst());
+		this.sprites = sprites;
 		this.maxAge = 8 + this.random.nextInt(4);
 		this.setVelocity(0D, 0D, 0D);
 		this.scale(1.25F);
-		this.sprites = sprites;
-		this.setSpriteForAge(sprites);
+		updateSprite(sprites);
 	}
 
 	@Override
@@ -22,17 +23,19 @@ public class ChargeParticle extends SpriteBillboardParticle {
 			this.markDead();
 		}
 		else {
-			this.setSpriteForAge(sprites);
+			this.updateSprite(sprites);
 		}
 	}
 
 	@Override
-	public ParticleTextureSheet getType() {
-		return ParticleTextureSheet.PARTICLE_SHEET_TRANSLUCENT;
+	protected RenderType getRenderType() {
+		return RenderType.PARTICLE_ATLAS_TRANSLUCENT;
 	}
 
 	public record Factory(SpriteProvider sprites) implements ParticleFactory<SimpleParticleType> {
-		public Particle createParticle(SimpleParticleType simpleParticleType, ClientWorld world, double x, double y, double z, double velX, double velY, double velZ) {
+
+		@Override
+		public Particle createParticle(SimpleParticleType parameters, ClientWorld world, double x, double y, double z, double velocityX, double velocityY, double velocityZ, Random random) {
 			return new ChargeParticle(world, x, y, z, sprites);
 		}
 	}

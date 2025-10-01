@@ -10,6 +10,8 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.mob.ZombieEntity;
+import net.minecraft.entity.passive.ChickenEntity;
+import net.minecraft.entity.passive.ChickenVariants;
 import net.minecraft.item.ItemStack;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.world.World;
@@ -45,8 +47,8 @@ public abstract class LivingEntityMixin extends Entity {
 	@Inject(method = "tick", at = @At("TAIL"))
 	private void tick(CallbackInfo ci) {
 		var client = MinecraftClient.getInstance();
-		if(getWorld().isClient() && ticksDelay != 0) ticksDelay--;
-		if(getWorld().isClient() && this.isAlive() && client.player != null && VisualityMod.config.shinyArmorEnabled) {
+		if(getEntityWorld().isClient() && ticksDelay != 0) ticksDelay--;
+		if(getEntityWorld().isClient() && this.isAlive() && client.player != null && VisualityMod.config.shinyArmorEnabled) {
 
 			if(client.player.getUuid().equals(this.getUuid())) {
 				if(!client.options.getPerspective().isFirstPerson()) {
@@ -61,7 +63,7 @@ public abstract class LivingEntityMixin extends Entity {
 
 	@Override
 	public boolean clientDamage(DamageSource source) {
-		if(getWorld().isClient() && source.getAttacker() instanceof LivingEntity attacker && ticksDelay == 0 && this.isAlive() && VisualityMod.config.hitParticlesEnabled) {
+		if(getEntityWorld().isClient() && source.getAttacker() instanceof LivingEntity attacker && ticksDelay == 0 && this.isAlive() && VisualityMod.config.hitParticlesEnabled) {
 			HitParticleRegistry.ENTRIES.forEach(entry -> {
 				if(this.getType().equals(entry.entity())) {
 					ticksDelay = 10;
@@ -77,7 +79,17 @@ public abstract class LivingEntityMixin extends Entity {
 						}
 					}
 
-					spawnHitParticles(entry.particle(), count);
+					if((Object)this instanceof ChickenEntity chicken && entry.particle().equals(VisualityParticles.FEATHER)) {
+						var variant = chicken.getVariant();
+						ParticleEffect particle = VisualityParticles.FEATHER;
+						if(variant.getKey().isPresent()) {
+							if(variant.getKey().get().equals(ChickenVariants.COLD)) particle = VisualityParticles.COLD_FEATHER;
+							if(variant.getKey().get().equals(ChickenVariants.WARM)) particle = VisualityParticles.WARM_FEATHER;
+						}
+						spawnHitParticles(particle, count);
+
+					}
+					else spawnHitParticles(entry.particle(), count);
 				}
 			});
 		}
@@ -91,7 +103,7 @@ public abstract class LivingEntityMixin extends Entity {
 		else height = height + 0.5F;
 		for(int i = 0; i <= Math.min(count, 10); i++) {
 			double randomHeight = (double) this.random.nextInt((int) height * 10) / 10;
-			ParticleUtils.add(getWorld(), particle, this.getX(), this.getY() + 0.2D + randomHeight, this.getZ());
+			ParticleUtils.add(getEntityWorld(), particle, this.getX(), this.getY() + 0.2D + randomHeight, this.getZ());
 		}
 	}
 
@@ -116,7 +128,7 @@ public abstract class LivingEntityMixin extends Entity {
 				double randY = (random.nextFloat() * 2 - 1) / 5D;
 				double randZ = random.nextFloat() - 0.5;
 
-				ParticleUtils.add(getWorld(), VisualityParticles.SPARKLE, this.getX() + randX, this.getY() + randY + height, this.getZ() + randZ);
+				ParticleUtils.add(getEntityWorld(), VisualityParticles.SPARKLE, this.getX() + randX, this.getY() + randY + height, this.getZ() + randZ);
 			}
 		}
 

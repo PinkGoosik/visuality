@@ -29,24 +29,24 @@ public abstract class SlimeEntityMixin extends MobEntity implements Monster {
 
 	@Redirect(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/World;addParticleClient(Lnet/minecraft/particle/ParticleEffect;DDDDDD)V"))
 	void addParticle(World world, ParticleEffect particle, double x, double y, double z, double velocityX, double velocityY, double velocityZ) {
-		if(world.isClient && this.getType().equals(EntityType.SLIME) && VisualityMod.config.slimeEnabled) {
+		if(world.isClient() && this.getType().equals(EntityType.SLIME) && VisualityMod.config.slimeEnabled) {
 			spawnSlimeParticle(x, y, z);
 		}
 		else {
-			this.getWorld().addParticleClient(particle, x, y, z, velocityX, velocityY, velocityZ);
+			this.getEntityWorld().addParticleClient(particle, x, y, z, velocityX, velocityY, velocityZ);
 		}
 	}
 
 	@Unique
 	private void spawnSlimeParticle(double x, double y, double z) {
 		if(getDataTracker().get(SLIME_SIZE) == 1) {
-			ParticleUtils.add(this.getWorld(), VisualityParticles.SMALL_SLIME_BLOB, x, y, z, VisualityMod.config.slimeColor.getRgb(), 1.0D);
+			ParticleUtils.add(this.getEntityWorld(), VisualityParticles.SMALL_SLIME_BLOB, x, y, z, VisualityMod.config.slimeColor.getRgb(), 1.0D);
 		}
 		else if(getDataTracker().get(SLIME_SIZE) == 2) {
-			ParticleUtils.add(this.getWorld(), VisualityParticles.MEDIUM_SLIME_BLOB, x, y, z, VisualityMod.config.slimeColor.getRgb(), 1.0D);
+			ParticleUtils.add(this.getEntityWorld(), VisualityParticles.MEDIUM_SLIME_BLOB, x, y, z, VisualityMod.config.slimeColor.getRgb(), 1.0D);
 		}
 		else {
-			ParticleUtils.add(this.getWorld(), VisualityParticles.BIG_SLIME_BLOB, x, y, z, VisualityMod.config.slimeColor.getRgb(), 2.0D);
+			ParticleUtils.add(this.getEntityWorld(), VisualityParticles.BIG_SLIME_BLOB, x, y, z, VisualityMod.config.slimeColor.getRgb(), 2.0D);
 		}
 	}
 

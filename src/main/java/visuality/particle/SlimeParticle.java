@@ -1,13 +1,15 @@
 package visuality.particle;
 
 import net.minecraft.client.particle.*;
+import net.minecraft.client.texture.Sprite;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.particle.SimpleParticleType;
+import net.minecraft.util.math.random.Random;
 
-public class SlimeParticle extends SpriteBillboardParticle {
+public class SlimeParticle extends BillboardParticle {
 
-	private SlimeParticle(ClientWorld world, double x, double y, double z, double color, double size) {
-		super(world, x, y, z, 0, 0, 0);
+	private SlimeParticle(ClientWorld world, double x, double y, double z, double color, double size, Sprite sprite) {
+		super(world, x, y, z, 0, 0, 0, sprite);
 		this.setColor((int) color);
 		this.setAlpha(0.8F);
 		this.velocityX *= 0.10000000149011612D;
@@ -39,14 +41,16 @@ public class SlimeParticle extends SpriteBillboardParticle {
 	}
 
 	@Override
-	public ParticleTextureSheet getType() {
-		return ParticleTextureSheet.PARTICLE_SHEET_TRANSLUCENT;
+	protected RenderType getRenderType() {
+		return RenderType.PARTICLE_ATLAS_TRANSLUCENT;
 	}
 
 	public record Factory(SpriteProvider sprites) implements ParticleFactory<SimpleParticleType> {
-		public Particle createParticle(SimpleParticleType simpleParticleType, ClientWorld world, double x, double y, double z, double velX, double velY, double velZ) {
-			SlimeParticle particle = new SlimeParticle(world, x, y, z, velX, velY);
-			particle.setSprite(sprites.getSprite(world.random));
+
+		@Override
+		public Particle createParticle(SimpleParticleType parameters, ClientWorld world, double x, double y, double z, double velocityX, double velocityY, double velocityZ, Random random) {
+			SlimeParticle particle = new SlimeParticle(world, x, y, z, velocityX, velocityY, sprites.getSprite(world.random));
+//			particle.setSprite(sprites.getSprite(world.random));
 			return particle;
 		}
 	}
