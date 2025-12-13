@@ -1,19 +1,19 @@
 package visuality.registry;
 
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.tag.TagKey;
-import net.minecraft.util.Identifier;
 import visuality.VisualityMod;
 
 import java.util.ArrayList;
 import java.util.Optional;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.Identifier;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
 
 public class ShinyBlockRegistry {
-	private static final ArrayList<AbstractBlock> BLOCKS = new ArrayList<>();
+	private static final ArrayList<BlockBehaviour> BLOCKS = new ArrayList<>();
 	private static final ArrayList<TagKey<Block>> TAGS = new ArrayList<>();
 
 	public static void reload() {
@@ -24,7 +24,7 @@ public class ShinyBlockRegistry {
 
 		VisualityMod.config.shinyBlockEntries.forEach(entry -> {
 			if(entry.startsWith("#")) {
-				tags.add(TagKey.of(RegistryKeys.BLOCK, Identifier.of(entry.replace("#", ""))));
+				tags.add(TagKey.create(Registries.BLOCK, Identifier.parse(entry.replace("#", ""))));
 				return;
 			}
 			getBlockFromString(entry).ifPresent(blocks::add);
@@ -37,12 +37,12 @@ public class ShinyBlockRegistry {
 	public static boolean isShiny(BlockState block) {
 		if(BLOCKS.contains(block.getBlock())) return true;
 		for(var tag : TAGS) {
-			if(block.isIn(tag)) return true;
+			if(block.is(tag)) return true;
 		}
 		return false;
 	}
 
 	private static Optional<Block> getBlockFromString(String id) {
-		return Registries.BLOCK.getOptionalValue(Identifier.of(id));
+		return BuiltInRegistries.BLOCK.getOptional(Identifier.parse(id));
 	}
 }

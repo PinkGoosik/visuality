@@ -1,15 +1,15 @@
 package visuality.registry;
 
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.tag.TagKey;
-import net.minecraft.util.Identifier;
 import visuality.VisualityMod;
 
 import java.util.ArrayList;
 import java.util.Optional;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.Identifier;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 
 public class ShinyArmorRegistry {
 	private static final ArrayList<Item> ITEMS = new ArrayList<>();
@@ -23,7 +23,7 @@ public class ShinyArmorRegistry {
 
 		VisualityMod.config.shinyArmorEntries.forEach(entry -> {
 			if(entry.startsWith("#")) {
-				tags.add(TagKey.of(RegistryKeys.ITEM, Identifier.of(entry.replace("#", ""))));
+				tags.add(TagKey.create(Registries.ITEM, Identifier.parse(entry.replace("#", ""))));
 				return;
 			}
 			getItemFromString(entry).ifPresent(items::add);
@@ -36,12 +36,12 @@ public class ShinyArmorRegistry {
 	public static boolean isShiny(ItemStack item) {
 		if(ITEMS.contains(item.getItem())) return true;
 		for(var tag : TAGS) {
-			if(item.isIn(tag)) return true;
+			if(item.is(tag)) return true;
 		}
 		return false;
 	}
 
 	private static Optional<Item> getItemFromString(String id) {
-		return Registries.ITEM.getOptionalValue(Identifier.of(id));
+		return BuiltInRegistries.ITEM.getOptional(Identifier.parse(id));
 	}
 }

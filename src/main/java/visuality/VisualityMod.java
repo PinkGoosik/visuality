@@ -1,7 +1,7 @@
 package visuality;
 
 import net.fabricmc.api.ClientModInitializer;
-import net.minecraft.util.Identifier;
+import net.minecraft.resources.Identifier;
 import visuality.config.VisualityConfig;
 import visuality.config.VisualityClothConfig;
 import visuality.registry.*;
@@ -20,6 +20,6 @@ public class VisualityMod implements ClientModInitializer {
 	}
 
 	public static Identifier id(String path) {
-		return Identifier.of(MOD_ID, path);
+		return Identifier.fromNamespaceAndPath(MOD_ID, path);
 	}
 }

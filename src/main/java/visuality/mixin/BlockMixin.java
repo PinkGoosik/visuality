@@ -1,14 +1,14 @@
 package visuality.mixin;
 
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.item.ItemConvertible;
-import net.minecraft.registry.tag.BlockTags;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -19,16 +19,16 @@ import visuality.registry.VisualityParticles;
 import visuality.util.ParticleUtils;
 
 @Mixin(Block.class)
-public abstract class BlockMixin extends AbstractBlock implements ItemConvertible {
+public abstract class BlockMixin extends BlockBehaviour implements ItemLike {
 
-	public BlockMixin(Settings settings) {
+	public BlockMixin(Properties settings) {
 		super(settings);
 	}
 
-	@Inject(method = "randomDisplayTick", at = @At("TAIL"))
-	void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random, CallbackInfo ci) {
-		if(VisualityMod.config.soulEnabled && state.isIn(BlockTags.WITHER_SUMMON_BASE_BLOCKS)) {
-			if(world.getBlockState(pos.up()).isAir()) {
+	@Inject(method = "animateTick", at = @At("TAIL"))
+	void randomDisplayTick(BlockState state, Level world, BlockPos pos, RandomSource random, CallbackInfo ci) {
+		if(VisualityMod.config.soulEnabled && state.is(BlockTags.WITHER_SUMMON_BASE_BLOCKS)) {
+			if(world.getBlockState(pos.above()).isAir()) {
 				if(random.nextFloat() > 0.995F) {
 					double x = pos.getX() + random.nextDouble();
 					double y = pos.getY() + 1.1D;
@@ -39,13 +39,13 @@ public abstract class BlockMixin extends AbstractBlock implements ItemConvertibl
 		}
 		if(VisualityMod.config.shinyBlocksEnabled && ShinyBlockRegistry.isShiny(state)) {
 			for(Direction direction : Direction.values()) {
-				BlockPos offset = pos.offset(direction);
-				if(!world.getBlockState(offset).isOpaqueFullCube()) {
+				BlockPos offset = pos.relative(direction);
+				if(!world.getBlockState(offset).isSolidRender()) {
 					if(random.nextFloat() > 0.8) {
 						Direction.Axis axis = direction.getAxis();
-						double x = axis == Direction.Axis.X ? 0.5 + 0.5625 * (double) direction.getOffsetX() : (double) random.nextFloat();
-						double y = axis == Direction.Axis.Y ? 0.5 + 0.5625 * (double) direction.getOffsetY() : (double) random.nextFloat();
-						double z = axis == Direction.Axis.Z ? 0.5 + 0.5625 * (double) direction.getOffsetZ() : (double) random.nextFloat();
+						double x = axis == Direction.Axis.X ? 0.5 + 0.5625 * (double) direction.getStepX() : (double) random.nextFloat();
+						double y = axis == Direction.Axis.Y ? 0.5 + 0.5625 * (double) direction.getStepY() : (double) random.nextFloat();
+						double z = axis == Direction.Axis.Z ? 0.5 + 0.5625 * (double) direction.getStepZ() : (double) random.nextFloat();
 						ParticleUtils.add(world, VisualityParticles.SPARKLE, (double) pos.getX() + x, (double) pos.getY() + y, (double) pos.getZ() + z);
 					}
 				}

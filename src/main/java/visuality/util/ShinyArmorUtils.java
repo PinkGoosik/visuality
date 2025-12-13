@@ -1,7 +1,5 @@
 package visuality.util;
 
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.ItemStack;
 import visuality.registry.ShinyArmorRegistry;
 
 public class ShinyArmorUtils {

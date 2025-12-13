@@ -1,9 +1,8 @@
 package visuality.config;
 
-import net.minecraft.text.TextColor;
-
 import java.util.ArrayList;
 import java.util.List;
+import net.minecraft.network.chat.TextColor;
 
 public class VisualityConfig {
 	public static final ArrayList<String> DEFAULT_HIT_PARTICLES = new ArrayList<>(List.of(
@@ -26,7 +25,7 @@ public class VisualityConfig {
 	public boolean sparkleEnabled = true;
 	public boolean soulEnabled = true;
 
-	public VisualityClothConfig.WaterCirclesConfigOption waterCircles = new VisualityClothConfig.WaterCirclesConfigOption();
+	public WaterCirclesConfigOption waterCircles = new WaterCirclesConfigOption();
 
 	public boolean hitParticlesEnabled = true;
 //	public float hitParticlesPer1Damage = 0.5F;

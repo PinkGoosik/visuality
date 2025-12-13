@@ -2,9 +2,9 @@ package visuality.registry;
 
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes;
-import net.minecraft.particle.SimpleParticleType;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
+import net.minecraft.core.Registry;
+import net.minecraft.core.particles.SimpleParticleType;
+import net.minecraft.core.registries.BuiltInRegistries;
 import visuality.VisualityMod;
 import visuality.particle.*;
 
@@ -35,7 +35,7 @@ public class VisualityParticles {
 	}
 
 	private static SimpleParticleType add(String name, ParticleFactoryRegistry.PendingParticleFactory<SimpleParticleType> constructor) {
-		var particle = Registry.register(Registries.PARTICLE_TYPE, VisualityMod.id(name), FabricParticleTypes.simple());
+		var particle = Registry.register(BuiltInRegistries.PARTICLE_TYPE, VisualityMod.id(name), FabricParticleTypes.simple());
 		FACTORIES.put(particle, constructor);
 		return particle;
 	}

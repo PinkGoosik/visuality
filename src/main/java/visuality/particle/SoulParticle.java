@@ -2,43 +2,43 @@ package visuality.particle;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.*;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.particle.SimpleParticleType;
-import net.minecraft.util.math.random.Random;
+import net.minecraft.core.particles.SimpleParticleType;
+import net.minecraft.util.RandomSource;
 
-public class SoulParticle extends BillboardParticle {
-	private final SpriteProvider sprites;
+public class SoulParticle extends SingleQuadParticle {
+	private final SpriteSet sprites;
 
-	SoulParticle(ClientWorld world, double x, double y, double z, double velX, double velY, double velZ, SpriteProvider sprites) {
-		super(world, x, y, z, velX, velY, velZ, sprites.getFirst());
+	SoulParticle(ClientLevel world, double x, double y, double z, double velX, double velY, double velZ, SpriteSet sprites) {
+		super(world, x, y, z, velX, velY, velZ, sprites.first());
 
-		this.velocityX = (random.nextDouble() * 2 - 1) / 10;
-		this.velocityY = 0.1D + random.nextDouble() / 10;
-		this.velocityZ = (random.nextDouble() * 2 - 1) / 10;
+		this.xd = (random.nextDouble() * 2 - 1) / 10;
+		this.yd = 0.1D + random.nextDouble() / 10;
+		this.zd = (random.nextDouble() * 2 - 1) / 10;
 
-		this.maxAge = 16 + random.nextInt(5);
+		this.lifetime = 16 + random.nextInt(5);
 		this.sprites = sprites;
 		this.scale(3F + random.nextFloat());
-		this.updateSprite(sprites);
+		this.setSpriteFromAge(sprites);
 	}
 
 	@Override
 	public void tick() {
 		super.tick();
-		this.updateSprite(this.sprites);
+		this.setSpriteFromAge(this.sprites);
 	}
 
 	@Override
-	protected RenderType getRenderType() {
-		return RenderType.PARTICLE_ATLAS_TRANSLUCENT;
+	protected Layer getLayer() {
+		return Layer.TRANSLUCENT;
 	}
 
 	@Environment(EnvType.CLIENT)
-	public record Factory(SpriteProvider sprites) implements ParticleFactory<SimpleParticleType> {
+	public record Factory(SpriteSet sprites) implements ParticleProvider<SimpleParticleType> {
 
 		@Override
-		public Particle createParticle(SimpleParticleType parameters, ClientWorld world, double x, double y, double z, double velocityX, double velocityY, double velocityZ, Random random) {
+		public Particle createParticle(SimpleParticleType parameters, ClientLevel world, double x, double y, double z, double velocityX, double velocityY, double velocityZ, RandomSource random) {
 			return new SoulParticle(world, x, y, z, velocityX, velocityY, velocityZ, sprites);
 		}
 	}

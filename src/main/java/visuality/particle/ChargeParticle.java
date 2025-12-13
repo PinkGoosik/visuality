@@ -1,41 +1,41 @@
 package visuality.particle;
 
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.*;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.particle.SimpleParticleType;
-import net.minecraft.util.math.random.Random;
+import net.minecraft.core.particles.SimpleParticleType;
+import net.minecraft.util.RandomSource;
 
-public class ChargeParticle extends BillboardParticle {
-	private final SpriteProvider sprites;
+public class ChargeParticle extends SingleQuadParticle {
+	private final SpriteSet sprites;
 
-	protected ChargeParticle(ClientWorld world, double x, double y, double z, SpriteProvider sprites) {
-		super(world, x, y, z, sprites.getFirst());
+	protected ChargeParticle(ClientLevel world, double x, double y, double z, SpriteSet sprites) {
+		super(world, x, y, z, sprites.first());
 		this.sprites = sprites;
-		this.maxAge = 8 + this.random.nextInt(4);
-		this.setVelocity(0D, 0D, 0D);
+		this.lifetime = 8 + this.random.nextInt(4);
+		this.setParticleSpeed(0D, 0D, 0D);
 		this.scale(1.25F);
-		updateSprite(sprites);
+		setSpriteFromAge(sprites);
 	}
 
 	@Override
 	public void tick() {
-		if(this.age++ >= this.maxAge) {
-			this.markDead();
+		if(this.age++ >= this.lifetime) {
+			this.remove();
 		}
 		else {
-			this.updateSprite(sprites);
+			this.setSpriteFromAge(sprites);
 		}
 	}
 
 	@Override
-	protected RenderType getRenderType() {
-		return RenderType.PARTICLE_ATLAS_TRANSLUCENT;
+	protected Layer getLayer() {
+		return Layer.TRANSLUCENT;
 	}
 
-	public record Factory(SpriteProvider sprites) implements ParticleFactory<SimpleParticleType> {
+	public record Factory(SpriteSet sprites) implements ParticleProvider<SimpleParticleType> {
 
 		@Override
-		public Particle createParticle(SimpleParticleType parameters, ClientWorld world, double x, double y, double z, double velocityX, double velocityY, double velocityZ, Random random) {
+		public Particle createParticle(SimpleParticleType parameters, ClientLevel world, double x, double y, double z, double velocityX, double velocityY, double velocityZ, RandomSource random) {
 			return new ChargeParticle(world, x, y, z, sprites);
 		}
 	}
