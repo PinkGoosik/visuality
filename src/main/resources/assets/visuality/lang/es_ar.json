@@ -1,0 +1,20 @@
+{
+  "modmenu.descriptionTranslation.visuality": "Pequejas mejoras visuales que agregan un montón de partículas nuevas.",
+  "config.visuality.title": "Configuración de Visuality",
+  "config.visuality.general": "General",
+  "config.visuality.option.slime": "Globos de slime activados",
+  "config.visuality.option.slime.color": "Color de los globos de slime",
+  "config.visuality.option.charge": "Partículas de carga activadas",
+  "config.visuality.option.sparkle": "Partículas de brillo activadas",
+  "config.visuality.option.soul": "Partículas de alma activadas",
+  "config.visuality.option.waterCircle": "Círculos de agua activados",
+  "config.visuality.option.waterCircle.colored": "Círculos de agua coloreados",
+  "config.visuality.option.waterCircle.density": "Densidad de círculos de agua",
+  "config.visuality.option.waterCircle.radius": "Radio de círculos de agua",
+  "config.visuality.option.hitParticles": "Partículas de impacto activadas",
+  "config.visuality.option.hitParticles.entries": "Entradas de partículas de impacto",
+  "config.visuality.option.shinyArmor": "Armadura brillante activada",
+  "config.visuality.option.shinyArmor.entries": "Entradas de armadura brillante",
+  "config.visuality.option.shinyBlocks": "Bloques brillantes activados",
+  "config.visuality.option.shinyBlocks.entries": "Entradas de bloques brillantes"
+}

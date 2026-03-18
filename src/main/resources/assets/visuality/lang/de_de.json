@@ -1,0 +1,20 @@
+{
+  "modmenu.descriptionTranslation.visuality": "Kleine visuelle Verbesserungen durch Hinzufügen vieler neuer Partikel.",
+  "config.visuality.title": "Visuality Konfiguration",
+  "config.visuality.general": "Allgemein",
+  "config.visuality.option.slime": "Schleimklumpen Aktiviert",
+  "config.visuality.option.slime.color": "Schleimklumpenfarbe",
+  "config.visuality.option.charge": "Ladungspartikel Aktiviert",
+  "config.visuality.option.sparkle": "Funkelpartikel Aktiviert",
+  "config.visuality.option.soul": "Seelenpartikel Aktiviert",
+  "config.visuality.option.waterCircle": "Wasserkreise Aktiviert",
+  "config.visuality.option.waterCircle.colored": "Farbige Wasserkreise",
+  "config.visuality.option.waterCircle.density": "Wasserkreisdichte",
+  "config.visuality.option.waterCircle.radius": "Wasserkreisradius",
+  "config.visuality.option.hitParticles": "Trefferpartikel Aktiviert",
+  "config.visuality.option.hitParticles.entries": "Trefferpartikel Einträge",
+  "config.visuality.option.shinyArmor": "Glänzende Rüstung Aktiviert",
+  "config.visuality.option.shinyArmor.entries": "Glänzende Rüstung Einträge",
+  "config.visuality.option.shinyBlocks": "Glänzende Blöcke Aktiviert",
+  "config.visuality.option.shinyBlocks.entries": "Glänzende Blöcke Einträge"
+}
