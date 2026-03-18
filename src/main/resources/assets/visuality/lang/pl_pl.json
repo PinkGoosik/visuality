@@ -1,0 +1,20 @@
+{
+  "modmenu.descriptionTranslation.visuality": "Drobne ulepszenia wizualne dzięki dodaniu wielu nowych cząstek.",
+  "config.visuality.title": "Konfiguracja Visuality",
+  "config.visuality.general": "Ogólne",
+  "config.visuality.option.slime": "Włączone cząstki szlamu",
+  "config.visuality.option.slime.color": "Kolor cząstek szlamu",
+  "config.visuality.option.charge": "Włączone cząstki ładunku",
+  "config.visuality.option.sparkle": "Włączone cząstki iskier",
+  "config.visuality.option.soul": "Włączone cząstki dusz",
+  "config.visuality.option.waterCircle": "Włączone kręgi wodne",
+  "config.visuality.option.waterCircle.colored": "Kolor kręgów wodnych",
+  "config.visuality.option.waterCircle.density": "Gęstość kręgów wodnych",
+  "config.visuality.option.waterCircle.radius": "Promień kręgów wodnych",
+  "config.visuality.option.hitParticles": "Włączone cząstki uderzenia",
+  "config.visuality.option.hitParticles.entries": "Elementy cząstek uderzenia",
+  "config.visuality.option.shinyArmor": "Włączone świecące zbroje",
+  "config.visuality.option.shinyArmor.entries": "Elementy świecących zbroi",
+  "config.visuality.option.shinyBlocks": "Włączone świecące bloki",
+  "config.visuality.option.shinyBlocks.entries": "Elementy świecących bloków"
+}
