@@ -28,7 +28,7 @@ public class SparkleParticle extends SingleQuadParticle {
 	}
 
 	@Override
-	public int getLightColor(float tint) {
+	protected int getLightCoords(float a) {
 		return 15728880;
 	}
 

@@ -10,7 +10,7 @@ public class FeatherParticle extends RisingParticle {
 
 	private FeatherParticle(ClientLevel world, double x, double y, double z, double velX, double velY, double velZ, TextureAtlasSprite sprite) {
 		super(world, x, y, z, velX, velY, velZ, sprite);
-		this.scale(0.7F + (float) world.random.nextInt(6) / 10);
+		this.scale(0.7F + (float) world.getRandom().nextInt(6) / 10);
 		this.roll = oRoll = random.nextFloat() * (float) (2 * Math.PI);
 		this.yd = -0.25D;
 		this.lifetime = (int) (8.0D / (Math.random() * 0.8D + 0.2D)) + 12;

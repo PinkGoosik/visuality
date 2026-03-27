@@ -38,6 +38,6 @@
     "fabric-api": "*",
     "cloth-config": "*",
     "minecraft": "${minecraft_version_range}",
-    "java": ">=21"
+    "java": ">=25"
   }
 }

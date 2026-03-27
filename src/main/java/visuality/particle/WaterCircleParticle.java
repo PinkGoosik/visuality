@@ -5,7 +5,7 @@ import net.minecraft.client.Camera;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.*;
 import net.minecraft.client.renderer.BiomeColors;
-import net.minecraft.client.renderer.state.QuadParticleRenderState;
+import net.minecraft.client.renderer.state.level.QuadParticleRenderState;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.util.ARGB;
@@ -53,6 +53,7 @@ public class WaterCircleParticle extends SingleQuadParticle {
 		return Layer.TRANSLUCENT;
 	}
 
+	@Override
 	protected void extractRotatedQuad(QuadParticleRenderState submittable, Camera camera, Quaternionf rotation, float ticks) {
 		super.extractRotatedQuad(submittable, camera, ROTATION, ticks);
 	}

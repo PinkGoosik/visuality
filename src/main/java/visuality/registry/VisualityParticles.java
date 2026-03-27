@@ -1,6 +1,6 @@
 package visuality.registry;
 
-import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
+import net.fabricmc.fabric.api.client.particle.v1.ParticleProviderRegistry;
 import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes;
 import net.minecraft.core.Registry;
 import net.minecraft.core.particles.SimpleParticleType;
@@ -13,7 +13,7 @@ import java.util.Map;
 
 @SuppressWarnings("unused")
 public class VisualityParticles {
-	public static final Map<SimpleParticleType, ParticleFactoryRegistry.PendingParticleFactory<SimpleParticleType>> FACTORIES = new LinkedHashMap<>();
+	public static final Map<SimpleParticleType, ParticleProviderRegistry.PendingParticleProvider<SimpleParticleType>> FACTORIES = new LinkedHashMap<>();
 
 	public static final SimpleParticleType SPARKLE = add("sparkle", SparkleParticle.Factory::new);
 	public static final SimpleParticleType BONE = add("bone", SolidFallingParticle.Factory::new);
@@ -30,11 +30,11 @@ public class VisualityParticles {
 	public static final SimpleParticleType SOUL = add("soul", SoulParticle.Factory::new);
 
 	public static void init() {
-		ParticleFactoryRegistry registry = ParticleFactoryRegistry.getInstance();
+		ParticleProviderRegistry registry = ParticleProviderRegistry.getInstance();
 		FACTORIES.forEach(registry::register);
 	}
 
-	private static SimpleParticleType add(String name, ParticleFactoryRegistry.PendingParticleFactory<SimpleParticleType> constructor) {
+	private static SimpleParticleType add(String name, ParticleProviderRegistry.PendingParticleProvider<SimpleParticleType> constructor) {
 		var particle = Registry.register(BuiltInRegistries.PARTICLE_TYPE, VisualityMod.id(name), FabricParticleTypes.simple());
 		FACTORIES.put(particle, constructor);
 		return particle;

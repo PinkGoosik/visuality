@@ -23,14 +23,13 @@ abstract class EntityMixin {
 	@Inject(method = "spawnSprintParticle", at = @At("TAIL"))
 	void spawnSprintingParticles(CallbackInfo ci, @Local BlockState state) {
 		Entity entity = Entity.class.cast(this);
-		Level world = level();
 
-		if(world.isClientSide() && VisualityMod.config.soulEnabled && state.is(BlockTags.WITHER_SUMMON_BASE_BLOCKS)) {
-			if(world.random.nextInt(5) == 0) {
+		if(level().isClientSide() && VisualityMod.config.soulEnabled && state.is(BlockTags.WITHER_SUMMON_BASE_BLOCKS)) {
+			if(level().getRandom().nextInt(5) == 0) {
 				double x = entity.getX();
 				double y = entity.getY() + 0.1;
 				double z = entity.getZ();
-				ParticleUtils.add(world, VisualityParticles.SOUL, x, y, z);
+				ParticleUtils.add(level(), VisualityParticles.SOUL, x, y, z);
 			}
 		}
 	}

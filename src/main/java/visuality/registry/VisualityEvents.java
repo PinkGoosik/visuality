@@ -6,6 +6,6 @@ import visuality.event.CirclesOnWaterEvent;
 public class VisualityEvents {
 
 	public static void init() {
-		ClientTickEvents.START_WORLD_TICK.register(CirclesOnWaterEvent::onTick);
+		ClientTickEvents.START_LEVEL_TICK.register(CirclesOnWaterEvent::onTick);
 	}
 }
