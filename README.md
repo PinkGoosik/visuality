@@ -7,7 +7,7 @@
 
 Visuality is a Minecraft mod for fabric loader. This is a simple client-sided cosmetic mod that will add a bunch of new
 particles such as crystal sparkles, particles on mob hitting, custom blob particles for slimes, environmental particles
-to your Minecraft world. Expect particles collection expanding with the mod updates!
+to your Minecraft world.
 
 #### [Discord Server](https://discord.gg/DcemWeskeZ) | [Modrinth Page](https://modrinth.com/mod/visuality) | [CurseForge Page](https://curseforge.com/minecraft/mc-mods/visuality)
 
